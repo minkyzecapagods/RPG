@@ -17,12 +17,11 @@ void Game::render() {
     if (Game::currentState == GameState::MAIN_MENU) {
         renderMainMenu();
     } else if (Game::currentState == GameState::IN_GAME) {
-        Character player = Character(player);
-        Character enemy = Character(enemy);
-        Game::currentState = GameState::MAIN_MENU;
+        Character player("player");
+        Character enemy("enemy");
         int result;
         while(true){
-            result = advanceBattleLogic(player, enemy);
+            result = advanceBattleLogic(&player, &enemy);
             if(result == 1){
                 cout << "vitoria" << endl;
                 Game::currentState = GameState::MAIN_MENU;

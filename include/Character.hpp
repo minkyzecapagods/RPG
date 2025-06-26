@@ -28,7 +28,7 @@ class Character {
 
         //void addItem(Item i);
 
-        void dealDamage(Character target);
+        void dealDamage(Character* target);
 
         void takeDamage(int rawDamage);
 
@@ -36,9 +36,9 @@ class Character {
 
         void defend();
 
-        void action(Character target);
+        void action(Character* target);
 
-        void action(size_t choice, Character target);
+        void action(size_t choice, Character* target);
 };
 
 #endif

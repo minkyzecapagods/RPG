@@ -12,13 +12,13 @@ Character::Character(string name){
     this->name = name;
 }
 
-void Character::dealDamage(Character target){
-    int damage = 10 * attack/4;
-    target.takeDamage(damage);
+void Character::dealDamage(Character* target){
+    int damage = 10;
+    target->takeDamage(damage);
 }
 
 void Character::takeDamage(int rawDamage){
-    int damage = rawDamage * (60/defense);
+    int damage = rawDamage;
     hp -= damage;
 }
 
@@ -33,7 +33,7 @@ void Character::defend(){
     defense += 1;
 }
 
-void Character::action(size_t choice, Character target){
+void Character::action(size_t choice, Character* target){
     switch(choice){
         case 0: //atacar
             Character::dealDamage(target);
@@ -50,6 +50,6 @@ void Character::action(size_t choice, Character target){
     }
 }
 
-void Character::action(Character target){
+void Character::action(Character* target){
     Character::dealDamage(target);
 }

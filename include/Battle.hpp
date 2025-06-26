@@ -4,8 +4,8 @@
 #include "Character.hpp"
 
 void renderBattleMenu();
-void handleBattleStatus(Character player, Character enemy);
+void renderBattleStatus(Character *player, Character *enemy);
 size_t handleBattleMenuInput();
-int advanceBattleLogic(Character player, Character enemy);
+int advanceBattleLogic(Character *player, Character *enemy);
 
 #endif

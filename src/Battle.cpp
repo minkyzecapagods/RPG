@@ -29,10 +29,10 @@ void renderBattleMenu() {
     cout << "Use ↑ ↓ para mover, espaço para selecionar, q para sair.\n";
 }
 
-void renderBattleStatus(Character player, Character enemy){
+void renderBattleStatus(Character* player, Character* enemy){
     system(CLEAR_COMMAND);
-    cout << "Player hp: " << player.getHp() << endl;
-    cout << "Enemy hp: " << enemy.getHp() << endl;
+    std::cout << "Player hp: " << player->getHp() << std::endl;
+    std::cout << "Enemy hp: " << enemy->getHp() << std::endl;
 }
 
 size_t handleBattleMenuInput() {
@@ -52,20 +52,21 @@ size_t handleBattleMenuInput() {
     }
 }
 
-int advanceBattleLogic(Character player, Character enemy){
+int advanceBattleLogic(Character* player, Character* enemy){
 
     renderBattleStatus(player, enemy);
     renderBattleMenu();
     handleBattleMenuInput();
-    player.action(selectedOptionBattle, enemy);
+    player->action(selectedOptionBattle, enemy);
     renderBattleStatus(player, enemy);
-    if (enemy.getHp() <= 0){
+    if (enemy->getHp() <= 0){
         return 1; //flag de vitória
     }
 
-    enemy.action(player);
+    size_t enemyAction = 0; // inimigo sempre atacando
+    enemy->action(enemyAction, player);
     renderBattleStatus(player, enemy);
-    if(player.getHp() <= 0){
+    if(player->getHp() <= 0){
         return 2; //flag derrota
     }
 
