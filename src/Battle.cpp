@@ -35,36 +35,62 @@ void renderBattleStatus(Character* player, Character* enemy){
     std::cout << "Enemy hp: " << enemy->getHp() << std::endl;
 }
 
-size_t handleBattleMenuInput() {
+bool handleBattleMenuInput() {
     Key key = getArrowKey();
-
     switch (key) {
         case Key::Up:
             selectedOptionBattle = (selectedOptionBattle - 1 + battleMenuOptions.size()) % battleMenuOptions.size();
+            return false;
             break;
         case Key::Down:
             selectedOptionBattle = (selectedOptionBattle + 1) % battleMenuOptions.size();
+            return false;
             break;
         case Key::Enter:
-            return selectedOptionBattle;
+            return true;
         default:
+            return true;
             break;
+    }
+}
+
+void pressSpaceToContinue(){ //Temporario, enquanto não temos o sistema que fala "fulaninho te atacou"
+    bool i = true;
+    cout << "Aperte espaço para continuar : " << endl;
+    while(i){
+        Key key = getArrowKey();
+        switch(key){
+            case Key::Enter:
+                system(CLEAR_COMMAND);
+                i = false;
+                break;
+            default:
+                continue;
+        }
     }
 }
 
 int advanceBattleLogic(Character* player, Character* enemy){
 
-    renderBattleStatus(player, enemy);
-    renderBattleMenu();
-    handleBattleMenuInput();
-    player->action(selectedOptionBattle, enemy);
-    renderBattleStatus(player, enemy);
+    while(true){
+        renderBattleStatus(player, enemy);
+        renderBattleMenu();
+        if(handleBattleMenuInput()){
+            renderBattleMenu();
+            break;
+        }
+    }
+    player->action(selectedOptionBattle, enemy); //ação do player
+    renderBattleStatus(player, enemy); //atualização da vida dos jogadores
+
     if (enemy->getHp() <= 0){
         return 1; //flag de vitória
     }
 
-    size_t enemyAction = 0; // inimigo sempre atacando
-    enemy->action(enemyAction, player);
+    pressSpaceToContinue();
+
+    size_t enemyAction = 0; // inimigo sempre atacando por enquanto
+    enemy->action(player);
     renderBattleStatus(player, enemy);
     if(player->getHp() <= 0){
         return 2; //flag derrota

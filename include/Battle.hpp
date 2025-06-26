@@ -5,7 +5,8 @@
 
 void renderBattleMenu();
 void renderBattleStatus(Character *player, Character *enemy);
-size_t handleBattleMenuInput();
+bool handleBattleMenuInput();
 int advanceBattleLogic(Character *player, Character *enemy);
+void pressSpaceToContinue();
 
 #endif
