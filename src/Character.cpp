@@ -12,25 +12,35 @@ Character::Character(string name){
     this->name = name;
 }
 
+Character::Character(){
+    this->name = "Pedro, o comum."; //nome padrão kkkkkkkkkkkkkkkkkkkkkk PEDRO
+}
 void Character::dealDamage(Character* target){
-    int damage = 10;
+    int damage = 10 + this->attack;
     target->takeDamage(damage);
 }
 
 void Character::takeDamage(int rawDamage){
-    int damage = rawDamage;
-    hp -= damage;
+    int damage = rawDamage - (this->defense - 2);
+    if(rawDamage <= (this->defense - 2)){
+        damage = 1;
+    }
+
+    this->hp -= damage;
+    if(this->hp < 0){
+        this->hp = 0;
+    }
 }
 
 void Character::cure(){
-    hp += magic/4;
-    if (hp > 100){
-        hp = 100;
+    this->hp += this->magic;
+    if (this->hp > 100){
+        this->hp = 100;
     }
 }
 
 void Character::defend(){
-    defense += 1;
+    this->defense += 1;
 }
 
 void Character::action(size_t choice, Character* target){

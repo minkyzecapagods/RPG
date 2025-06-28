@@ -7,15 +7,12 @@
 #include "ArrowKey.hpp"
 #include "Character.hpp"
 
-size_t selectedOptionBattle = 0;
-
-vector<string> battleMenuOptions = {
-    "Atacar",
-    "Defender",
-    "Curar"
+Battle::Battle(Character player, Character enemy){
+    this->player = player;
+    this->enemy = enemy;
 };
 
-void renderBattleMenu() {
+void Battle::renderBattleMenu() {
     cout << "   __________________\n";
     cout << "/ \\                  ▏\n";
     cout << "\\_,▏                 ▏\n";
@@ -29,13 +26,15 @@ void renderBattleMenu() {
     cout << "Use ↑ ↓ para mover, espaço para selecionar, q para sair.\n";
 }
 
-void renderBattleStatus(Character* player, Character* enemy){
+void Battle::renderBattleStatus(){
     system(CLEAR_COMMAND);
-    std::cout << "Player hp: " << player->getHp() << std::endl;
-    std::cout << "Enemy hp: " << enemy->getHp() << std::endl;
+    std::cout << "Player hp: " << player.getHp() << std::endl;
+    std::cout << "Player attack: " << player.getAttack() << std::endl;
+    std::cout << "Player defense: " << player.getDefense() << std::endl;
+    std::cout << "Enemy hp: " << enemy.getHp() << std::endl;
 }
 
-bool handleBattleMenuInput() {
+bool Battle::handleBattleMenuInput() {
     Key key = getArrowKey();
     switch (key) {
         case Key::Up:
@@ -54,7 +53,7 @@ bool handleBattleMenuInput() {
     }
 }
 
-void pressSpaceToContinue(){ //Temporario, enquanto não temos o sistema que fala "fulaninho te atacou"
+void Battle::pressSpaceToContinue(){ //Temporario, enquanto não temos o sistema que fala "fulaninho te atacou"
     bool i = true;
     cout << "Aperte espaço para continuar : " << endl;
     while(i){
@@ -70,29 +69,28 @@ void pressSpaceToContinue(){ //Temporario, enquanto não temos o sistema que fal
     }
 }
 
-int advanceBattleLogic(Character* player, Character* enemy){
+int Battle::advanceBattleLogic(){
 
     while(true){
-        renderBattleStatus(player, enemy);
+        renderBattleStatus();
         renderBattleMenu();
         if(handleBattleMenuInput()){
             renderBattleMenu();
             break;
         }
     }
-    player->action(selectedOptionBattle, enemy); //ação do player
-    renderBattleStatus(player, enemy); //atualização da vida dos jogadores
+    player.action(selectedOptionBattle, &enemy); //ação do player
+    renderBattleStatus(); //atualização da vida dos jogadores
 
-    if (enemy->getHp() <= 0){
+    if (enemy.getHp() <= 0){
         return 1; //flag de vitória
     }
 
     pressSpaceToContinue();
 
-    size_t enemyAction = 0; // inimigo sempre atacando por enquanto
-    enemy->action(player);
-    renderBattleStatus(player, enemy);
-    if(player->getHp() <= 0){
+    enemy.action(&player); // por enquanto o inimigo só ataca msm
+    renderBattleStatus();
+    if(player.getHp() <= 0){
         return 2; //flag derrota
     }
 

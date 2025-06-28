@@ -13,12 +13,13 @@ class Character {
     private:
         string name;
         int hp = 100;
-        int defense = 100;
-        int attack = 100;
-        int magic = 100;
+        int defense = 10;
+        int attack = 10;
+        int magic = 10;
         vector <Item> equipment;
     public:
         Character(string name); //construtor
+        Character(); //construtor padrão
         string getName();
         int getHp();
         int getDefense();
