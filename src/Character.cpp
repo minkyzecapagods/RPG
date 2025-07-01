@@ -16,13 +16,17 @@ Character::Character(){
     this->name = "Pedro, o comum."; //nome padrão kkkkkkkkkkkkkkkkkkkkkk PEDRO
 }
 void Character::dealDamage(Character* target){
-    int damage = 10 + this->attack;
-    target->takeDamage(damage);
+    int damage = 10 * this->attack/3;
+    if (this->attack < 3){
+        damage = 10;
+    }
+    
+    target->takeDamage(damage);  //chamando a takeDamage do target
 }
 
 void Character::takeDamage(int rawDamage){
-    int damage = rawDamage - (this->defense - 2);
-    if(rawDamage <= (this->defense - 2)){
+    int damage = rawDamage * (2/this->defense);
+    if(damage < 1){
         damage = 1;
     }
 

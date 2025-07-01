@@ -71,7 +71,7 @@ void Battle::pressSpaceToContinue(){ //Temporario, enquanto não temos o sistema
 
 int Battle::advanceBattleLogic(){
 
-    while(true){
+    while(true){ //menu da batalha
         renderBattleStatus();
         renderBattleMenu();
         if(handleBattleMenuInput()){
@@ -79,6 +79,7 @@ int Battle::advanceBattleLogic(){
             break;
         }
     }
+    
     player.action(selectedOptionBattle, &enemy); //ação do player
     renderBattleStatus(); //atualização da vida dos jogadores
 
