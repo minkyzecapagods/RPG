@@ -1,11 +1,39 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <iomanip>
 
 #include "Battle.hpp"
 #include "GameState.hpp"
 #include "ArrowKey.hpp"
 #include "Character.hpp"
+#include "utils.hpp"
+
+using namespace std;
+
+//teste
+vector<string> n = {
+"              _,-'|",
+"           ,-'._  |",
+" .||,      |####\\ |",
+"\\.`',/     \\####| |",
+"= ,. =      |###| |",
+"/ || \\    ,-'\\#/,'`.",
+"  ||     ,'   `,,. `.",
+"  ,|____,' , ,;' \\| |",
+" (3|\\    _/|/'   _| |",
+"  ||/,-''  | >-'' _,\\",
+"  ||'      ==\\ ,-'  ,'",
+"  ||       |  V \\ ,|",
+"  ||       |    |` |",
+"  ||       |    |   \\",
+"  ||       |    \\    \\",
+"  ||       |     |    \\",
+"  ||       |      \\_,-'",
+"  ||       |___,,--')_\\",
+"  ||         |_|   ccc/",
+"  ||        ccc/",
+"  ||"};
 
 Battle::Battle(Character player, Character enemy){
     this->player = player;
@@ -13,26 +41,32 @@ Battle::Battle(Character player, Character enemy){
 };
 
 void Battle::renderBattleMenu() {
-    cout << "   __________________\n";
-    cout << "/ \\                  ▏\n";
-    cout << "\\_,▏                 ▏\n";
+    string spc = string(4, ' ');
+    cout << spc << " ╭──────────────── ⋆ ♱ ✮ ♱ ⋆ ────────────────╮\n";
+    cout << spc << "▕┘                                           └▏\n";
     for (size_t i = 0; i < battleMenuOptions.size(); ++i) {
         string prefix = (i == selectedOptionBattle) ? "• " : "  ";
-        size_t spaces = 14 - battleMenuOptions[i].size();
-        cout << "   ▏ " << prefix << battleMenuOptions[i] << string(spaces, ' ') << "▏\n";
+        size_t spaces = 42 - battleMenuOptions[i].size();
+        cout << spc << "▕ " << prefix << battleMenuOptions[i] << string(spaces, ' ') << "▏\n";
     }
-    cout << "   ▏  ________________\n";
-    cout << "   \\_/________________/\n\n";
+    cout << spc << "▕┐                                           ┌▏\n";
+    cout << spc <<" ╰──────────────── ⋆ ♱ ✮ ♱ ⋆ ────────────────╯\n\n";
     cout << "Use ↑ ↓ para mover, espaço para selecionar, q para sair.\n";
 }
 
 void Battle::renderBattleStatus(){
     system(CLEAR_COMMAND);
-    std::cout << "Player hp: " << player.getHp() << std::endl;
-    std::cout << "Player attack: " << player.getAttack() << std::endl;
-    std::cout << "Player defense: " << player.getDefense() << std::endl;
-    std::cout << "Enemy hp: " << enemy.getHp() << std::endl;
-}
+    printAsciiCentralizado(n);
+    cout << string((56 - player.getName().length())/2, ' ') << player.getName() << "\n";
+    cout <<  " " << setfill(' ') << setw(3) << player.getHp() << ": ";
+    cout << "\033[32m" << repetir(player.getHp()/2, "▇") << repetir(50 - player.getHp()/2, "◫") << "\n\n";    
+    cout << "\033[0m" << "Player attack: " << player.getAttack() << endl;
+    cout << "Player defense: " << player.getDefense() << endl;
+    cout << string((56 - enemy.getName().length())/2, ' ') << enemy.getName() << "\n";
+    cout << " " << setfill(' ') << setw(3) << enemy.getHp() << ": ";
+    cout << "\033[31m" << repetir(enemy.getHp()/2, "▇") << repetir(50 - enemy.getHp()/2, "◫") << "\n";    
+    cout << "\033[0m" << "Player attack: " << player.getAttack() << endl;
+}   
 
 bool Battle::handleBattleMenuInput() {
     Key key = getArrowKey();

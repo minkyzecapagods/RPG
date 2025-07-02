@@ -13,7 +13,8 @@ class Battle{
         vector<string> battleMenuOptions = {
         "Atacar",
         "Defender",
-        "Curar"
+        "Curar",
+        "Status"
         };
         size_t selectedOptionBattle = 0;
         void renderBattleMenu();

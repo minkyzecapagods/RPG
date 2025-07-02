@@ -2,12 +2,15 @@
 #define SAVEMENU_H
 
 #include <string>
-#include "Personagem.hpp"
+#include <vector>
+#include <set>
+#include "Character.hpp"
 
 class Save {
 private:
-  Personagem hero;
-  int items;
+  Character hero;
   bool isEmpty;
-};
+  vector<bool> unlocked;
+  set<vector<bool>> enemys_inventory;
+  };
 #endif
