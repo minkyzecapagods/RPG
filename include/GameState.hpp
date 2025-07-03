@@ -9,6 +9,8 @@ using namespace std;
 enum class GameState {
     MAIN_MENU,
     SAVE_MENU,
+    CREATE_MENU_CHOICE,
+    CREATE_MENU_CUSTOM,
     IN_GAME,
     EXIT
 };
@@ -16,7 +18,7 @@ enum class GameState {
 namespace Game {
     extern GameState currentState;
     extern size_t selectedOption;
-    
+
     void handleInput();
     void render();
 }

@@ -5,6 +5,7 @@
 #include "SaveMenu.hpp"
 #include "Character.hpp"
 #include "Battle.hpp"
+#include "CreateMenu.hpp"
 
 GameState Game::currentState = GameState::MAIN_MENU;
 size_t Game::selectedOption = 0;
@@ -37,6 +38,9 @@ void Game::handleInput() {
         case GameState::SAVE_MENU:
             handleSaveMenuInput();
             break;
+        case GameState::CREATE_MENU_CHOICE:
+            handleChoiceMenuInput();
+            break;
         default: break;
     }
 }
@@ -49,6 +53,10 @@ void Game::render() {
         case GameState::SAVE_MENU:
             renderSaveMenu();
             break;
+        case GameState::CREATE_MENU_CHOICE:
+            renderCharacterChoice();
+            break;
         default: break;
     }
 }
+

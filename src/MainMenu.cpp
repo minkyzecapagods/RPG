@@ -39,11 +39,11 @@ void handleMainMenuInput() {
             break;
         case Key::Enter:
             if (mainMenuOptions[Game::selectedOption] == "Novo Jogo") {
-                Game::currentState = GameState::IN_GAME;
-            } else if (mainMenuOptions[Game::selectedOption] == "Carregar Jogo") {
-                Game::currentState = GameState::SAVE_MENU;
-            } else if (mainMenuOptions[Game::selectedOption] == "Sair") {
-                Game::currentState = GameState::EXIT;
+                Game::currentState = GameState::CREATE_MENU_CHOICE; return;
+            } if (mainMenuOptions[Game::selectedOption] == "Carregar Jogo") {
+                Game::currentState = GameState::SAVE_MENU; return;
+            } if (mainMenuOptions[Game::selectedOption] == "Sair") {
+                Game::currentState = GameState::EXIT; return;   
             }
             Game::selectedOption = 0;
             break;
