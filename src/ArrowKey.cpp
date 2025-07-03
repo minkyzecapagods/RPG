@@ -43,24 +43,23 @@ void restoreKeyboard() {
 Key getArrowKey() {
     char c;
     if (read(STDIN_FILENO, &c, 1) != 1) return Key::None;
-
-    if (c == '\x1B') {
-        char seq[2];
-        if (read(STDIN_FILENO, &seq[0], 1) != 1) return Key::None;
-        if (read(STDIN_FILENO, &seq[1], 1) != 1) return Key::None;
-        if (seq[0] == '[') {
-            if (seq[1] == 'A') return Key::Up;
-            if (seq[1] == 'B') return Key::Down;
-            if (seq[1] == 'C') return Key::Right;
-            if (seq[1] == 'D') return Key::Left;
+    switch (c) {
+        case '\x1B': {
+            char seq[2];
+            if (read(STDIN_FILENO, &seq[0], 1) != 1) return Key::None;
+            if (read(STDIN_FILENO, &seq[1], 1) != 1) return Key::None;
+            if (seq[0] == '[') {
+                if (seq[1] == 'A') return Key::Up;
+                if (seq[1] == 'B') return Key::Down;
+                if (seq[1] == 'C') return Key::Right;
+                if (seq[1] == 'D') return Key::Left;
+            }
+            return Key::None;
         }
-    } else if (c == ' ') {
-        return Key::Enter;
-    } else if (c == 'q') {
-        return Key::Quit;
+        case ' ': return Key::Enter;
+        case 'q': return Key::Quit;
+        default: return Key::None;
     }
-
-    return Key::None;
 }
 
 #endif

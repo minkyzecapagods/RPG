@@ -1,5 +1,6 @@
 
 #include "utils.hpp"
+#include "GameState.hpp"
 
 #include <vector>
 #include <iostream>

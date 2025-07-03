@@ -3,7 +3,12 @@
 
 #include <vector>
 #include <string>
-std::string repetir(int vezes, const std::string& str);
-void printAsciiCentralizado(const std::vector<std::string>& arte);
+
+using namespace std;
+std::string repetir(int vezes, const string& str);
+void printAsciiCentralizado(const vector<string>& arte);
+
+void renderMenu(const vector<string>& options, int selectedIndex, int width, const string& padding, 
+                const vector<string>& borderTop, const vector<string>& borderBottom);
 
 #endif

@@ -16,7 +16,6 @@ class Battle{
         "Curar",
         "Status"
         };
-        size_t selectedOptionBattle = 0;
         void renderBattleMenu();
         void renderBattleStatus();
         bool handleBattleMenuInput();

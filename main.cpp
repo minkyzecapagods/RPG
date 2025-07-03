@@ -10,6 +10,7 @@ using namespace std;
 int main() {
     initKeyboard();
     cout << "\033[8;100;60t";
+    
     while (Game::currentState != GameState::EXIT) {
         Game::render();
         Game::handleInput();

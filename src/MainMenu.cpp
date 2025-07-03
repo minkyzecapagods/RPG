@@ -6,8 +6,6 @@
 #include "GameState.hpp"
 #include "ArrowKey.hpp"
 
-size_t selectedOption = 0;
-
 vector<string> mainMenuOptions = {
     "Novo Jogo",
     "Carregar Jogo",
@@ -20,7 +18,7 @@ void renderMainMenu() {
     cout << "/ \\                  ▏\n";
     cout << "\\_,▏                 ▏\n";
     for (size_t i = 0; i < mainMenuOptions.size(); ++i) {
-        string prefix = (i == selectedOption) ? "• " : "  ";
+        string prefix = (i == Game::selectedOption) ? "• " : "  ";
         size_t spaces = 14 - mainMenuOptions[i].size();
         cout << "   ▏ " << prefix << mainMenuOptions[i] << string(spaces, ' ') << "▏\n";
     }
@@ -34,22 +32,20 @@ void handleMainMenuInput() {
 
     switch (key) {
         case Key::Up:
-            selectedOption = (selectedOption - 1 + mainMenuOptions.size()) % mainMenuOptions.size();
+            Game::selectedOption = (Game::selectedOption - 1 + mainMenuOptions.size()) % mainMenuOptions.size();
             break;
         case Key::Down:
-            selectedOption = (selectedOption + 1) % mainMenuOptions.size();
+            Game::selectedOption = (Game::selectedOption + 1) % mainMenuOptions.size();
             break;
         case Key::Enter:
-            if (mainMenuOptions[selectedOption] == "Novo Jogo") {
+            if (mainMenuOptions[Game::selectedOption] == "Novo Jogo") {
                 Game::currentState = GameState::IN_GAME;
-            } else if (mainMenuOptions[selectedOption] == "Carregar Jogo") {
-                restoreKeyboard(); // antes de usar cin
-                cout << "Função de carregamento ainda não implementada.\n";
-                cin.get();
-                initKeyboard(); // volta pro modo raw
-            } else if (mainMenuOptions[selectedOption] == "Sair") {
+            } else if (mainMenuOptions[Game::selectedOption] == "Carregar Jogo") {
+                Game::currentState = GameState::SAVE_MENU;
+            } else if (mainMenuOptions[Game::selectedOption] == "Sair") {
                 Game::currentState = GameState::EXIT;
             }
+            Game::selectedOption = 0;
             break;
         case Key::Quit:
             Game::currentState = GameState::EXIT;

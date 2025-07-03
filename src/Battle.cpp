@@ -42,47 +42,48 @@ Battle::Battle(Character player, Character enemy){
 
 void Battle::renderBattleMenu() {
     string spc = string(4, ' ');
-    cout << spc << " ╭──────────────── ⋆ ♱ ✮ ♱ ⋆ ────────────────╮\n";
-    cout << spc << "▕┘                                           └▏\n";
+    cout << spc << " ╭──────────────── ⋆ ♱ ✮ ♱ ⋆ ────────────────╮\n"
+         << spc << "▕┘                                           └▏\n";
     for (size_t i = 0; i < battleMenuOptions.size(); ++i) {
-        string prefix = (i == selectedOptionBattle) ? "• " : "  ";
+        string prefix = (i == Game::selectedOption) ? "• " : "  ";
         size_t spaces = 42 - battleMenuOptions[i].size();
         cout << spc << "▕ " << prefix << battleMenuOptions[i] << string(spaces, ' ') << "▏\n";
     }
-    cout << spc << "▕┐                                           ┌▏\n";
-    cout << spc <<" ╰──────────────── ⋆ ♱ ✮ ♱ ⋆ ────────────────╯\n\n";
-    cout << "Use ↑ ↓ para mover, espaço para selecionar, q para sair.\n";
+    cout << spc << "▕┐                                           ┌▏\n"
+         << spc <<" ╰──────────────── ⋆ ♱ ✮ ♱ ⋆ ────────────────╯\n\n"
+         << "Use ↑ ↓ para mover, espaço para selecionar, q para sair.\n";
 }
 
 void Battle::renderBattleStatus(){
     system(CLEAR_COMMAND);
     printAsciiCentralizado(n);
-    cout << string((56 - player.getName().length())/2, ' ') << player.getName() << "\n";
-    cout <<  " " << setfill(' ') << setw(3) << player.getHp() << ": ";
-    cout << "\033[32m" << repetir(player.getHp()/2, "▇") << repetir(50 - player.getHp()/2, "◫") << "\n\n";    
-    cout << "\033[0m" << "Player attack: " << player.getAttack() << endl;
-    cout << "Player defense: " << player.getDefense() << endl;
-    cout << string((56 - enemy.getName().length())/2, ' ') << enemy.getName() << "\n";
-    cout << " " << setfill(' ') << setw(3) << enemy.getHp() << ": ";
-    cout << "\033[31m" << repetir(enemy.getHp()/2, "▇") << repetir(50 - enemy.getHp()/2, "◫") << "\n";    
-    cout << "\033[0m" << "Player attack: " << player.getAttack() << endl;
+    cout << string((56 - enemy.getName().length())/2, ' ') << enemy.getName() << "\n"
+         << " " << setfill(' ') << setw(3) << enemy.getHp() << ": "
+         << "\033[31m" << repetir(enemy.getHp()/2, "▇") << repetir(50 - enemy.getHp()/2, "◫") << "\n\n"  
+         << "\033[0m" << "Player attack: " << player.getAttack() << std::endl
+         << "Player defense: " << player.getDefense() << std::endl
+         << string((56 - player.getName().length())/2, ' ') << player.getName() << "\n"
+         <<  " " << setfill(' ') << setw(3) << player.getHp() << ": "
+         << "\033[32m" << repetir(player.getHp()/2, "▇") << repetir(50 - player.getHp()/2, "◫") << "\n"
+         << "\033[0m" << "Player attack: " << player.getAttack() << std::endl;
 }   
 
 bool Battle::handleBattleMenuInput() {
     Key key = getArrowKey();
+
     switch (key) {
         case Key::Up:
-            selectedOptionBattle = (selectedOptionBattle - 1 + battleMenuOptions.size()) % battleMenuOptions.size();
+             Game::selectedOption = (Game::selectedOption - 1 + battleMenuOptions.size()) % battleMenuOptions.size();
             return false;
             break;
         case Key::Down:
-            selectedOptionBattle = (selectedOptionBattle + 1) % battleMenuOptions.size();
+            Game::selectedOption = (Game::selectedOption + 1) % battleMenuOptions.size();
             return false;
             break;
         case Key::Enter:
             return true;
         default:
-            return true;
+            return false;
             break;
     }
 }
@@ -114,7 +115,7 @@ int Battle::advanceBattleLogic(){
         }
     }
     
-    player.action(selectedOptionBattle, &enemy); //ação do player
+    player.action(Game::selectedOption, &enemy); //ação do player
     renderBattleStatus(); //atualização da vida dos jogadores
 
     if (enemy.getHp() <= 0){
