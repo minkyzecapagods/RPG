@@ -1,0 +1,15 @@
+# Ignorar arquivos de objeto
+*.o
+
+# Ignorar executável
+RPG
+
+# Ignorar pastas comuns de build
+/build/
+/bin/
+/obj/
+
+# Ignorar arquivos de backup ou temporários
+*~
+*.swp
+*.tmp
