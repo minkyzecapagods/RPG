@@ -22,18 +22,20 @@ const int numSaves = saves.size();
 const int numItens = 10;
 
 void renderSaves() {
-  cout << repetir(numSaves, "↑→→→→→→→→→→→→→→→→→→↓ ") << "\n";
-  string nonSelected = "↑                  ↓ ";
-  string selected = "↑        ◹◸        ↓ ";
+  int chars = 69;
+  centralPrint(repetir(numSaves, " ↑→→→→→→→→→→→→→→→→→→↓ ") + "\n", chars );
+  string nonSelected = " ↑                  ↓ ";
+  string selected = " ↑        ◹◸        ↓ ";
+  string str;
   for (int i = 0; i < numSaves; ++i) {
-    if (selectedSave == i) cout << selected;
-    else cout << nonSelected;
+    if (selectedSave == i) str += selected;
+    else str += nonSelected;
   }
-  string nameStr = "\n";
-  string itemStr = "\n";
+  centralPrint(str, chars);
+  string nameStr, itemStr;
 
   for (int i = 0; i < numSaves; ++i) {
-    nameStr += "↑";
+    nameStr += " ↑";
     if (saves[i].getIsWritten()) {
       string name = saves[i].getHero().getName();
       int size = name.size(), spaces = (18 - name.size())/2;
@@ -46,33 +48,24 @@ void renderSaves() {
       }
       ostringstream num;
       num << setw(2) << setfill('0') << saves[i].getHero().getEquipment().size();
-      itemStr += "↑   Items: " + num.str() + "\\" + to_string(numItens) + "   ↓ ";
+      itemStr += " ↑   Items: " + num.str() + "\\" + to_string(numItens) + "   ↓ ";
     }
     else {
-      nameStr += "↑       ----       ↓ ";
-      itemStr += "↑   Items: --/--   ↓ ";
+      nameStr += " ↑       ----       ↓ ";
+      itemStr += " ↑   Items: --/--   ↓ ";
     }
   }
-  cout << nameStr << itemStr << "\n"
-       << repetir(numSaves, "↑                  ↓ ") << "\n"
-       << repetir(numSaves, "↑←←←←←←←←←←←←←←←←←←↓ ") << "\n";
+  cout << "\n";
+  centralPrint(nameStr + "\n", chars);
+  centralPrint(itemStr + "\n", chars);
+  centralPrint(repetir(numSaves, " ↑                  ↓ ") + "\n", chars);
+  centralPrint(repetir(numSaves, " ↑←←←←←←←←←←←←←←←←←←↓ ") + "\n", chars);
 }
 
 void renderSaveMenu() {
-    system(CLEAR_COMMAND);
-    cout << "\n\n";
-    renderSaves();
-    cout << "   __________________\n"
-         << "/ \\                  ▏\n"
-         << "\\_,▏                 ▏\n";
-    for (size_t i = 0; i < saveMenuOptions.size(); ++i) {
-        string prefix = (i == Game::selectedOption) ? "• " : "  ";
-        size_t spaces = 14 - saveMenuOptions[i].size();
-        cout << "   ▏ " << prefix << saveMenuOptions[i] << string(spaces, ' ') << "▏\n";
-    }
-    cout << "   ▏  ________________\n"
-         << "   \\_/________________/\n\n"
-         << "Use ↑ ↓ para mover, espaço para selecionar, q para sair.\n";
+  system(CLEAR_COMMAND);
+  renderSaves();
+  renderScroll(saveMenuOptions);
 }
 
 void handleSaveMenuInput() {

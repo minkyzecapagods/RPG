@@ -56,7 +56,6 @@ void Battle::renderBattleMenu() {
 
 void Battle::renderBattleStatus(){
     system(CLEAR_COMMAND);
-    printAsciiCentralizado(n);
     cout << string((56 - enemy.getName().length())/2, ' ') << enemy.getName() << "\n"
          << " " << setfill(' ') << setw(3) << enemy.getHp() << ": "
          << "\033[31m" << repetir(enemy.getHp()/2, "▇") << repetir(50 - enemy.getHp()/2, "◫") << "\n\n"  

@@ -5,6 +5,7 @@
 #include "CreateMenu.hpp"
 #include "GameState.hpp"
 #include "ArrowKey.hpp"
+#include "utils.hpp"
 
 using namespace std;
 
@@ -43,10 +44,10 @@ vector<string> fechado =
 "  (`\\ \\_..-~~-._   _.-~--.._       ",
 "   `=\\/\\        \\ /        \\\\      ",
 "    `=\\/         V          \\\\     ",
-"     //\\_.-~-._  |  _.-~-..__\\\\    ",
+"     //\\_.-~-._  |  _.-~-..__\\\\   ",
 "    //) (--~~._\\ | /_.~~--..._\\\\   ",
 "   =(_INK_)====\\\\|//============   ",
-"                                     ",
+"                                   ",
 
 };
 
@@ -79,15 +80,19 @@ void getStrs() {
 }
 
 void renderCharacterChoice(){
+    int chars = 71;
     getStrs();
     system(CLEAR_COMMAND);
-    cout << "\n\n" << str1 << "\n";
-    for (int i = 0; i < 7; i++) cout << magnolia[i] << cesar[i] << "\n";
-    cout << "\n\n" << str2 << "\n";
-    for (int i = 0; i < 7; i++) cout << cahara[i] << fechado[i] << "\n";
-    cout << "\n\n" << str3 << "\n";
+    cout << "\n\n";
+    centralPrint(str1 + "\n", chars);
+    for (int i = 0; i < 7; i++) centralPrint(magnolia[i] + cesar[i] + "\n", chars);
+    cout << "\n\n";
+    centralPrint(str2 + "\n", chars);
+    for (int i = 0; i < 7; i++) centralPrint(cahara[i] + fechado[i] + "\n");
+    cout << "\n\n";
+    centralPrint(str3 + "\n");
 }
-    
+
 void handleChoiceMenuInput() {
     Key key = getArrowKey();
 

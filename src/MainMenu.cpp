@@ -5,6 +5,7 @@
 #include "MainMenu.hpp"
 #include "GameState.hpp"
 #include "ArrowKey.hpp"
+#include "utils.hpp"
 
 vector<string> mainMenuOptions = {
     "Novo Jogo",
@@ -14,17 +15,8 @@ vector<string> mainMenuOptions = {
 
 void renderMainMenu() {
     system(CLEAR_COMMAND);
-    cout << "   __________________\n";
-    cout << "/ \\                  ▏\n";
-    cout << "\\_,▏                 ▏\n";
-    for (size_t i = 0; i < mainMenuOptions.size(); ++i) {
-        string prefix = (i == Game::selectedOption) ? "• " : "  ";
-        size_t spaces = 14 - mainMenuOptions[i].size();
-        cout << "   ▏ " << prefix << mainMenuOptions[i] << string(spaces, ' ') << "▏\n";
-    }
-    cout << "   ▏  ________________\n";
-    cout << "   \\_/________________/\n\n";
-    cout << "Use ↑ ↓ para mover, espaço para selecionar, q para sair.\n";
+    renderScroll(mainMenuOptions);
+    centralPrint("Use setas para mover, espaço para selecionar, pressione q para sair.\n");
 }
 
 void handleMainMenuInput() {
@@ -37,14 +29,15 @@ void handleMainMenuInput() {
         case Key::Down:
             Game::selectedOption = (Game::selectedOption + 1) % mainMenuOptions.size();
             break;
-        case Key::Enter:
+        case Key::Enter: {
             if (mainMenuOptions[Game::selectedOption] == "Novo Jogo") {
-                Game::currentState = GameState::CREATE_MENU_CHOICE; return;
+                Game::currentState = GameState::CREATE_MENU_CHOICE;
             } if (mainMenuOptions[Game::selectedOption] == "Carregar Jogo") {
-                Game::currentState = GameState::SAVE_MENU; return;
+                Game::currentState = GameState::SAVE_MENU;
             } if (mainMenuOptions[Game::selectedOption] == "Sair") {
-                Game::currentState = GameState::EXIT; return;   
+                Game::currentState = GameState::EXIT;  
             }
+            break;} 
             Game::selectedOption = 0;
             break;
         case Key::Quit:
