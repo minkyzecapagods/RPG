@@ -5,22 +5,19 @@
 
 class Battle{
     private:
-        int battleState;
+        bool battleOver = false;
     public:
         Character player;
         Character enemy;
         Battle(Character player, Character enemy);
-        vector<string> battleMenuOptions = {
-        "Atacar",
-        "Defender",
-        "Curar",
-        "Status"
-        };
-        void renderBattleMenu();
-        void renderBattleStatus();
-        bool handleBattleMenuInput();
-        int advanceBattleLogic();
-        void pressSpaceToContinue();
+        void playerTurn();
+        void enemyTurn();
+        void checkBattleStatus();
+
+        bool getBattleOver() { return battleOver; }
+        void setBattleOver() { battleOver = true; }
+        Character getPlayer() { return player; }
+        Character getEnemy() { return enemy; }
 };
 
 #endif

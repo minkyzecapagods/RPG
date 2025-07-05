@@ -38,7 +38,7 @@ void handleMainMenuInput() {
             } if (mainMenuOptions[Game::selectedOption] == "Sair") {
                 Game::currentState = GameState::EXIT;  
             } if (mainMenuOptions[Game::selectedOption] == "Battle Test") {
-                Game::currentState = GameState::IN_GAME;  
+                Game::currentState = GameState::INITIALIZE_BATTLE;  
             }
             break;} 
             Game::selectedOption = 0;

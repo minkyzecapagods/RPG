@@ -14,6 +14,11 @@ int main() {
     while (Game::currentState != GameState::EXIT) {
         Game::render();
         Game::handleInput();
+        if (Game::currentState == GameState::INITIALIZE_BATTLE) {
+            Game::isBattleOver = false;
+            Game::startBattle();
+            Game::isBattleOver = false; // Reseta o estado da batalha
+        }
     }
 
     restoreKeyboard(); // restaurar de forma segura no fim

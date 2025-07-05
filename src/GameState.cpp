@@ -6,16 +6,23 @@
 #include "Character.hpp"
 #include "Battle.hpp"
 #include "CreateMenu.hpp"
+#include "BattleMenu.hpp"
 
 GameState Game::currentState = GameState::MAIN_MENU;
 size_t Game::selectedOption = 0;
+bool Game::isBattleActive = false;
+bool Game::isBattleOver = false;
 
 void Game::handleInput() {
     switch (Game::currentState) {
         case GameState::MAIN_MENU:
             handleMainMenuInput();
             break;
+        case GameState::BATTLE_MENU:
+            handleBattleMenuInput();
+            break;
         case GameState::IN_GAME: {
+            /*
             Character player("player");
             Character enemy("enemy");
             Battle currentBattle(player, enemy); //inicializando uma batalha com player e enemy
@@ -33,6 +40,7 @@ void Game::handleInput() {
                     break;
                 }
             }
+            */
             break;
         }
         case GameState::SAVE_MENU:
@@ -56,7 +64,41 @@ void Game::render() {
         case GameState::CREATE_MENU_CHOICE:
             renderCharacterChoice();
             break;
+        case GameState::BATTLE_MENU:
+            renderBattleMenu();
+            break;
         default: break;
+    }
+}
+
+void Game::render(Battle currentBattle) {
+    renderBattleStatus(currentBattle.getPlayer(), currentBattle.getEnemy());
+}
+
+void Game::startBattle() {
+    Character player("player");
+    Character enemy("enemy");
+    Battle currentBattle(player, enemy);
+    while (!Game::isBattleOver) {
+        Game::currentState = GameState::BATTLE_MENU;
+        while (Game::currentState == GameState::BATTLE_MENU) {
+            Game::render(currentBattle);
+            Game::render();
+            Game::handleInput();
+        }
+        if (Game::currentState == GameState::IN_GAME) {
+            currentBattle.playerTurn();
+            currentBattle.checkBattleStatus();
+            render(currentBattle);
+            pressSpaceToContinue(); // Temporario
+            currentBattle.enemyTurn();
+            currentBattle.checkBattleStatus();
+            render(currentBattle);
+        }
+        if (currentBattle.getBattleOver()) {
+            Game::isBattleOver = true;
+            Game::currentState = GameState::MAIN_MENU; // Volta ao menu principal após a batalha (temporário)
+        }
     }
 }
 
