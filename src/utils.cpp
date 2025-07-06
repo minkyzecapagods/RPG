@@ -16,12 +16,40 @@ int getTerminalWidth() {
     return csbi.srWindow.Right - csbi.srWindow.Left + 1;
 } 
 
+void adjustWindow() {
+        // SOLUÇÃO WINDOWS
+    HWND console = GetConsoleWindow();
+    
+    // Sair do modo tela cheia
+    ShowWindow(console, SW_RESTORE);
+    
+    // Configurar tamanho e posição
+    int width = 800;
+    int height = 600;
+    
+    RECT rect;
+    GetWindowRect(console, &rect);
+    int screenWidth = GetSystemMetrics(SM_CXSCREEN);
+    int screenHeight = GetSystemMetrics(SM_CYSCREEN);
+    int x = (screenWidth - width) / 2;
+    int y = (screenHeight - height) / 2;
+    
+    MoveWindow(console, x, y, width, height, TRUE);
+    
+}
+
 #else
 
 int getTerminalWidth() {
   struct winsize w;
   ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
   return w.ws_col; // largura em colunas
+}
+
+
+void adjustWindow() {
+    cout << "\033[8;60;100t";  // 50 linhas, 100 colunas
+    flush(cout);
 }
 
 #endif
@@ -62,4 +90,3 @@ void renderScroll(const vector<string>& options) {
     centralPrint("   ▏  ________________\n", chars);
     centralPrint("   \\_/________________/\n\n", chars);
 }
-

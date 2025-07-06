@@ -4,14 +4,16 @@
 
 #include "ArrowKey.hpp"
 #include "GameState.hpp"
+#include "utils.hpp"
 
 using namespace std;
 
 int main() {
     initKeyboard();
-    cout << "\033[8;100;60t";
     
     while (Game::currentState != GameState::EXIT) {
+        adjustWindow();
+        
         Game::render();
         Game::handleInput();
     }
