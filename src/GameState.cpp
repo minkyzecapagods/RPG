@@ -71,34 +71,7 @@ void Game::render() {
     }
 }
 
-void Game::render(Battle currentBattle) {
-    renderBattleStatus(currentBattle.getPlayer(), currentBattle.getEnemy());
-}
-
-void Game::startBattle() {
-    Character player("player");
-    Character enemy("enemy");
-    Battle currentBattle(player, enemy);
-    while (!Game::isBattleOver) {
-        Game::currentState = GameState::BATTLE_MENU;
-        while (Game::currentState == GameState::BATTLE_MENU) {
-            Game::render(currentBattle);
-            Game::render();
-            Game::handleInput();
-        }
-        if (Game::currentState == GameState::IN_GAME) {
-            currentBattle.playerTurn();
-            currentBattle.checkBattleStatus();
-            render(currentBattle);
-            pressSpaceToContinue(); // Temporario
-            currentBattle.enemyTurn();
-            currentBattle.checkBattleStatus();
-            render(currentBattle);
-        }
-        if (currentBattle.getBattleOver()) {
-            Game::isBattleOver = true;
-            Game::currentState = GameState::MAIN_MENU; // Volta ao menu principal após a batalha (temporário)
-        }
-    }
+void Game::render(Character player, Character enemy) {
+    renderBattleStatus(player, enemy);
 }
 

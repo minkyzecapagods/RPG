@@ -27,8 +27,7 @@ namespace Game {
 
     void handleInput();
     void render();
-    void render(Battle currentBattle);
-    void startBattle();
+    void render(Character player, Character enemy);
 }
 
 #ifdef _WIN32

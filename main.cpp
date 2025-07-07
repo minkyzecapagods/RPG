@@ -4,6 +4,7 @@
 
 #include "ArrowKey.hpp"
 #include "GameState.hpp"
+#include "include/Character.hpp"
 
 using namespace std;
 
@@ -16,7 +17,7 @@ int main() {
         Game::handleInput();
         if (Game::currentState == GameState::INITIALIZE_BATTLE) {
             Game::isBattleOver = false;
-            Game::startBattle();
+            Battle(Character("player"), Character("enemy")); // Inicia uma batalha com um personagem jogador e um inimigo
             Game::isBattleOver = false; // Reseta o estado da batalha
         }
     }

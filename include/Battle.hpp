@@ -6,6 +6,15 @@
 class Battle{
     private:
         bool battleOver = false;
+        int whoWon = 0; // 0 = Ninguém, 1 = Jogador, 2 = Inimigo
+        //a informação whoWon vai ser utilizada pra saber se precisamos tirar um item do player
+        //ou dar um item pra ele!
+
+        //talvez possamos criar uma outra variavel privada que vai ser o item que foi dado ou retirado
+        //de uma forma em que a classe "leia" o item do inimigo, e salve essa informação
+        //para que o player possa pegar o item depois da batalha, ou perder o item se
+        //ele perder a batalha.
+        
     public:
         Character player;
         Character enemy;
