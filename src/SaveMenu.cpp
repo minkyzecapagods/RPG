@@ -3,6 +3,7 @@
 #include "ArrowKey.hpp"
 #include "utils.hpp"
 
+#include <map>
 #include <string>
 #include <iostream>
 #include <sstream>
@@ -16,6 +17,12 @@ vector<string> saveMenuOptions = {
   "Voltar",
 };
 
+vector<string> saveInfo = {
+  " ↑        {SELECTED}        ↓ ",
+  " ↑{NAME}↓ ",
+  " ↑   Items: {ITEMS}/{TOTAL}   ↓ "
+};
+
 int selectedSave = 0;
 vector<Save> saves = {Save(), Save(), Save()};
 const int numSaves = saves.size();
@@ -23,43 +30,45 @@ const int numItens = 10;
 
 void renderSaves() {
   int chars = 69;
-  centralPrint(repetir(numSaves, " ↑→→→→→→→→→→→→→→→→→→↓ ") + "\n", chars );
-  string nonSelected = " ↑                  ↓ ";
-  string selected = " ↑        ◹◸        ↓ ";
+  centralPrint(repeat(numSaves, " ↑→→→→→→→→→→→→→→→→→→↓ ", selectedSave) + "\n", chars );
   string str;
   for (int i = 0; i < numSaves; ++i) {
-    if (selectedSave == i) str += selected;
-    else str += nonSelected;
+    if (selectedSave == i) str += greenText + replacePlaceholder(saveInfo[0], "{SELECTED}", "◹◸") + normalText;
+    else str += replacePlaceholder(saveInfo[0], "{SELECTED}", "  ");
   }
   centralPrint(str, chars);
-  string nameStr, itemStr;
 
+  string nameStr, itemStr;
   for (int i = 0; i < numSaves; ++i) {
-    nameStr += " ↑";
-    if (saves[i].getIsWritten()) {
-      string name = saves[i].getHero().getName();
-      int size = name.size(), spaces = (18 - name.size())/2;
-      string str = string(spaces, ' ');
-      if (size % 2 == 0) {
-        nameStr += str + name + str + "↓ ";
-      }
-      else {
-        nameStr += str + name + str + " ↓ ";
-      }
-      ostringstream num;
-      num << setw(2) << setfill('0') << saves[i].getHero().getEquipment().size();
-      itemStr += " ↑   Items: " + num.str() + "\\" + to_string(numItens) + "   ↓ ";
+    if (i == selectedSave) {
+      nameStr += greenText; 
+      itemStr += greenText;
     }
-    else {
-      nameStr += " ↑       ----       ↓ ";
-      itemStr += " ↑   Items: --/--   ↓ ";
+
+    string name, items;
+    if (saves[i].getIsWritten()) {
+      name = saves[i].getHero().getName();
+      items = to_string(saves[i].getHero().getEquipment().size());
+    } else {
+      name = "----";
+      items = "--";
+    }
+    nameStr += replacePlaceholder(saveInfo[1], "{NAME}", formatField(name, 18, ' ')); // 18 chars dentro do save
+    itemStr += replacePlaceholder(saveInfo[2], {
+    {"{TOTAL}", "30"},
+    {"{ITEMS}", formatField(items, 2, '0')}
+    });
+
+    if (i == selectedSave) {
+      nameStr += normalText; 
+      itemStr += normalText;
     }
   }
   cout << "\n";
   centralPrint(nameStr + "\n", chars);
   centralPrint(itemStr + "\n", chars);
-  centralPrint(repetir(numSaves, " ↑                  ↓ ") + "\n", chars);
-  centralPrint(repetir(numSaves, " ↑←←←←←←←←←←←←←←←←←←↓ ") + "\n", chars);
+  centralPrint(repeat(numSaves, " ↑                  ↓ ", selectedSave) + "\n", chars);
+  centralPrint(repeat(numSaves, " ↑←←←←←←←←←←←←←←←←←←↓ ", selectedSave) + "\n", chars);
 }
 
 void renderSaveMenu() {
