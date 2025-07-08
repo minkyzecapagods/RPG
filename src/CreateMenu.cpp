@@ -270,11 +270,11 @@ void handleCharCreation() {
     switch (key) {
         case Key::Up:
             Game::selectedOption = (Game::selectedOption - 1 + 5) % 5;
-            Game::selectedHorizontal = 0;
+            if (Game::selectedOption == 0) Game::selectedHorizontal = 0;
             break;
         case Key::Down:
             Game::selectedOption = (Game::selectedOption + 1) % 5;
-            Game::selectedHorizontal = 0;
+            if (Game::selectedOption == 0) Game::selectedHorizontal = 0;
             break;
         case Key::Left:
             Game::selectedHorizontal = (Game::selectedHorizontal - 1 + 2) % 2;

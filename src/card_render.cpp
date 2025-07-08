@@ -6,15 +6,6 @@
 #include "CreateMenu.hpp"
 #include "GameState.hpp"
 #include "utils.hpp"
-
-vector<string> result = {
-    " .-/|           \\ /           |\\-. ",
-    " ||||{NAME}| Ataque: {ATK} |||| ",
-    " ||||     {THE}      | Defesa: {DEF} |||| ",
-    " ||||{TITLE}| Mana:   {MAG} |||| ",
-    " ||||            |            |||| ",
-    " ||/============\\|/============\\|| ",
-    " `-------------~___------------~'' ",};
     
 vector<string> getHeaders() {
     vector<string> selected = {" ", " ", " ", " ", " "};
@@ -39,6 +30,16 @@ vector<string> getHeaders() {
 }
 
 vector<string> formatCharacterCard(const DefaultCharacter &character) {
+
+    vector<string> result = {
+      " .-/|           \\ /           |\\-. ",
+      " ||||{NAME}| Ataque: {ATK} |||| ",
+      " ||||     {THE}      | Defesa: {DEF} |||| ",
+      " ||||{TITLE}| Mana:   {MAG} |||| ",
+      " ||||            |            |||| ",
+      " ||/============\\|/============\\|| ",
+      " `-------------~___------------~'' ",};
+
     string name = formatField(character.name[0], 12, ' ');       
     string title = formatField(character.name[2], 12, ' ');
     string atk = formatField(to_string(character.attack), 2, '0');
@@ -89,11 +90,14 @@ void renderCharCustom(const DefaultCharacter &custom) {
         else selected[Game::selectedOption + 1] = greenText;
     } 
     vector<string> titles = {"Nome: " + custom.name[0],
-                             "Atk:  " + selected[0] + "- "+ normalText + 
+                             selected[0] + selected[3] + "Atk:  " + normalText +
+                             selected[0] + "- "+ normalText + 
                              formatField(to_string(custom.attack), 2, '0') + selected[3] + " +",
-                             "Def:  " + selected[1] + "- "+ normalText +
+                             selected[1] + selected[4] + "Def:  " + normalText + 
+                             selected[1] + "- "+ normalText +
                              formatField(to_string(custom.defense), 2, '0') + selected[4] + " +",
-                             "Mag:  " + selected[2] + "- "+ normalText +
+                             selected[2] + selected[5] + "Mag:  " + normalText +
+                             selected[2] + "- "+ normalText +
                              formatField(to_string(custom.magic), 2, '0') + selected[5] + " +"};
     int j = (size / 2);
     string asciiLine;
