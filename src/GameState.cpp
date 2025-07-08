@@ -36,6 +36,8 @@ void Game::handleInput() {
             }
             break;
         }
+        case GameState::INVENTORY_MENU:
+            break;
         case GameState::SAVE_MENU:
             handleSaveMenuInput();
             break;
