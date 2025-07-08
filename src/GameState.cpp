@@ -6,9 +6,12 @@
 #include "Character.hpp"
 #include "Battle.hpp"
 #include "CreateMenu.hpp"
+#include "BattleMenu.hpp"
 
 GameState Game::currentState = GameState::MAIN_MENU;
 size_t Game::selectedOption = 0;
+bool Game::isBattleActive = false;
+bool Game::isBattleOver = false;
 int Game::selectedHorizontal = 0;
 
 void Game::handleInput() {
@@ -16,7 +19,11 @@ void Game::handleInput() {
         case GameState::MAIN_MENU:
             handleMainMenuInput();
             break;
+        case GameState::BATTLE_MENU:
+            handleBattleMenuInput();
+            break;
         case GameState::IN_GAME: {
+            /*
             Character player("player");
             Character enemy("enemy");
             Battle currentBattle(player, enemy); //inicializando uma batalha com player e enemy
@@ -34,6 +41,7 @@ void Game::handleInput() {
                     break;
                 }
             }
+            */
             break;
         }
         case GameState::SAVE_MENU:
@@ -63,6 +71,9 @@ void Game::render() {
         case GameState::CREATE_MENU_CHOICE:
             renderCharacterChoice();
             break;
+        case GameState::BATTLE_MENU:
+            renderBattleMenu();
+            break;
         case GameState::CREATE_SAVE:
             renderCreateSaveMenu();
             break;
@@ -71,5 +82,9 @@ void Game::render() {
             break;
         default: break;
     }
+}
+
+void Game::render(Character player, Character enemy) {
+    renderBattleStatus(player, enemy);
 }
 
