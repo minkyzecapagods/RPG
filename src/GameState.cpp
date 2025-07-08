@@ -45,6 +45,9 @@ void Game::handleInput() {
         case GameState::CREATE_SAVE:
             handleCreateSaveInput();
             break;
+        case GameState::CREATE_CHARACTER:
+            handleCharCreation();
+            break;
         default: break;
     }
 }
@@ -62,6 +65,9 @@ void Game::render() {
             break;
         case GameState::CREATE_SAVE:
             renderCreateSaveMenu();
+            break;
+        case GameState::CREATE_CHARACTER:
+            renderCharCreation();
             break;
         default: break;
     }

@@ -18,5 +18,7 @@ void renderCharacterChoice();
 void handleChoiceMenuInput();
 void handleCreateSaveInput();
 void renderCreateSaveMenu();
+void handleCharCreation();
+void renderCharCreation();
 
 #endif
