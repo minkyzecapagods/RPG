@@ -9,12 +9,6 @@ using namespace std;
 const vector<Save> saveVector = {Save(), Save(), Save()};
 const int numSaves = saveVector.size();
 
-const vector<string> saveInfo = {
-  " ↑        {SELECTED}        ↓ ",
-  " ↑{NAME}↓ ",
-  " ↑   Items: {ITEMS}/{TOTAL}   ↓ "
-};
-
 Save::Save() {
   this -> hero = Character("boyy");
   vector<vector<int>> enemys_inventory(3);
@@ -22,7 +16,7 @@ Save::Save() {
   enemys_inventory[1].push_back(201);
   enemys_inventory[2].push_back(202);
   this -> enemys_inventory = enemys_inventory;
-  this -> isWritten = true;
+  this -> isWritten = false;
 }
 
 const Character& Save::getHero() const{ return hero; }
@@ -61,7 +55,12 @@ bool Save::saveToFile(const std::string& filename) const {
 }
 
 void renderSaves(const int selectedSave) {
-  int chars = 69;
+    vector<string> saveInfo = {
+                                " ↑        {SELECTED}        ↓ ",
+                                " ↑{NAME}↓ ",
+                                " ↑   Items: {ITEMS}/{TOTAL}   ↓ "};
+                                
+  int chars = 69;  // largura do quadrado do save é 23, como vou printar 3, fica 69
   centralPrint(repeat(numSaves, " ↑→→→→→→→→→→→→→→→→→→↓ ", selectedSave) + "\n", chars );
   string str;
   for (int i = 0; i < numSaves; ++i) {

@@ -9,7 +9,7 @@
 using namespace std;
 
 int main() {
-    cout << normalText;
+    cout << normalText; // Modo de texto dentro do jogo (fundo preto, texto branco)
     initKeyboard();
     
     while (Game::currentState != GameState::EXIT) {
@@ -19,7 +19,8 @@ int main() {
         Game::handleInput();
     }
 
-    restoreKeyboard(); // restaurar de forma segura no fim
-    cout << "Saindo do jogo...\n" << "\033[0;0m";
+    restoreKeyboard(); // restaurar de forma segura no fim 
+    system(CLEAR_COMMAND);
+    cout << "Saindo do jogo...\n" << "\033[0;0m"; // mensagem junto ao retorno das cores normais do terminal
     return 0;
 }

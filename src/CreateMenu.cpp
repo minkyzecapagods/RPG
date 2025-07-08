@@ -75,18 +75,30 @@ const DefaultCharacter healer = {{"Cesar,", "o", "curandeiro"}, 3, 12, 15, {
     "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢆⠀⠀⠀⠀⠀⠀⠀  ", 
 }};
 
+DefaultCharacter custom = {{"????"}, 10, 10, 10, {
+"                 __           ",
+"             ___/ /\\          ",
+"            /,  /  _\\         ",
+"         _/   / / / \\\\        ",
+"        /__    / /   \\       ",
+"       ||  |  ( (     ))      ",
+"        '  \\_  \\ \\   //       ",
+"             \\ ,\\_\\_//        ",
+"            /  ___  /         ",
+"          _/  /   | \\______   ",
+"         /   |    |_/      \\  ",
+"        / ,  |         ____ / ",
+"       /    \\ \\     __/   (/  ",
+"     _/      \\ \\___/ /        ",
+"    /  /     \\     |         ",
+"   / ///            /         ",
+"  / //             |          ",
+" / //              |          ",}};
 vector<DefaultCharacter> defaults = {tank, healer, assassin};
 
 DefaultCharacter chosen;
 
-vector<string> defaultChar = {
-" .-/|           \\ /           |\\-. ",
-" ||||{NAME}| Ataque: {ATK} |||| ",
-" ||||     {THE}      | Defesa: {DEF} |||| ",
-" ||||{TITLE}| Mana:   {MAG} |||| ",
-" ||||            |            |||| ",
-" ||/============\\|/============\\|| ",
-" `-------------~___------------~'' ",};
+
 
 vector<string> createChar = 
 {
@@ -123,7 +135,14 @@ vector<string> getStrs() {
 }
 
 vector<string> formatCharacterCard(DefaultCharacter character) {
-    vector<string> result = defaultChar;
+    vector<string> result = {
+                            " .-/|           \\ /           |\\-. ",
+                            " ||||{NAME}| Ataque: {ATK} |||| ",
+                            " ||||     {THE}      | Defesa: {DEF} |||| ",
+                            " ||||{TITLE}| Mana:   {MAG} |||| ",
+                            " ||||            |            |||| ",
+                            " ||/============\\|/============\\|| ",
+                            " `-------------~___------------~'' ",};
     
     string name = formatField(character.name[0], 12, ' ');       
     string title = formatField(character.name[2], 12, ' ');
