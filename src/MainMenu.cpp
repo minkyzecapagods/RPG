@@ -33,16 +33,17 @@ void handleMainMenuInput() {
         case Key::Enter: {
             if (mainMenuOptions[Game::selectedOption] == "Novo Jogo") {
                 Game::currentState = GameState::CREATE_MENU_CHOICE;
-            } if (mainMenuOptions[Game::selectedOption] == "Carregar Jogo") {
+            } else if (mainMenuOptions[Game::selectedOption] == "Carregar Jogo") {
                 Game::currentState = GameState::SAVE_MENU;
-            } if (mainMenuOptions[Game::selectedOption] == "Sair") {
+            } else if (mainMenuOptions[Game::selectedOption] == "Sair") {
                 Game::currentState = GameState::EXIT;  
             } if (mainMenuOptions[Game::selectedOption] == "Battle Test") {
                 Game::currentState = GameState::INITIALIZE_BATTLE;  
             }
-            break;} 
+            
             Game::selectedOption = 0;
             break;
+        }
         case Key::Quit:
             Game::currentState = GameState::EXIT;
             break;

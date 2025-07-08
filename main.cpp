@@ -5,14 +5,18 @@
 #include "ArrowKey.hpp"
 #include "GameState.hpp"
 #include "include/Character.hpp"
+#include "utils.hpp"
+
 
 using namespace std;
 
 int main() {
+    cout << normalText; // Modo de texto dentro do jogo (fundo preto, texto branco)
     initKeyboard();
-    cout << "\033[8;100;60t";
     
     while (Game::currentState != GameState::EXIT) {
+        adjustWindow();
+
         Game::render();
         Game::handleInput();
         if (Game::currentState == GameState::INITIALIZE_BATTLE) {
@@ -22,7 +26,8 @@ int main() {
         }
     }
 
-    restoreKeyboard(); // restaurar de forma segura no fim
-    cout << "Saindo do jogo...\n";
+    restoreKeyboard(); // restaurar de forma segura no fim 
+    system(CLEAR_COMMAND);
+    cout << "Saindo do jogo...\n" << "\033[0;0m"; // mensagem junto ao retorno das cores normais do terminal
     return 0;
 }

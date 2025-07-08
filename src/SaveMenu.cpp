@@ -1,8 +1,10 @@
 #include "GameState.hpp"
 #include "SaveMenu.hpp"
+#include "Save.hpp"
 #include "ArrowKey.hpp"
 #include "utils.hpp"
 
+#include <map>
 #include <string>
 #include <iostream>
 #include <sstream>
@@ -16,55 +18,9 @@ vector<string> saveMenuOptions = {
   "Voltar",
 };
 
-int selectedSave = 0;
-vector<Save> saves = {Save(), Save(), Save()};
-const int numSaves = saves.size();
-const int numItens = 10;
-
-void renderSaves() {
-  int chars = 69;
-  centralPrint(repetir(numSaves, " ↑→→→→→→→→→→→→→→→→→→↓ ") + "\n", chars );
-  string nonSelected = " ↑                  ↓ ";
-  string selected = " ↑        ◹◸        ↓ ";
-  string str;
-  for (int i = 0; i < numSaves; ++i) {
-    if (selectedSave == i) str += selected;
-    else str += nonSelected;
-  }
-  centralPrint(str, chars);
-  string nameStr, itemStr;
-
-  for (int i = 0; i < numSaves; ++i) {
-    nameStr += " ↑";
-    if (saves[i].getIsWritten()) {
-      string name = saves[i].getHero().getName();
-      int size = name.size(), spaces = (18 - name.size())/2;
-      string str = string(spaces, ' ');
-      if (size % 2 == 0) {
-        nameStr += str + name + str + "↓ ";
-      }
-      else {
-        nameStr += str + name + str + " ↓ ";
-      }
-      ostringstream num;
-      num << setw(2) << setfill('0') << saves[i].getHero().getEquipment().size();
-      itemStr += " ↑   Items: " + num.str() + "\\" + to_string(numItens) + "   ↓ ";
-    }
-    else {
-      nameStr += " ↑       ----       ↓ ";
-      itemStr += " ↑   Items: --/--   ↓ ";
-    }
-  }
-  cout << "\n";
-  centralPrint(nameStr + "\n", chars);
-  centralPrint(itemStr + "\n", chars);
-  centralPrint(repetir(numSaves, " ↑                  ↓ ") + "\n", chars);
-  centralPrint(repetir(numSaves, " ↑←←←←←←←←←←←←←←←←←←↓ ") + "\n", chars);
-}
-
 void renderSaveMenu() {
   system(CLEAR_COMMAND);
-  renderSaves();
+  renderSaves(Game::selectedHorizontal);
   renderScroll(saveMenuOptions);
 }
 
@@ -79,10 +35,10 @@ void handleSaveMenuInput() {
             Game::selectedOption = (Game::selectedOption + 1) % saveMenuOptions.size();
             break;
         case Key::Left:
-            selectedSave = (selectedSave - 1 + numSaves) % numSaves;
+            Game::selectedHorizontal = (Game::selectedHorizontal - 1 + numSaves) % numSaves;
             break;
         case Key::Right:
-            selectedSave = (selectedSave + 1) % numSaves;
+            Game::selectedHorizontal = (Game::selectedHorizontal + 1) % numSaves;
             break;
         case Key::Enter:
             if (saveMenuOptions[Game::selectedOption] == "Carregar") {
@@ -93,6 +49,7 @@ void handleSaveMenuInput() {
                 Game::currentState = GameState::MAIN_MENU;
             }
             Game::selectedOption = 0;
+            Game::selectedHorizontal = 0;
             break;
         case Key::Quit:
             Game::currentState = GameState::EXIT;

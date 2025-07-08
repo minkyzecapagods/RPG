@@ -6,6 +6,9 @@
 #include <set>
 #include "Character.hpp"
 
+extern const int numSaves;
+extern vector<Save> saveVector;
+
 class Save {
 private:
   Character hero;
@@ -13,10 +16,14 @@ private:
   bool isWritten;
 public:
   Save();
-  Character& getHero();
+  const Character& getHero() const;
   vector<vector<int>>& getEnemysInventory();
   bool getIsWritten() const;
-  bool saveToFile(const std::string& filename) const; 
+  bool saveToFile(const Character& hero, const vector<vector<int>>& enemys_inventory);
+  bool deleteSave();
 };
+
+void renderSaves(const int selectedSave);
+void loadFromFile();
 
 #endif

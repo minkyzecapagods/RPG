@@ -1,51 +1,154 @@
 #include "Save.hpp"
+#include "utils.hpp"
 
 #include <fstream>
 #include <sstream>
 
 using namespace std;
 
-Save::Save() {
-  this -> hero = Character("boyy");
-  vector<vector<int>> enemys_inventory(3);
-  enemys_inventory[0] = {101, 102, 103};  
-  enemys_inventory[1].push_back(201);
-  enemys_inventory[2].push_back(202);
-  this -> enemys_inventory = enemys_inventory;
-  this -> isWritten = true;
-}
+vector<Save> saveVector = {Save(), Save(), Save()};
+const int numSaves = saveVector.size();
 
-Character& Save::getHero() { return hero; }
+Save::Save() : hero(), enemys_inventory(), isWritten(false) {}
+
+const Character& Save::getHero() const{ return hero; }
 
 vector<vector<int>>& Save::getEnemysInventory() {return enemys_inventory;}
 
 bool Save::getIsWritten() const { return isWritten; }
 
-bool Save::saveToFile(const std::string& filename) const {
-    std::ofstream out(filename);
-    if (!out.is_open()) return false;
+bool Save::saveToFile(const Character& hero, const vector<vector<int>>& enemys_inv) {
+    // Determina índice do save no vetor (por subtração de vetores)
+    int index = this - &saveVector[0];
+    if (index < 0 || index >= numSaves) return false;
 
-    // Salvar nome e atributos com ponto e vírgula
-    out << hero.getName() << "; "
-        << hero.getAttack() << "; "
-        << hero.getMagic() << "; "
-        << hero.getDefense() << ";"
-        << "\n";
+    string filename = "../saves/save" + to_string(index) + ".txt";
+    ofstream file(filename);
+    if (!file.is_open()) return false;
 
-    // Salvar itens do personagem
-    const vector<int>& items = hero.getEquipment();
-    for (int id : items) {
-        out << id << " ";
+    // Salva os dados do personagem
+    file << hero.getName() << ";" << hero.getDefense() << ";" 
+         << hero.getAttack() << ";" << hero.getMagic() << ";";
+
+    // Salva equipamentos do herói
+    for (size_t i = 0; i < hero.getEquipment().size(); ++i) {
+        file << hero.getEquipment()[i];
+        if (i != hero.getEquipment().size() - 1)
+            file << ",";
     }
-    out << "\n";
+    file << "\n";
 
-    // Salvar inventário dos inimigos
-    for (const auto& inv : enemys_inventory) {
-        for (int item : inv) {
-            out << item << " ";
+    // Salva inventário dos inimigos
+    for (const auto& inv : enemys_inv) {
+        for (size_t i = 0; i < inv.size(); ++i) {
+            file << inv[i];
+            if (i != inv.size() - 1)
+                file << ",";
         }
-        out << "\n";
+        file << "\n";
     }
+
+    file.close();
+
+    // Atualiza o objeto Save
+    this->hero = hero;
+    this->enemys_inventory = enemys_inv;
+    isWritten = true;
 
     return true;
+}
+
+void loadFromFile() {
+    for (int i = 0; i < numSaves; ++i) {
+        string filename = "../saves/save" + to_string(i) + ".txt";
+        ifstream file(filename);
+        if (!file.is_open()) {
+            saveVector[i] = Save();
+            continue;
+        }
+
+        string line;
+        // Lê linha do herói
+        if (getline(file, line)) {
+            stringstream ss(line);
+            string name, defense, attack, magic, equipStr;
+
+            getline(ss, name, ';');
+            getline(ss, defense, ';');
+            getline(ss, attack, ';');
+            getline(ss, magic, ';');
+            getline(ss, equipStr, ';');
+
+            vector<int> equipment;
+            stringstream equipSS(equipStr);
+            string id;
+            while (getline(equipSS, id, ',')) {
+                equipment.push_back(stoi(id));
+            }
+
+            Character hero(name, stoi(defense), stoi(attack), stoi(magic), equipment);
+
+            // Lê inventário dos inimigos
+            vector<vector<int>> enemys_inv;
+            while (getline(file, line)) {
+                stringstream invSS(line);
+                vector<int> inv;
+                while (getline(invSS, id, ',')) {
+                    inv.push_back(stoi(id));
+                }
+                enemys_inv.push_back(inv);
+            }
+
+            saveVector[i].saveToFile(hero, enemys_inv);
+        }
+        file.close();
+    }
+}
+
+void renderSaves(const int selectedSave) {
+    vector<string> saveInfo = {
+                                " ↑        {SELECTED}        ↓ ",
+                                " ↑{NAME}↓ ",
+                                " ↑   Items: {ITEMS}/{TOTAL}   ↓ "};
+                                
+  int chars = 23 * numSaves;  // largura do quadrado do save é 23
+  centralPrint(repeat(numSaves, " ↑→→→→→→→→→→→→→→→→→→↓ ", selectedSave) + "\n", chars );
+  string str;
+  for (int i = 0; i < numSaves; ++i) {
+    if (selectedSave == i) str += greenText + replacePlaceholder(saveInfo[0], "{SELECTED}", "◹◸") + normalText;
+    else str += replacePlaceholder(saveInfo[0], "{SELECTED}", "  ");
+  }
+  centralPrint(str, chars);
+
+  string nameStr, itemStr;
+  for (int i = 0; i < numSaves; ++i) {
+    if (i == selectedSave) {
+      nameStr += greenText; 
+      itemStr += greenText;
+    }
+
+    string name, items;
+    if (saveVector[i].getIsWritten()) {
+      name = saveVector[i].getHero().getName();
+      items = to_string(saveVector[i].getHero().getEquipment().size());
+    } else {
+      name = "----";
+      items = "--";
+    }
+    nameStr += replacePlaceholder(saveInfo[1], "{NAME}", formatField(name, 18, ' ')); // 18 chars dentro do save
+    itemStr += replacePlaceholder(saveInfo[2], {
+    {"{TOTAL}", "30"},
+    {"{ITEMS}", formatField(items, 2, '0')}
+    });
+
+    if (i == selectedSave) {
+      nameStr += normalText; 
+      itemStr += normalText;
+    }
+  }
+  cout << "\n";
+  centralPrint(nameStr + "\n", chars);
+  centralPrint(itemStr + "\n", chars);
+  centralPrint(repeat(numSaves, " ↑                  ↓ ", selectedSave) + "\n", chars);
+  centralPrint(repeat(numSaves, " ↑←←←←←←←←←←←←←←←←←←↓ ", selectedSave) + "\n", chars);
 }

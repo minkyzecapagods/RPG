@@ -1,4 +1,4 @@
-#ifndef GAMETATE_H
+#ifndef GAMESTATE_H
 #define GAMESTATE_H
 
 #include <string>
@@ -14,6 +14,8 @@ enum class GameState {
     CREATE_MENU_CUSTOM,
     INITIALIZE_BATTLE,
     BATTLE_MENU,
+    CREATE_SAVE,
+    CREATE_CHARACTER,
     INVENTORY_MENU,
     IN_GAME,
     EXIT
@@ -24,6 +26,7 @@ namespace Game {
     extern size_t selectedOption;
     extern bool isBattleActive;
     extern bool isBattleOver;
+    extern int selectedHorizontal;
 
     void handleInput();
     void render();
