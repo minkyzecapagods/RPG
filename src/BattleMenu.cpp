@@ -75,11 +75,11 @@ void renderBattleStatus(Character enemy, Character player) {
     system(CLEAR_COMMAND);
     cout << string((56 - enemy.getName().length())/2, ' ') << enemy.getName() << "\n"
          << " " << setfill(' ') << setw(3) << enemy.getHp() << ": "
-         << "\033[31m" << repetir(enemy.getHp()/2, "▇") << repetir(50 - enemy.getHp()/2, "◫") << "\n\n"  
+         << "\033[31m" << repeat(enemy.getHp()/2, "▇") << repeat(50 - enemy.getHp()/2, "◫") << "\n\n"  
          << "\033[0m" << "Player attack: " << player.getAttack() << std::endl
          << "Player defense: " << player.getDefense() << std::endl
          << string((56 - player.getName().length())/2, ' ') << player.getName() << "\n"
          <<  " " << setfill(' ') << setw(3) << player.getHp() << ": "
-         << "\033[32m" << repetir(player.getHp()/2, "▇") << repetir(50 - player.getHp()/2, "◫") << "\n"
+         << "\033[32m" << repeat(player.getHp()/2, "▇") << repeat(50 - player.getHp()/2, "◫") << "\n"
          << "\033[0m" << "Player attack: " << player.getAttack() << std::endl;
 }   

@@ -86,7 +86,8 @@ void loadFromFile() {
                 equipment.push_back(stoi(id));
             }
 
-            Character hero(name, stoi(defense), stoi(attack), stoi(magic), equipment);
+            Character hero = Character();
+            // name, stoi(defense), stoi(attack), stoi(magic), equipment
 
             // Lê inventário dos inimigos
             vector<vector<int>> enemys_inv;
