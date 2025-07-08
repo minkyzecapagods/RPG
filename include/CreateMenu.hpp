@@ -11,9 +11,12 @@ struct DefaultCharacter {
     int defense;
     int attack;
     int magic;
+    vector<string> ascii;
 };
 
 void renderCharacterChoice();
 void handleChoiceMenuInput();
+void handleCreateSaveInput();
+void renderCreateSaveMenu();
 
 #endif

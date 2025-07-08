@@ -20,6 +20,6 @@ int main() {
     }
 
     restoreKeyboard(); // restaurar de forma segura no fim
-    cout << "\033[0;0m" << "Saindo do jogo...\n";
+    cout << "Saindo do jogo...\n" << "\033[0;0m";
     return 0;
 }

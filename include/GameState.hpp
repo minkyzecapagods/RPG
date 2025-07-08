@@ -10,7 +10,8 @@ enum class GameState {
     MAIN_MENU,
     SAVE_MENU,
     CREATE_MENU_CHOICE,
-    CREATE_MENU_CUSTOM,
+    CREATE_SAVE,
+    CREATE_CHARACTER,
     BATTLES_MENU,
     INVENTORY_MENU,
     IN_GAME,
@@ -20,6 +21,7 @@ enum class GameState {
 namespace Game {
     extern GameState currentState;
     extern size_t selectedOption;
+    extern int selectedHorizontal;
 
     void handleInput();
     void render();
