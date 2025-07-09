@@ -15,7 +15,6 @@ vector<string> mainMenuOptions = {
 };
 
 void renderMainMenu() {
-    system(CLEAR_COMMAND);
     renderScroll(mainMenuOptions);
     centralPrint("Use setas para mover, espaço para selecionar, pressione q para sair.\n");
 }

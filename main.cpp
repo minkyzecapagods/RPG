@@ -7,6 +7,7 @@
 #include "include/Character.hpp"
 #include "utils.hpp"
 #include "Enemy.hpp"
+#include "Save.hpp"
 
 
 using namespace std;
@@ -14,6 +15,7 @@ using namespace std;
 int main() {
     cout << normalText; // Modo de texto dentro do jogo (fundo preto, texto branco)
     initKeyboard();
+    loadFromFile(); // Carrega os saves do jogo
     
     while (Game::currentState != GameState::EXIT) {
         adjustWindow();

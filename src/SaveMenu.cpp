@@ -19,7 +19,6 @@ vector<string> saveMenuOptions = {
 };
 
 void renderSaveMenu() {
-  system(CLEAR_COMMAND);
   renderSaves(Game::selectedHorizontal);
   renderScroll(saveMenuOptions);
 }
@@ -44,7 +43,7 @@ void handleSaveMenuInput() {
             if (saveMenuOptions[Game::selectedOption] == "Carregar") {
                 cout << "a implementar";
             } else if (saveMenuOptions[Game::selectedOption] == "Deletar") {
-                cout << "a implementar";
+                saveVector[Game::selectedHorizontal].deleteSave();
             } else if (saveMenuOptions[Game::selectedOption] == "Voltar") {
                 Game::currentState = GameState::MAIN_MENU;
             }

@@ -19,10 +19,11 @@ bool Save::getIsWritten() const { return isWritten; }
 
 bool Save::saveToFile(const Character& hero, const vector<vector<int>>& enemys_inv) {
     // Determina índice do save no vetor (por subtração de vetores)
-    int index = this - &saveVector[0];
+    int index = this - &saveVector[0] + 1; // +1 porque o vetor começa em 0, mas os saves começam em 1
+
     if (index < 0 || index >= numSaves) return false;
 
-    string filename = "../saves/save" + to_string(index) + ".txt";
+    string filename = "saves/save" + to_string(index) + ".txt";
     ofstream file(filename);
     if (!file.is_open()) return false;
 
@@ -51,6 +52,20 @@ bool Save::saveToFile(const Character& hero, const vector<vector<int>>& enemys_i
     file.close();
 
     // Atualiza o objeto Save
+
+    this->hero = hero;
+    this->enemys_inventory = enemys_inv;
+    isWritten = true;
+
+    return true;
+}
+
+bool Save::saveToVector(const Character& hero, const vector<vector<int>>& enemys_inv)  {
+    // Determina índice do save no vetor (por subtração de vetores)
+    int index = this - &saveVector[0] + 1; // +1 porque o vetor começa em 0, mas os saves começam em 1
+    if (index < 0 || index >= numSaves) return false;
+
+    // Atualiza o objeto Save
     this->hero = hero;
     this->enemys_inventory = enemys_inv;
     isWritten = true;
@@ -59,51 +74,63 @@ bool Save::saveToFile(const Character& hero, const vector<vector<int>>& enemys_i
 }
 
 void loadFromFile() {
-    for (int i = 0; i < numSaves; ++i) {
-        string filename = "../saves/save" + to_string(i) + ".txt";
-        ifstream file(filename);
-        if (!file.is_open()) {
-            saveVector[i] = Save();
-            continue;
-        }
+  for (int i = 0; i < numSaves; ++i) {
+    string filename = "saves/save" + to_string(i + 1) + ".txt";
+    ifstream file(filename);
 
-        string line;
-        // Lê linha do herói
-        if (getline(file, line)) {
-            stringstream ss(line);
-            string name, defense, attack, magic, equipStr;
+    if (!file.is_open()) continue;
 
-            getline(ss, name, ';');
-            getline(ss, defense, ';');
-            getline(ss, attack, ';');
-            getline(ss, magic, ';');
-            getline(ss, equipStr, ';');
+    string line;
+    // Lê linha do herói
+    if (getline(file, line)) {
+      stringstream ss(line);
+      // Lê os dados do herói
+      // Exemplo de linha: "HeroName;100;50;30;1,
+      string name, defense, attack, magic, equipStr;
+      getline(ss, name, ';');
+      getline(ss, defense, ';');
+      getline(ss, attack, ';');
+      getline(ss, magic, ';');
+      getline(ss, equipStr, ';');
 
-            vector<int> equipment;
-            stringstream equipSS(equipStr);
-            string id;
-            while (getline(equipSS, id, ',')) {
-                equipment.push_back(stoi(id));
-            }
+      // Lê os equipamentos do herói
+      // Exemplo de equipStr: "1,2,3"
+      vector<int> equipment;
+      stringstream equipSS(equipStr);
+      string id;
+      while (getline(equipSS, id, ',')) equipment.push_back(stoi(id));
 
-            Character hero = Character();
-            // name, stoi(defense), stoi(attack), stoi(magic), equipment
-
-            // Lê inventário dos inimigos
-            vector<vector<int>> enemys_inv;
-            while (getline(file, line)) {
-                stringstream invSS(line);
-                vector<int> inv;
-                while (getline(invSS, id, ',')) {
-                    inv.push_back(stoi(id));
-                }
-                enemys_inv.push_back(inv);
-            }
-
-            saveVector[i].saveToFile(hero, enemys_inv);
-        }
-        file.close();
+      Character hero(name, stoi(defense), stoi(attack), stoi(magic), equipment);
+      // Lê inventário dos inimigos
+      vector<vector<int>> enemys_inv;
+      while (getline(file, line)) {
+          stringstream invSS(line);
+          vector<int> inv;
+          while (getline(invSS, id, ',')) {
+              inv.push_back(stoi(id));
+          }
+          enemys_inv.push_back(inv);
+      }
+      saveVector[i].saveToVector(hero, enemys_inv);
     }
+    file.close();
+  }
+}
+
+bool Save::deleteSave() {
+    // Determina índice do save no vetor (por subtração de vetores)
+    int index = this - &saveVector[0] + 1; // +1 porque o vetor começa em 0, mas os saves começam em 1
+    if (index < 0 || index >= numSaves) return false;
+
+    // Reseta o objeto Save
+    saveVector[index - 1] = Save();
+    isWritten = false;
+
+    // Remove o arquivo correspondente
+    string filename = "saves/save" + to_string(index) + ".txt";
+    ifstream file(filename);
+    file.close();
+    return true;
 }
 
 void renderSaves(const int selectedSave) {

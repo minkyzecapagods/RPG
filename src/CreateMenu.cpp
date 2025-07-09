@@ -146,7 +146,6 @@ void renderCharacterChoice(){
 }
 
 void renderCharCreation() {
-    system(CLEAR_COMMAND);
     renderCharCustom(custom);
     cout << "\n";
     centralPrint("Distribua 30 pontos de atributo da forma que desejar\n", 51);
@@ -154,7 +153,6 @@ void renderCharCreation() {
 }
 
 void renderCreateSaveMenu() {
-  system(CLEAR_COMMAND);
   renderCharStats(chosen);
   renderSaves(Game::selectedHorizontal);
   renderScroll(createSaveOptions);

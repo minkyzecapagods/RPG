@@ -8,7 +8,7 @@ int Character::getHp() const{return hp;}
 int Character::getDefense() const{return defense;}
 int Character::getAttack() const{return attack;}
 int Character::getMagic() const{return magic;}
-int Character::getDefenseTEST(){return defense;} //para testes, não usar em produção
+
 const vector<int>& Character::getEquipment() const{return equipment;}
 
 void Character::addDefense(int addedDefense){
@@ -40,6 +40,21 @@ Character::Character(string name) {
     magic = 10;
     equipment = {1, 2, 3, 4};
 }
+
+Character::Character(string name, int defense, int attack, int magic, vector<int> equipment) {
+    this->name = name;
+    this->hp = 100; // HP padrão
+    this->defense = defense;
+    this->attack = attack;
+    this->magic = magic;
+    this->equipment = equipment;
+
+    // Verifica se os valores de defesa, ataque e magia são válidos
+    if (this->defense < 0) this->defense = 0;
+    if (this->attack < 0) this->attack = 0;
+    if (this->magic < 0) this->magic = 0;
+}
+
 
 Character::Character() {
     this->name = "name";

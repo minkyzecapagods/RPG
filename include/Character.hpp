@@ -19,8 +19,9 @@ class Character {
         vector<int> equipment;
     public:
         Character(string name); //construtor
+        Character(string name, int defense, int attack, int magic, vector<int> equipment);
         Character(); //construtor padrão
-
+        
         //getters
         string getName() const;
         int getHp() const;

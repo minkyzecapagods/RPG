@@ -17,6 +17,7 @@ public:
   vector<vector<int>>& getEnemysInventory();
   bool getIsWritten() const;
   bool saveToFile(const Character& hero, const vector<vector<int>>& enemys_inventory);
+  bool saveToVector(const Character& hero, const vector<vector<int>>& enemys_inventory);
   bool deleteSave();
 };
 
