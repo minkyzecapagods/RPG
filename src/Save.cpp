@@ -128,7 +128,7 @@ bool Save::deleteSave() {
 
     // Remove o arquivo correspondente
     string filename = "saves/save" + to_string(index) + ".txt";
-    ifstream file(filename);
+    ofstream file(filename);
     file.close();
     return true;
 }

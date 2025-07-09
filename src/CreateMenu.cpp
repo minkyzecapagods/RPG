@@ -227,6 +227,11 @@ void handleChoiceMenuInput() {
     }
 }
 
+Character chosenCharacter() {
+    Character hero(chosen.name[0], chosen.defense, chosen.attack, chosen.magic, {});
+    return hero;
+}
+
 void handleCreateSaveInput() {
     Key key = getArrowKey();
 
@@ -245,12 +250,12 @@ void handleCreateSaveInput() {
             break;
         case Key::Enter:
             if (createSaveOptions[Game::selectedOption] == "Salvar") {
-                cout << "a implementar";
+                saveVector[Game::selectedHorizontal].saveToFile(chosenCharacter(), {});
             } else if (createSaveOptions[Game::selectedOption] == "Deletar") {
-                cout << "a implementar";
-            } else if (createSaveOptions[Game::selectedOption] == "Voltar") {
+                saveVector[Game::selectedHorizontal].deleteSave();
+                break;
+            } else if (createSaveOptions[Game::selectedOption] == "Voltar") 
                 Game::currentState = GameState::CREATE_MENU_CHOICE;
-            }
             Game::selectedOption = 0;
             Game::selectedHorizontal = 0;
             break;
