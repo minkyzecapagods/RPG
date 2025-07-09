@@ -44,9 +44,9 @@ void handleSaveMenuInput() {
                 cout << "a implementar";
             } else if (saveMenuOptions[Game::selectedOption] == "Deletar") {
                 saveVector[Game::selectedHorizontal].deleteSave();
-            } else if (saveMenuOptions[Game::selectedOption] == "Voltar") {
+                break;
+            } else if (saveMenuOptions[Game::selectedOption] == "Voltar")
                 Game::currentState = GameState::MAIN_MENU;
-            }
             Game::selectedOption = 0;
             Game::selectedHorizontal = 0;
             break;
