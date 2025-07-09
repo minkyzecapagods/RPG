@@ -9,6 +9,7 @@
 #include "Character.hpp"
 #include "utils.hpp"
 #include "BattleMenu.hpp"
+#include "Enemy.hpp"
 
 using namespace std;
 
@@ -36,7 +37,7 @@ vector<string> n = {
 "  ||        ccc/",
 "  ||"};
 
-Battle::Battle(Character player, Character enemy){
+Battle::Battle(Character player, Enemy enemy){
     this->player = player;
     this->enemy = enemy;
 
@@ -44,18 +45,18 @@ Battle::Battle(Character player, Character enemy){
     while (!Game::isBattleOver) {
         Game::currentState = GameState::BATTLE_MENU;
         while (Game::currentState == GameState::BATTLE_MENU) {
-            Game::render(this->player, this->enemy);
+            Game::render(getPlayer(), getEnemy());
             Game::render();
             Game::handleInput();
         }
         if (Game::currentState == GameState::IN_GAME) {
             playerTurn();
             checkBattleStatus();
-            Game::render(this->player, this->enemy);
+            Game::render(getPlayer(), getEnemy());
             pressSpaceToContinue(); // Temporario
             enemyTurn();
             checkBattleStatus();
-            Game::render(this->player, this->enemy);
+            Game::render(getPlayer(), getEnemy());
         }
         if (battleOver) {
             Game::isBattleOver = true;
@@ -69,7 +70,7 @@ void Battle::playerTurn() {
 }
 
 void Battle::enemyTurn() {
-    enemy.action(&player);
+    enemy.autoAction(&player);
 }
 
 void Battle::checkBattleStatus() {

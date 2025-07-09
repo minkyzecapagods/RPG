@@ -2,6 +2,7 @@
 #define BATTLE_HPP
 
 #include "Character.hpp"
+#include "Enemy.hpp"
 
 class Battle{
     private:
@@ -17,8 +18,8 @@ class Battle{
         
     public:
         Character player;
-        Character enemy;
-        Battle(Character player, Character enemy);
+        Enemy enemy;
+        Battle(Character player, Enemy enemy);
         void playerTurn();
         void enemyTurn();
         void checkBattleStatus();

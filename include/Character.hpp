@@ -20,12 +20,21 @@ class Character {
     public:
         Character(string name); //construtor
         Character(); //construtor padrão
+
+        //getters
         string getName() const;
         int getHp() const;
         int getDefense() const;
         int getAttack() const;
         int getMagic() const;
+        int getDefenseTEST();
         const vector<int>& getEquipment() const;
+
+        //setters
+
+        void addDefense(int addedDefense);
+        void addAttack(int addedAttack);
+        void addMagic(int addedMagic);
 
         //void addItem(Item i);
 
@@ -37,7 +46,7 @@ class Character {
 
         void defend();
 
-        void action(Character* target);
+        //void action(Character* target);
 
         void action(size_t choice, Character* target);
 };

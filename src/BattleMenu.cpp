@@ -81,5 +81,5 @@ void renderBattleStatus(Character enemy, Character player) {
          << string((56 - player.getName().length())/2, ' ') << player.getName() << "\n"
          <<  " " << setfill(' ') << setw(3) << player.getHp() << ": "
          << "\033[32m" << repeat(player.getHp()/2, "▇") << repeat(50 - player.getHp()/2, "◫") << "\n"
-         << "\033[0m" << "Player attack: " << player.getAttack() << std::endl;
+         << "\033[0m" << "Enemy attack: " << enemy.getAttack() << std::endl;
 }   

@@ -1,12 +1,36 @@
 #include "Character.hpp"
 #include <iostream>
 
+using namespace std;
+
 string Character::getName() const{return name;}
 int Character::getHp() const{return hp;}
 int Character::getDefense() const{return defense;}
 int Character::getAttack() const{return attack;}
 int Character::getMagic() const{return magic;}
+int Character::getDefenseTEST(){return defense;} //para testes, não usar em produção
 const vector<int>& Character::getEquipment() const{return equipment;}
+
+void Character::addDefense(int addedDefense){
+    defense += addedDefense;
+    if (defense < 0) {
+        defense = 0; // Evita defesa negativa
+    }
+}
+
+void Character::addAttack(int addedAttack){
+    attack += addedAttack;
+    if (attack < 0) {
+        attack = 0; // Evita ataque negativo
+    }
+}
+
+void Character::addMagic(int addedMagic){
+    magic += addedMagic;
+    if (magic < 0) {
+        magic = 0; // Evita magia negativa
+    }
+}
 
 Character::Character(string name) {
     this->name = name;
@@ -26,16 +50,13 @@ Character::Character() {
     equipment = {1, 2, 3, 4};
 }
 void Character::dealDamage(Character* target){
-    int damage = 10 * this->attack/3;
-    if (this->attack < 3){
-        damage = 10;
-    }
+    int damage = 10 + this->attack;
     
     target->takeDamage(damage);  //chamando a takeDamage do target
 }
 
 void Character::takeDamage(int rawDamage){
-    int damage = rawDamage * (2/this->defense);
+    int damage = rawDamage - defense;
     if(damage < 1){
         damage = 1;
     }
@@ -74,6 +95,7 @@ void Character::action(size_t choice, Character* target){
     }
 }
 
-void Character::action(Character* target){
-    Character::dealDamage(target);
-}
+//void Character::action(Character* target){
+   // Character::dealDamage(target);
+    //IA
+//}
