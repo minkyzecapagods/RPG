@@ -71,7 +71,7 @@ void pressSpaceToContinue(){ //Temporario, enquanto não temos o sistema que fal
 }
 
 
-void renderBattleStatus(Character enemy, Character player) {
+void renderBattleStatus(Character player, Character enemy) {
     system(CLEAR_COMMAND);
     cout << string((56 - enemy.getName().length())/2, ' ') << enemy.getName() << "\n"
          << " " << setfill(' ') << setw(3) << enemy.getHp() << ": "
