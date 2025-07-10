@@ -53,3 +53,19 @@ Este changelog documenta as modificações realizadas para trazer o jogo RPG Ter
 
 -   **Reset do Índice de Inimigo em Novo Jogo:**
     -   `Game::currentEnemyIndex` agora é resetado para `0` em `src/MainMenu.cpp` quando a opção "Novo Jogo" é selecionada, garantindo que o primeiro inimigo seja sempre enfrentado ao iniciar um novo jogo.
+
+## Versão 1.2.0 - Pós-Merge e Correções de Fluxo
+
+### Melhorias e Correções:
+
+-   **Padronização da Variável do Jogador:**
+    -   Renomeada a variável global `Game::activePlayer` para `Game::player` em todo o projeto (`GameState.hpp`, `GameState.cpp`, `main.cpp`, `CreateMenu.cpp`) para resolver um erro de linkagem (`undefined reference`) que surgiu após o merge com a branch `main`.
+
+-   **Correção da Lógica de Renderização da Batalha:**
+    -   Removida a limpeza de tela (`system(CLEAR_COMMAND)`) da função `pressSpaceToContinue()` em `src/BattleMenu.cpp` para evitar que a tela da batalha desaparecesse durante o turno do inimigo.
+
+-   **Correção de Pausas Duplas na Batalha:**
+    -   Removidas chamadas redundantes para `pressSpaceToContinue()` de dentro do loop de batalha em `src/Battle.cpp`, resolvendo o problema de o jogo pausar duas vezes por rodada.
+
+-   **Correção do Incremento Duplo do Inimigo:**
+    -   Restaurada a verificação `if (battleOver)` após o turno do jogador em `src/Battle.cpp` para interromper o loop de batalha imediatamente após uma vitória, corrigindo o bug que fazia o jogo pular um inimigo na sequência.

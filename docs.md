@@ -21,7 +21,7 @@ O projeto é um jogo RPG baseado em terminal, desenvolvido em C++. Ele apresenta
 
 -   **[`GameState.hpp`](include/GameState.hpp)** / **[`GameState.cpp`](src/GameState.cpp)**:
     -   Define o `enum class GameState` que representa os diferentes estados do jogo (e.g., `MAIN_MENU`, `BATTLE_MENU`, `SAVE_MENU`, `EXIT`).
-    -   O namespace `Game` gerencia o estado atual (`currentState`), a opção selecionada (`selectedOption`), e outras variáveis globais relacionadas ao estado do jogo, incluindo `activePlayer` que armazena o personagem do jogador atualmente em uso e `currentEnemyIndex` para controlar o inimigo atual na sequência.
+    -   O namespace `Game` gerencia o estado atual (`currentState`), a opção selecionada (`selectedOption`), e outras variáveis globais relacionadas ao estado do jogo, incluindo `player` que armazena o personagem do jogador atualmente em uso e `currentEnemyIndex` para controlar o inimigo atual na sequência.
     -   A função `Game::getEnemyByIndex(int index)` retorna um objeto `Enemy` da lista de inimigos pré-definidos, e `Game::getTotalEnemies()` retorna o número total de inimigos.
     -   As funções `Game::handleInput()` e `Game::render()` são responsáveis por processar a entrada do usuário e renderizar a tela com base no `currentState`.
 
@@ -48,7 +48,7 @@ O projeto é um jogo RPG baseado em terminal, desenvolvido em C++. Ele apresenta
 -   **[`Battle.hpp`](include/Battle.hpp)** / **[`Battle.cpp`](src/Battle.cpp)**:
     -   Gerencia a lógica principal de uma batalha entre o `player` e um `enemy`.
     -   Contém métodos para `playerTurn()`, `enemyTurn()` e `checkBattleStatus()`.
-    -   A batalha continua em um loop até que `battleOver` seja verdadeiro.
+    -   O loop de batalha é interrompido imediatamente após o turno do jogador se a batalha terminar, evitando ações desnecessárias e bugs de incremento duplo.
     -   A lógica de exibição da mensagem de vitória/derrota e a atualização visual da barra de HP foram ajustadas no construtor da classe `Battle` para garantir a sincronização visual.
     -   Quando o jogador vence, `Game::currentEnemyIndex` é incrementado para o próximo inimigo na sequência.
     -   Após a batalha, o jogo transiciona para o próximo inimigo (se houver) ou retorna ao menu principal (se todos os inimigos forem derrotados ou o jogador perder).
@@ -57,6 +57,7 @@ O projeto é um jogo RPG baseado em terminal, desenvolvido em C++. Ele apresenta
     -   `renderBattleMenu()` exibe o menu de batalha.
     -   `handleBattleMenuInput()` processa a entrada do usuário para navegar no menu de batalha.
     -   `renderBattleStatus()` exibe o HP e outras informações do jogador e inimigo durante a batalha.
+    -   A função `announceAction()` exibe a ação realizada e chama `pressSpaceToContinue()` para pausar o jogo.
 
 ### 3.5. Sistema de Salvar/Carregar
 
@@ -84,7 +85,7 @@ O projeto é um jogo RPG baseado em terminal, desenvolvido em C++. Ele apresenta
     -   `renderCharacterChoice()` exibe as opções de personagens.
     -   `handleChoiceMenuInput()` processa a seleção do personagem.
     -   `renderCharCreation()` e `handleCharCreation()` lidam com a customização de atributos.
-    -   `renderCreateSaveMenu()` e `handleCreateSaveInput()` gerenciam a tela de salvar o personagem recém-criado. Após a criação/seleção, o personagem é atribuído a `Game::activePlayer` e o jogo transiciona para o estado de batalha.
+    -   `renderCreateSaveMenu()` e `handleCreateSaveInput()` gerenciam a tela de salvar o personagem recém-criado. Após a criação/seleção, o personagem é atribuído a `Game::player` e o jogo transiciona para o estado de batalha.
 
 ### 3.7. Utilitários e Renderização
 
@@ -117,7 +118,7 @@ O arquivo [`main.cpp`](main.cpp) é o ponto de entrada do jogo.
         -   `adjustWindow()`: Ajusta o tamanho da janela do terminal.
         -   `Game::render()`: Renderiza a tela com base no `currentState`.
         -   `Game::handleInput()`: Processa a entrada do usuário e atualiza o `currentState`.
-        -   Se `currentState` for `INITIALIZE_BATTLE`, uma nova instância de `Battle` é criada usando `Game::activePlayer` e o inimigo atual (`Game::getEnemyByIndex(Game::currentEnemyIndex)`), iniciando o ciclo de batalha.
+        -   Se `currentState` for `INITIALIZE_BATTLE`, uma nova instância de `Battle` é criada usando `Game::player` e o inimigo atual (`Game::getEnemyByIndex(Game::currentEnemyIndex)`), iniciando o ciclo de batalha.
 3.  **Finalização:**
     -   Quando o `currentState` se torna `EXIT`, o loop termina.
     -   `restoreKeyboard()` é chamado para restaurar as configurações do terminal.

@@ -62,7 +62,6 @@ void pressSpaceToContinue(){ //Temporario, enquanto não temos o sistema que fal
         switch(key){
             case Key::Enter:
                 i = false;
-                system(CLEAR_COMMAND);
                 break;
             default:
                 continue;

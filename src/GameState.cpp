@@ -15,7 +15,7 @@ size_t Game::selectedOption = 0;
 bool Game::isBattleActive = false;
 bool Game::isBattleOver = false;
 int Game::selectedHorizontal = 0;
-Character Game::activePlayer;
+Character Game::player;
 int Game::currentEnemyIndex = 0;
 
 namespace {

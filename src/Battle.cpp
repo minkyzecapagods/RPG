@@ -68,8 +68,6 @@ Battle::Battle(Character player, Enemy enemy){
                 break; // Sai do loop de batalha
             }
 
-            pressSpaceToContinue(); // Solicita para continuar antes do turno do inimigo (se a batalha não terminou)
-
             enemyTurn();
             checkBattleStatus();
             Game::render(getPlayer(), getEnemy()); // Renderiza após a ação do inimigo e verificação de status

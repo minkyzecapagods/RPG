@@ -32,7 +32,7 @@ namespace Game {
     extern int currentEnemyIndex;
     Enemy getEnemyByIndex(int index);
     size_t getTotalEnemies();
-    extern Character activePlayer;
+    extern Character player;
 
     void handleInput();
     void render();
