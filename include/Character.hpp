@@ -17,6 +17,8 @@ class Character {
         int attack;
         int magic;
         vector<int> equipment;
+    protected:
+        bool raisedDefenses = false;
     public:
         Character(string name); //construtor
         Character(string name, int defense, int attack, int magic, vector<int> equipment);
@@ -45,11 +47,11 @@ class Character {
 
         void cure();
 
-        void defend();
+        virtual bool defend(bool havePlayerDefended);
 
         //void action(Character* target);
 
-        void action(size_t choice, Character* target);
+        int action(size_t choice, Character* target, bool havePlayerDefended, bool haveEnemyDefended);
 };
 
 #endif

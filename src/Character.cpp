@@ -1,6 +1,17 @@
 #include "Character.hpp"
 #include <iostream>
 
+
+#include "BattleMenu.hpp"
+#include "ArrowKey.hpp"
+#include "GameState.hpp"
+#include "MainMenu.hpp"
+#include "SaveMenu.hpp"
+#include "Character.hpp"
+#include "Battle.hpp"
+#include "CreateMenu.hpp"
+#include "utils.hpp"
+
 using namespace std;
 
 string Character::getName() const{return name;}
@@ -71,7 +82,11 @@ void Character::dealDamage(Character* target){
 }
 
 void Character::takeDamage(int rawDamage){
-    int damage = rawDamage - defense;
+    int damage = rawDamage - this->defense;
+    if(this->raisedDefenses){
+        damage = rawDamage - this->defense - 5;
+    }
+
     if(damage < 1){
         damage = 1;
     }
@@ -89,23 +104,37 @@ void Character::cure(){
     }
 }
 
-void Character::defend(){
-    this->defense += 1;
+bool Character::defend(bool havePlayerDefended){
+    if(havePlayerDefended) {
+        this->raisedDefenses = false;
+        return false;
+    }
+    else {
+        this->raisedDefenses = true;
+        return true;
+    }
 }
 
-void Character::action(size_t choice, Character* target){
+int Character::action(size_t choice, Character* target, bool havePlayerDefended, bool haveEnemyDefended) {
+    raisedDefenses = false; // Reseta o estado de defesa antes de cada ação
     switch(choice){
         case 0: //atacar
-            Character::dealDamage(target);
+            this->dealDamage(target);
+            return 0; // Retorna 0 para indicar que a ação foi de ataque
             break;
         case 1: //defender
-            Character::defend();
+            if (this->defend(havePlayerDefended)){
+                return 1; //Retorna 1 para indicar que tentou defender e conseguiu
+            };
+            return -1; // Retorna -1 para indicar que tentou defender e não conseguiu
             break;
         case 2: //curar
-            Character::cure();
+            this->cure();
+            return 2; // Retorna 2 para indicar que a ação foi de cura
             break;
         default:
             cout << "Alguma coisa muito estranha aconteceu!" << endl;
+            return 4; // Retorna -1 para indicar que a ação é inválida
             break;
     }
 }

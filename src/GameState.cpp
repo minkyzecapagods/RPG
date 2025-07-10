@@ -6,7 +6,9 @@
 #include "Character.hpp"
 #include "Battle.hpp"
 #include "CreateMenu.hpp"
+#include "CustomMenu.hpp"
 #include "BattleMenu.hpp"
+#include "GameMenu.hpp"
 
 GameState Game::currentState = GameState::MAIN_MENU;
 size_t Game::selectedOption = 0;
@@ -77,8 +79,14 @@ void Game::handleInput() {
         case GameState::CREATE_SAVE:
             handleCreateSaveInput();
             break;
+        case GameState::GIVE_NAME:
+            handleNameInput();
+            break;
         case GameState::CREATE_CHARACTER:
             handleCharCreation();
+            break;
+        case GameState::GAME_MENU:
+            handleGameMenuInput();
             break;
         default: break;
     }
@@ -104,6 +112,12 @@ void Game::render() {
             break;
         case GameState::CREATE_CHARACTER:
             renderCharCreation();
+            break;
+        case GameState::GIVE_NAME:
+            renderNameInput();
+            break;
+        case GameState::GAME_MENU:
+            renderGameMenu();
             break;
         default: break;
     }

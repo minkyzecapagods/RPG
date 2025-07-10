@@ -41,7 +41,8 @@ void handleSaveMenuInput() {
             break;
         case Key::Enter:
             if (saveMenuOptions[Game::selectedOption] == "Carregar") {
-                cout << "a implementar";
+                loadSave(saveVector[Game::selectedHorizontal]);
+                Game::currentState = GameState::GAME_MENU;
             } else if (saveMenuOptions[Game::selectedOption] == "Deletar") {
                 saveVector[Game::selectedHorizontal].deleteSave();
                 break;

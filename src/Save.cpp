@@ -1,8 +1,10 @@
 #include "Save.hpp"
 #include "utils.hpp"
+#include "GameState.hpp"
 
 #include <fstream>
 #include <sstream>
+
 
 using namespace std;
 
@@ -12,8 +14,6 @@ const int numSaves = saveVector.size();
 Save::Save() : hero(), enemys_inventory(), isWritten(false) {}
 
 const Character& Save::getHero() const{ return hero; }
-
-vector<vector<int>>& Save::getEnemysInventory() {return enemys_inventory;}
 
 bool Save::getIsWritten() const { return isWritten; }
 
@@ -115,6 +115,11 @@ void loadFromFile() {
     }
     file.close();
   }
+}
+
+void loadSave(const Save& save) {
+    Game::player = save.getHero(); // Atualiza o personagem do jogo com o herói salvo
+    // Quando tiver itens e inimigos, devemos tambem atualizar o inventário dos inimigos
 }
 
 bool Save::deleteSave() {

@@ -40,8 +40,8 @@ vector<string> formatCharacterCard(const DefaultCharacter &character) {
       " ||/============\\|/============\\|| ",
       " `-------------~___------------~'' ",};
 
-    string name = formatField(character.name[0], 12, ' ');       
-    string title = formatField(character.name[2], 12, ' ');
+    string name = formatField(character.name[0] + character.name[1], 12, ' ');       
+    string title = formatField(character.name[3], 12, ' ');
     string atk = formatField(to_string(character.attack), 2, '0');
     string def = formatField(to_string(character.defense), 2, '0');
     string mag = formatField(to_string(character.magic), 2, '0');
@@ -50,7 +50,7 @@ vector<string> formatCharacterCard(const DefaultCharacter &character) {
     {"{ATK}", atk}
     });
     result[2] = replacePlaceholder(result[2], {
-    {"{THE}", character.name[1]},
+    {"{THE}", character.name[2]},
     {"{DEF}", def}
     });
     result[3] = replacePlaceholder(result[3], {
@@ -62,7 +62,7 @@ vector<string> formatCharacterCard(const DefaultCharacter &character) {
 
 void renderCharStats(const DefaultCharacter &chosen) {
     int size = chosen.ascii.size();
-    vector<string> titles = {"Nome: " + chosen.name[0] + "  " + chosen.name[1] + "  " + chosen.name[2],
+    vector<string> titles = {"Nome: " + chosen.name[0] + chosen.name[1] + chosen.name[1] + chosen.name[2] + chosen.name[3],
                              "Atk:  " + formatField(to_string(chosen.attack), 2, '0'),
                              "Def:  " + formatField(to_string(chosen.defense), 2, '0'),
                              "Mag:  " + formatField(to_string(chosen.magic), 2, '0')};
@@ -89,7 +89,9 @@ void renderCharCustom(const DefaultCharacter &custom) {
         if (Game::selectedHorizontal == 0) selected[Game::selectedOption - 2] = greenText;
         else selected[Game::selectedOption + 1] = greenText;
     } 
-    vector<string> titles = {"Nome: " + custom.name[0],
+    int remaining = 30 - (custom.attack + custom.defense + custom.magic);
+    vector<string> titles = {"Pontos restantes: " + formatField(to_string(remaining), 2, '0'),
+                             "Nome: " + custom.name[0],
                              selected[0] + selected[3] + "Atk:  " + normalText +
                              selected[0] + "- "+ normalText + 
                              formatField(to_string(custom.attack), 2, '0') + selected[3] + " +",
@@ -102,7 +104,7 @@ void renderCharCustom(const DefaultCharacter &custom) {
     int j = (size / 2);
     string asciiLine;
     for (int i = 0; i < size; ++i) {
-        if (i >= (j - 2) && i <= (j + 1)) {
+        if (i >= (j - 2) && i <= (j + 2)) {
             string spcs;
             if (custom.ascii[i].size() > 34) spcs = " ";
             else spcs = string(34 - custom.ascii[i].size(), ' ');

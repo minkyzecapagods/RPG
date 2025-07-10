@@ -53,6 +53,7 @@ Battle::Battle(Character player, Enemy enemy){
             playerTurn();
             checkBattleStatus();
             Game::render(getPlayer(), getEnemy()); // Renderiza após a ação do jogador e verificação de status
+            announceAction(player.getName(), playerAction);
 
             if (battleOver) { // Verifica se a batalha terminou após o turno do jogador
                 if (whoWon == 1) {
@@ -72,6 +73,8 @@ Battle::Battle(Character player, Enemy enemy){
             enemyTurn();
             checkBattleStatus();
             Game::render(getPlayer(), getEnemy()); // Renderiza após a ação do inimigo e verificação de status
+            announceAction(enemy.getName(), enemyAction);
+            
 
             if (battleOver) { // Verifica se a batalha terminou após o turno do inimigo
                 if (whoWon == 1) {
@@ -101,20 +104,32 @@ Battle::Battle(Character player, Enemy enemy){
 };
 
 void Battle::playerTurn() {
-    player.action(Game::selectedOption, &enemy);
+    this->playerAction = player.action(Game::selectedOption, &enemy, havePlayerDefended, haveEnemyDefended);
+    if(playerAction == 1) {
+        this->havePlayerDefended = true;
+    }
+    else {
+        this->havePlayerDefended = false;
+    }
 }
 
 void Battle::enemyTurn() {
-    enemy.autoAction(&player);
+    this->enemyAction = enemy.autoAction(&player, havePlayerDefended, haveEnemyDefended);
+    if(enemyAction == 1) {
+        this->haveEnemyDefended = true;
+    }
+    else {
+        this->haveEnemyDefended = false;
+    }
 }
 
 void Battle::checkBattleStatus() {
     if (enemy.getHp() <= 0) {
-        setBattleOver();
+        this->setBattleOver();
         whoWon = 1; // Jogador venceu
         Game::currentEnemyIndex++; // Incrementa o índice do inimigo
     } else if (player.getHp() <= 0) {
-        setBattleOver();
+        this->setBattleOver();
         whoWon = 2; // Inimigo venceu
     }
 }
