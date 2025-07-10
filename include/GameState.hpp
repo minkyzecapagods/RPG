@@ -27,6 +27,7 @@ namespace Game {
     extern bool isBattleActive;
     extern bool isBattleOver;
     extern int selectedHorizontal;
+    extern Character activePlayer;
 
     void handleInput();
     void render();

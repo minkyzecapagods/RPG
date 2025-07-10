@@ -10,8 +10,7 @@
 vector<string> mainMenuOptions = {
     "Novo Jogo",
     "Carregar Jogo",
-    "Sair",
-    "Battle Test"
+    "Sair"
 };
 
 void renderMainMenu() {
@@ -36,8 +35,6 @@ void handleMainMenuInput() {
                 Game::currentState = GameState::SAVE_MENU;
             } else if (mainMenuOptions[Game::selectedOption] == "Sair") {
                 Game::currentState = GameState::EXIT;  
-            } if (mainMenuOptions[Game::selectedOption] == "Battle Test") {
-                Game::currentState = GameState::INITIALIZE_BATTLE;  
             }
             
             Game::selectedOption = 0;

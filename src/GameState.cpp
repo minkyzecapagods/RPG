@@ -13,6 +13,7 @@ size_t Game::selectedOption = 0;
 bool Game::isBattleActive = false;
 bool Game::isBattleOver = false;
 int Game::selectedHorizontal = 0;
+Character Game::activePlayer;
 
 void Game::handleInput() {
     switch (Game::currentState) {
