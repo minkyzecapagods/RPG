@@ -50,13 +50,15 @@ Battle::Battle(Character player, Enemy enemy){
             Game::handleInput();
         }
         if (Game::currentState == GameState::IN_GAME) {
-            playerTurn();
-            Game::render(getPlayer(), getEnemy());
-            announceAction(player.getName(), playerAction);
-            checkBattleStatus();
-            if(!battleOver){
-                enemyTurn();
+            if(!this->battleOver){
+                playerTurn();
+                Game::render(getPlayer(), getEnemy());
+                announceAction(player.getName(), playerAction);
                 checkBattleStatus();
+            }
+            
+            if(!this->battleOver){
+                enemyTurn();
                 Game::render(getPlayer(), getEnemy());
                 announceAction(enemy.getName(), enemyAction);
                 checkBattleStatus();
@@ -91,12 +93,12 @@ void Battle::enemyTurn() {
 
 void Battle::checkBattleStatus() {
     if (enemy.getHp() <= 0) {
-        setBattleOver();
+        this->setBattleOver();
         whoWon = 1; // Jogador venceu
         cout << "Você venceu a batalha!" << endl;
         pressSpaceToContinue(); // Temporario
     } else if (player.getHp() <= 0) {
-        setBattleOver();
+        this->setBattleOver();
         whoWon = 2; // Inimigo venceu
         cout << "Você foi derrotado!" << endl;
         pressSpaceToContinue(); // Temporario
