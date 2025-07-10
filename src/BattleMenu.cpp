@@ -61,8 +61,8 @@ void pressSpaceToContinue(){ //Temporario, enquanto não temos o sistema que fal
         Key key = getArrowKey();
         switch(key){
             case Key::Enter:
-                system(CLEAR_COMMAND);
                 i = false;
+                system(CLEAR_COMMAND);
                 break;
             default:
                 continue;
@@ -82,4 +82,27 @@ void renderBattleStatus(Character player, Character enemy) {
          <<  " " << setfill(' ') << setw(3) << player.getHp() << ": "
          << "\033[32m" << repeat(player.getHp()/2, "▇") << repeat(50 - player.getHp()/2, "◫") << "\n"
          << "\033[0m" << "Enemy attack: " << enemy.getAttack() << std::endl;
-}   
+}
+
+void announceAction(string name, int action){
+    switch(action){
+        case 0:
+            cout << name << " atacou!" << endl;
+            break;
+        case 1:
+            cout << name << " se defendeu!" << endl;
+            break;
+        case 2:
+            cout << name << " curou-se!" << endl;
+            break;
+        case 3:
+            cout << name << "verificou o status!" << endl;
+            break;
+        case -1:
+            cout << name << " tentou se defender, mas não conseguiu!" << endl;
+            break;
+        default:
+            cout << "Ação desconhecida!" << endl;
+    }
+    pressSpaceToContinue();
+}

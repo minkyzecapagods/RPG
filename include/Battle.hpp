@@ -8,6 +8,10 @@ class Battle{
     private:
         bool battleOver = false;
         int whoWon = 0; // 0 = Ninguém, 1 = Jogador, 2 = Inimigo
+        bool havePlayerDefended = false;
+        bool haveEnemyDefended = false;
+        int playerAction;
+        int enemyAction;
         //a informação whoWon vai ser utilizada pra saber se precisamos tirar um item do player
         //ou dar um item pra ele!
 

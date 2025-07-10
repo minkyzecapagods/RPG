@@ -53,10 +53,11 @@ Battle::Battle(Character player, Enemy enemy){
             playerTurn();
             checkBattleStatus();
             Game::render(getPlayer(), getEnemy());
-            pressSpaceToContinue(); // Temporario
+            announceAction(player.getName(), playerAction);
             enemyTurn();
             checkBattleStatus();
             Game::render(getPlayer(), getEnemy());
+            announceAction(enemy.getName(), enemyAction);
         }
         if (battleOver) {
             Game::isBattleOver = true;
@@ -66,11 +67,23 @@ Battle::Battle(Character player, Enemy enemy){
 };
 
 void Battle::playerTurn() {
-    player.action(Game::selectedOption, &enemy);
+    this->playerAction = player.action(Game::selectedOption, &enemy, havePlayerDefended, haveEnemyDefended);
+    if(playerAction == 1) {
+        this->havePlayerDefended = true;
+    }
+    else {
+        this->havePlayerDefended = false;
+    }
 }
 
 void Battle::enemyTurn() {
-    enemy.autoAction(&player);
+    this->enemyAction = enemy.autoAction(&player, havePlayerDefended, haveEnemyDefended);
+    if(enemyAction == 1) {
+        this->haveEnemyDefended = true;
+    }
+    else {
+        this->haveEnemyDefended = false;
+    }
 }
 
 void Battle::checkBattleStatus() {

@@ -10,7 +10,7 @@ void renderBattleMenu();
 void pressSpaceToContinue();
 void handleBattleMenuInput();
 void renderBattleStatus(Character player, Character enemy);
-
+void announceAction(string name, int action);
 
 
 

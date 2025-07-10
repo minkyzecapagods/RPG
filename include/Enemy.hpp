@@ -13,7 +13,8 @@ class Enemy : public Character {
     public:
         Enemy();
         Enemy(string name);
-        void autoAction(Character* target);
+        bool defend(bool havePlayerDefended) override;
+        int autoAction(Character* target, bool havePlayerDefended, bool haveEnemyDefended);
 };
 
 #endif
