@@ -51,13 +51,16 @@ Battle::Battle(Character player, Enemy enemy){
         }
         if (Game::currentState == GameState::IN_GAME) {
             playerTurn();
-            checkBattleStatus();
             Game::render(getPlayer(), getEnemy());
             announceAction(player.getName(), playerAction);
-            enemyTurn();
             checkBattleStatus();
-            Game::render(getPlayer(), getEnemy());
-            announceAction(enemy.getName(), enemyAction);
+            if(!battleOver){
+                enemyTurn();
+                checkBattleStatus();
+                Game::render(getPlayer(), getEnemy());
+                announceAction(enemy.getName(), enemyAction);
+                checkBattleStatus();
+            }
         }
         if (battleOver) {
             Game::isBattleOver = true;
