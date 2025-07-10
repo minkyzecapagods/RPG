@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "CreateMenu.hpp"
+#include "CustomMenu.hpp"
 #include "GameState.hpp"
 #include "ArrowKey.hpp"
 #include "utils.hpp"
@@ -21,7 +22,7 @@ vector<string> createChar = {
     "                                   "};
 
 
-// Name, defense, attack, mana
+// Nome, defesa, ataque, magia e arte ASCII dos personagens
 const DefaultCharacter tank = {{"Magnolia,", "a", "escudeira"}, 16, 6, 8,{
     "       _,.",
     "     ,` -.)                   ",
@@ -86,38 +87,13 @@ const DefaultCharacter healer = {{"Cesar,", "o", "curandeiro"}, 3, 12, 15, {
     "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢆⠀⠀⠀⠀⠀⠀⠀  ", 
 }};
 
-DefaultCharacter custom = {{"????", "", ""}, 10, 10, 10, {
-"                 __           ",
-"             ___/ /\\          ",
-"            /,  /  _\\         ",
-"         _/   / / / \\\\        ",
-"        /__    / /   \\       ",
-"       ||  |  ( (     ))      ",
-"        '  \\_  \\ \\   //       ",
-"             \\ ,\\_\\_//        ",
-"            /  ___  /         ",
-"          _/  /   | \\______   ",
-"         /   |    |_/      \\  ",
-"        / ,  |         ____ / ",
-"       /    \\ \\     __/   (/  ",
-"     _/      \\ \\___/ /        ",
-"    /  /     \\     |         ",
-"   / ///            /         ",
-"  / //             |          ",
-" / //              |          ",}};
-
-vector<DefaultCharacter> choices = {tank, healer, assassin, custom};
+vector<DefaultCharacter> choices = {tank, healer, assassin};
 
 DefaultCharacter chosen;
 
 vector<string> createSaveOptions = {
   "Salvar",
   "Deletar",
-  "Voltar",
-};
-
-vector<string> createCustomOptions = {
-  "Confirmar",
   "Voltar",
 };
 
@@ -145,49 +121,10 @@ void renderCharacterChoice(){
     centralPrint(str[2] + "\n", chars);
 }
 
-void renderCharCreation() {
-    renderCharCustom(custom);
-    cout << "\n";
-    centralPrint("Distribua 30 pontos de atributo da forma que desejar\n", 51);
-    renderScroll(createCustomOptions);
-}
-
 void renderCreateSaveMenu() {
   renderCharStats(chosen);
   renderSaves(Game::selectedHorizontal);
   renderScroll(createSaveOptions);
-}
-
-void changeAttribute() {
-    if (Game::selectedHorizontal == 0) {
-        switch (Game::selectedOption) {
-            case 2: // Attack
-                if (custom.attack >= 5) custom.attack-= 5;
-                break;
-            case 3: // Defense
-                if (custom.defense >= 5) custom.defense-= 5;
-                break;  
-            case 4: // Magic
-                if (custom.magic >= 5) custom.magic-= 5;
-                break;
-        default:
-            break;
-        }} else {
-        if (custom.attack + custom.defense + custom.magic >= 30) return;
-        switch (Game::selectedOption) {
-            case 2: // Attack
-                custom.attack+= 5;
-                break;
-            case 3: // Defense
-                custom.defense+= 5;
-                break;  
-            case 4: // Magic
-                custom.magic+= 5;
-                break;
-        default:
-            break;
-        }
-    }
 }
 
 void handleChoiceMenuInput() {
@@ -207,12 +144,12 @@ void handleChoiceMenuInput() {
             Game::selectedOption = (Game::selectedOption + 1) % 5;
             break;
         case Key::Enter: {
-            if (Game::selectedOption < 3) {
+            if (Game::selectedOption < 3) {  //Defaults
                 Game::currentState = GameState::CREATE_SAVE;
                 chosen = choices[Game::selectedOption];
-            } else if (Game::selectedOption == 3) {
+            } else if (Game::selectedOption == 3) { //Custom
                 Game::currentState = GameState::CREATE_CHARACTER;
-            } else {
+            } else { //Voltar
                 Game::currentState = GameState::MAIN_MENU;
             } 
 
@@ -248,52 +185,17 @@ void handleCreateSaveInput() {
         case Key::Right:
             Game::selectedHorizontal = (Game::selectedHorizontal + 1) % numSaves;
             break;
-        case Key::Enter:
+        case Key::Enter: {
             if (createSaveOptions[Game::selectedOption] == "Salvar") {
                 saveVector[Game::selectedHorizontal].saveToFile(chosenCharacter(), {});
             } else if (createSaveOptions[Game::selectedOption] == "Deletar") {
                 saveVector[Game::selectedHorizontal].deleteSave();
                 break;
-            } else if (createSaveOptions[Game::selectedOption] == "Voltar") 
+            } else if (createSaveOptions[Game::selectedOption] == "Voltar") {
+                chosen = {};
+                custom.name[0] = "";
                 Game::currentState = GameState::CREATE_MENU_CHOICE;
-            Game::selectedOption = 0;
-            Game::selectedHorizontal = 0;
-            break;
-        case Key::Quit:
-            Game::currentState = GameState::EXIT;
-            break;
-        default:
-            break;
-    }
-}
-
-void handleCharCreation() {
-    Key key = getArrowKey();
-
-    switch (key) {
-        case Key::Up:
-            Game::selectedOption = (Game::selectedOption - 1 + 5) % 5;
-            if (Game::selectedOption == 0) Game::selectedHorizontal = 0;
-            break;
-        case Key::Down:
-            Game::selectedOption = (Game::selectedOption + 1) % 5;
-            if (Game::selectedOption == 0) Game::selectedHorizontal = 0;
-            break;
-        case Key::Left:
-            Game::selectedHorizontal = (Game::selectedHorizontal - 1 + 2) % 2;
-            break;
-        case Key::Right:
-            Game::selectedHorizontal = (Game::selectedHorizontal + 1) % 2;
-            break;
-        case Key::Enter: {
-            if (Game::selectedOption > 1) {
-                changeAttribute();
-                break;
-            } if (Game::selectedOption == 0) {
-                Game::currentState = GameState::CREATE_SAVE;
-                chosen = custom;
-            } else Game::currentState = GameState::CREATE_MENU_CHOICE;
-
+            }
             Game::selectedOption = 0;
             Game::selectedHorizontal = 0;
             break;

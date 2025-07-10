@@ -4,6 +4,7 @@
 #include <fstream>
 #include <sstream>
 
+
 using namespace std;
 
 vector<Save> saveVector = {Save(), Save(), Save()};
@@ -12,8 +13,6 @@ const int numSaves = saveVector.size();
 Save::Save() : hero(), enemys_inventory(), isWritten(false) {}
 
 const Character& Save::getHero() const{ return hero; }
-
-vector<vector<int>>& Save::getEnemysInventory() {return enemys_inventory;}
 
 bool Save::getIsWritten() const { return isWritten; }
 

@@ -89,7 +89,9 @@ void renderCharCustom(const DefaultCharacter &custom) {
         if (Game::selectedHorizontal == 0) selected[Game::selectedOption - 2] = greenText;
         else selected[Game::selectedOption + 1] = greenText;
     } 
-    vector<string> titles = {"Nome: " + custom.name[0],
+    int remaining = 30 - (custom.attack + custom.defense + custom.magic);
+    vector<string> titles = {"Pontos restantes: " + formatField(to_string(remaining), 2, '0'),
+                             "Nome: " + custom.name[0],
                              selected[0] + selected[3] + "Atk:  " + normalText +
                              selected[0] + "- "+ normalText + 
                              formatField(to_string(custom.attack), 2, '0') + selected[3] + " +",
@@ -102,7 +104,7 @@ void renderCharCustom(const DefaultCharacter &custom) {
     int j = (size / 2);
     string asciiLine;
     for (int i = 0; i < size; ++i) {
-        if (i >= (j - 2) && i <= (j + 1)) {
+        if (i >= (j - 2) && i <= (j + 2)) {
             string spcs;
             if (custom.ascii[i].size() > 34) spcs = " ";
             else spcs = string(34 - custom.ascii[i].size(), ' ');

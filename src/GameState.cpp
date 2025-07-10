@@ -6,6 +6,7 @@
 #include "Character.hpp"
 #include "Battle.hpp"
 #include "CreateMenu.hpp"
+#include "CustomMenu.hpp"
 #include "BattleMenu.hpp"
 
 GameState Game::currentState = GameState::MAIN_MENU;
@@ -53,6 +54,9 @@ void Game::handleInput() {
         case GameState::CREATE_SAVE:
             handleCreateSaveInput();
             break;
+        case GameState::GIVE_NAME:
+            handleNameInput();
+            break;
         case GameState::CREATE_CHARACTER:
             handleCharCreation();
             break;
@@ -80,6 +84,9 @@ void Game::render() {
             break;
         case GameState::CREATE_CHARACTER:
             renderCharCreation();
+            break;
+        case GameState::GIVE_NAME:
+            renderNameInput();
             break;
         default: break;
     }
