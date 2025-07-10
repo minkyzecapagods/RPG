@@ -24,7 +24,7 @@ int main() {
         Game::handleInput();
         if (Game::currentState == GameState::INITIALIZE_BATTLE) {
             Game::isBattleOver = false;
-            Battle(Character("player"), Enemy("enemy")); // Inicia uma batalha com um personagem jogador e um inimigo
+            Battle(Game::player, Enemy("enemy")); // Inicia uma batalha com um personagem jogador e um inimigo
             Game::isBattleOver = false; // Reseta o estado da batalha
         }
     }

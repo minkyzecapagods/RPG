@@ -6,7 +6,7 @@
 #include "Save.hpp"
 #include "card_render.hpp"
 
-DefaultCharacter custom = {{"", "", ""}, 10, 10, 10, {
+DefaultCharacter custom = {{"", "", "", ""}, 10, 10, 10, {
 "                 __           ",
 "             ___/ /\\          ",
 "            /,  /  _\\         ",

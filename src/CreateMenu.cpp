@@ -23,7 +23,7 @@ vector<string> createChar = {
 
 
 // Nome, defesa, ataque, magia e arte ASCII dos personagens
-const DefaultCharacter tank = {{"Magnolia,", "a", "escudeira"}, 16, 6, 8,{
+const DefaultCharacter tank = {{"Magnolia", ", ", "a", " escudeira"}, 16, 6, 8,{
     "       _,.",
     "     ,` -.)                   ",
     "    ( _/-\\-._                ",
@@ -43,7 +43,7 @@ const DefaultCharacter tank = {{"Magnolia,", "a", "escudeira"}, 16, 6, 8,{
     "   (  /   \\  ))       ))  /",
     "    `Y-.___\\__ ))))))) __/",
     "     |        \\_______/",}};
-const DefaultCharacter healer = {{"Cesar,", "o", "curandeiro"}, 3, 12, 15, {
+const DefaultCharacter healer = {{"Cesar", ", ", "o", " curandeiro"}, 3, 12, 15, {
     "               _____          ",
     "              / \\   \\         ",
     "             / / \\   \\        ",
@@ -64,7 +64,7 @@ const DefaultCharacter healer = {{"Cesar,", "o", "curandeiro"}, 3, 12, 15, {
     "           /   /'  \\  \\ /     ",
     "           \\  ' '   \\   \\     "}};
 
- DefaultCharacter assassin = {{"Cahara,", "o", "assassino"}, 20, 6, 4, {
+ DefaultCharacter assassin = {{"Cahara", ", ", "o", " assassino"}, 20, 6, 4, {
     "⠀⠀⠀⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀  ",
     "⠀⠀⠀⠀⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀  ",
     "⠀⠀⠀⢸⠀⡇⠀⠀⠀⠀⠀⠀⠀⠀⢸⠈⠑⢤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀  ",
@@ -188,6 +188,8 @@ void handleCreateSaveInput() {
         case Key::Enter: {
             if (createSaveOptions[Game::selectedOption] == "Salvar") {
                 saveVector[Game::selectedHorizontal].saveToFile(chosenCharacter(), {});
+                loadSave(saveVector[Game::selectedHorizontal]);
+                Game::currentState = GameState::GAME_MENU;
             } else if (createSaveOptions[Game::selectedOption] == "Deletar") {
                 saveVector[Game::selectedHorizontal].deleteSave();
                 break;

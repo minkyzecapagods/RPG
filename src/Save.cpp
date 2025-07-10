@@ -1,5 +1,6 @@
 #include "Save.hpp"
 #include "utils.hpp"
+#include "GameState.hpp"
 
 #include <fstream>
 #include <sstream>
@@ -114,6 +115,11 @@ void loadFromFile() {
     }
     file.close();
   }
+}
+
+void loadSave(const Save& save) {
+    Game::player = save.getHero(); // Atualiza o personagem do jogo com o herói salvo
+    // Quando tiver itens e inimigos, devemos tambem atualizar o inventário dos inimigos
 }
 
 bool Save::deleteSave() {
