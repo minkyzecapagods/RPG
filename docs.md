@@ -4,7 +4,7 @@ Este documento descreve a estrutura e o funcionamento do jogo RPG de terminal, f
 
 ## 1. Visão Geral do Projeto
 
-O projeto é um jogo RPG baseado em terminal, desenvolvido em C++. Ele apresenta um sistema de batalha simples por turnos entre o jogador e um inimigos, um sistema de criação de personagem e funcionalidade de salvar/carregar o progresso do jogo. A interação com o usuário é feita através de menus e entrada de teclado (setas, espaço, 'q').
+O projeto é um jogo RPG baseado em terminal, desenvolvido em C++. Ele apresenta um sistema de batalha simples por turnos entre o jogador e inimigos sequenciais, um sistema de criação de personagem e funcionalidade de salvar/carregar o progresso do jogo. A interação com o usuário é feita através de menus e entrada de teclado (setas, espaço, 'q').
 
 ## 2. Estrutura de Diretórios
 
@@ -21,7 +21,8 @@ O projeto é um jogo RPG baseado em terminal, desenvolvido em C++. Ele apresenta
 
 -   **[`GameState.hpp`](include/GameState.hpp)** / **[`GameState.cpp`](src/GameState.cpp)**:
     -   Define o `enum class GameState` que representa os diferentes estados do jogo (e.g., `MAIN_MENU`, `BATTLE_MENU`, `SAVE_MENU`, `EXIT`).
-    -   O namespace `Game` gerencia o estado atual (`currentState`), a opção selecionada (`selectedOption`), e outras variáveis globais relacionadas ao estado do jogo, incluindo `activePlayer` que armazena o personagem do jogador atualmente em uso.
+    -   O namespace `Game` gerencia o estado atual (`currentState`), a opção selecionada (`selectedOption`), e outras variáveis globais relacionadas ao estado do jogo, incluindo `activePlayer` que armazena o personagem do jogador atualmente em uso e `currentEnemyIndex` para controlar o inimigo atual na sequência.
+    -   A função `Game::getEnemyByIndex(int index)` retorna um objeto `Enemy` da lista de inimigos pré-definidos, e `Game::getTotalEnemies()` retorna o número total de inimigos.
     -   As funções `Game::handleInput()` e `Game::render()` são responsáveis por processar a entrada do usuário e renderizar a tela com base no `currentState`.
 
 ### 3.2. Entrada do Usuário
@@ -39,6 +40,7 @@ O projeto é um jogo RPG baseado em terminal, desenvolvido em C++. Ele apresenta
     -   Métodos para `dealDamage()`, `takeDamage()`, `cure()`, `defend()` e `action()` (para realizar ações em batalha).
 -   **[`Enemy.hpp`](include/Enemy.hpp)** / **[`Enemy.cpp`](src/Enemy.cpp)**:
     -   Deriva da classe `Character`.
+    -   Possui construtores que permitem a criação de inimigos com nome, defesa, ataque e magia específicos.
     -   Implementa a lógica de `autoAction()` para o inimigo, que decide automaticamente qual ação tomar em batalha (atacar, curar, defender).
 
 ### 3.4. Sistema de Batalha
@@ -48,6 +50,8 @@ O projeto é um jogo RPG baseado em terminal, desenvolvido em C++. Ele apresenta
     -   Contém métodos para `playerTurn()`, `enemyTurn()` e `checkBattleStatus()`.
     -   A batalha continua em um loop até que `battleOver` seja verdadeiro.
     -   A lógica de exibição da mensagem de vitória/derrota e a atualização visual da barra de HP foram ajustadas no construtor da classe `Battle` para garantir a sincronização visual.
+    -   Quando o jogador vence, `Game::currentEnemyIndex` é incrementado para o próximo inimigo na sequência.
+    -   Após a batalha, o jogo transiciona para o próximo inimigo (se houver) ou retorna ao menu principal (se todos os inimigos forem derrotados ou o jogador perder).
 -   **[`BattleMenu.hpp`](include/BattleMenu.hpp)** / **[`BattleMenu.cpp`](src/BattleMenu.cpp)**:
     -   Define as opções do menu de batalha (Atacar, Defender, Curar, Status).
     -   `renderBattleMenu()` exibe o menu de batalha.
@@ -73,6 +77,7 @@ O projeto é um jogo RPG baseado em terminal, desenvolvido em C++. Ele apresenta
 -   **[`MainMenu.hpp`](include/MainMenu.hpp)** / **[`MainMenu.cpp`](src/MainMenu.cpp)**:
     -   Define as opções do menu principal (Novo Jogo, Carregar Jogo, Sair).
     -   `renderMainMenu()` e `handleMainMenuInput()` gerenciam a exibição e a interação.
+    -   Ao selecionar "Novo Jogo", `Game::currentEnemyIndex` é resetado para `0`.
 -   **[`CreateMenu.hpp`](include/CreateMenu.hpp)** / **[`CreateMenu.cpp`](src/CreateMenu.cpp)**:
     -   Gerencia o processo de criação de personagem.
     -   Permite ao usuário escolher entre personagens pré-definidos (Tank, Healer, Assassin) ou criar um personagem customizado.
@@ -112,7 +117,7 @@ O arquivo [`main.cpp`](main.cpp) é o ponto de entrada do jogo.
         -   `adjustWindow()`: Ajusta o tamanho da janela do terminal.
         -   `Game::render()`: Renderiza a tela com base no `currentState`.
         -   `Game::handleInput()`: Processa a entrada do usuário e atualiza o `currentState`.
-        -   Se `currentState` for `INITIALIZE_BATTLE`, uma nova instância de `Battle` é criada usando `Game::activePlayer` e um inimigo padrão, iniciando o ciclo de batalha. Após a batalha, o jogo retorna ao menu principal.
+        -   Se `currentState` for `INITIALIZE_BATTLE`, uma nova instância de `Battle` é criada usando `Game::activePlayer` e o inimigo atual (`Game::getEnemyByIndex(Game::currentEnemyIndex)`), iniciando o ciclo de batalha.
 3.  **Finalização:**
     -   Quando o `currentState` se torna `EXIT`, o loop termina.
     -   `restoreKeyboard()` é chamado para restaurar as configurações do terminal.
@@ -127,8 +132,8 @@ Para implementar modificações, siga estas diretrizes:
     -   Atualize `Character.hpp` e `Character.cpp` com os novos métodos de ação.
     -   Ajuste a lógica em `Battle.cpp` para chamar as novas ações.
 -   **Novos Tipos de Inimigos:**
-    -   Crie novas classes derivadas de `Enemy` (ou modifique `Enemy.cpp`) para definir comportamentos e atributos específicos.
-    -   Integre esses novos inimigos na lógica de inicialização de batalhas em `main.cpp` ou em um sistema de encontro de inimigos.
+    -   Para adicionar novos inimigos, modifique a lista de `enemies` em `src/GameState.cpp`.
+    -   Se desejar comportamentos mais complexos, você pode estender a classe `Enemy` ou adicionar lógica condicional em `Enemy::autoAction()`.
 -   **Sistema de Inventário/Itens:**
     -   Expanda a classe `Item` em `Item.hpp` e `Item.cpp` com mais atributos e funcionalidades.
     -   Adicione um vetor de `Item` à classe `Character` para gerenciar o inventário do jogador.

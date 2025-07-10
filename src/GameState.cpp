@@ -14,6 +14,29 @@ bool Game::isBattleActive = false;
 bool Game::isBattleOver = false;
 int Game::selectedHorizontal = 0;
 Character Game::activePlayer;
+int Game::currentEnemyIndex = 0;
+
+namespace {
+    // Lista de inimigos pré-definidos
+    const std::vector<Enemy> enemies = {
+        Enemy("Goblin", 5, 15, 0),   // Nome, Defesa, Ataque, Magia
+        Enemy("Orc", 10, 20, 0),
+        Enemy("Slime", 2, 10, 0),
+        Enemy("Dragon", 20, 30, 0)
+    };
+}
+
+Enemy Game::getEnemyByIndex(int index) {
+    if (index >= 0 && static_cast<size_t>(index) < enemies.size()) {
+        return enemies[index];
+    }
+    // Retorna um inimigo padrão ou lança um erro se o índice for inválido
+    return Enemy("Inimigo Desconhecido");
+}
+
+size_t Game::getTotalEnemies() {
+    return enemies.size();
+}
 
 void Game::handleInput() {
     switch (Game::currentState) {

@@ -28,3 +28,28 @@ Este changelog documenta as modificações realizadas para trazer o jogo RPG Ter
 
 -   **Erro de Compilação em `src/MainMenu.cpp`:**
     -   Corrigido um erro de chave de fechamento (`}`) ausente na função `handleMainMenuInput()` em `src/MainMenu.cpp`, que impedia a compilação do projeto.
+
+## Versão 1.1.0 - Inimigos Sequenciais e Refinamentos do Fluxo
+
+### Funcionalidades Adicionadas:
+
+-   **Inimigos Sequenciais:**
+    -   Adicionada a variável `currentEnemyIndex` no namespace `Game` (`include/GameState.hpp` e `src/GameState.cpp`) para controlar o inimigo atual na sequência.
+    -   Implementadas as funções `Game::getEnemyByIndex(int index)` e `Game::getTotalEnemies()` em `src/GameState.cpp` para gerenciar uma lista pré-definida de inimigos.
+    -   A inicialização da batalha em `main.cpp` agora utiliza o inimigo correspondente ao `Game::currentEnemyIndex`.
+    -   `Game::currentEnemyIndex` é incrementado em `src/Battle.cpp` quando o jogador vence uma batalha.
+
+### Melhorias e Correções:
+
+-   **Correção do Construtor de Inimigo:**
+    -   Adicionado um novo construtor à classe `Enemy` (`include/Enemy.hpp` e `src/Enemy.cpp`) para permitir a inicialização com nome, defesa, ataque e magia, corrigindo erros de compilação ao criar inimigos.
+
+-   **Correção de Warnings de Comparação:**
+    -   Aplicado `static_cast<size_t>` em comparações entre `int` e `size_t` em `src/Battle.cpp` e `src/GameState.cpp` para resolver warnings de compilação relacionados a diferentes tipos de sinalização.
+
+-   **Fluxo de Batalha Aprimorado:**
+    -   A lógica de transição de estado após a batalha em `src/Battle.cpp` foi ajustada para que o jogo avance para o próximo inimigo (se houver) ou retorne ao menu principal (se todos os inimigos forem derrotados ou o jogador perder).
+    -   Removida a transição incondicional para o menu principal em `main.cpp` após cada batalha, permitindo o fluxo sequencial de inimigos.
+
+-   **Reset do Índice de Inimigo em Novo Jogo:**
+    -   `Game::currentEnemyIndex` agora é resetado para `0` em `src/MainMenu.cpp` quando a opção "Novo Jogo" é selecionada, garantindo que o primeiro inimigo seja sempre enfrentado ao iniciar um novo jogo.

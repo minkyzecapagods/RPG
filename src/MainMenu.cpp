@@ -30,6 +30,7 @@ void handleMainMenuInput() {
             break;
         case Key::Enter: {
             if (mainMenuOptions[Game::selectedOption] == "Novo Jogo") {
+                Game::currentEnemyIndex = 0; // Reseta o índice do inimigo para um novo jogo
                 Game::currentState = GameState::CREATE_MENU_CHOICE;
             } else if (mainMenuOptions[Game::selectedOption] == "Carregar Jogo") {
                 Game::currentState = GameState::SAVE_MENU;
