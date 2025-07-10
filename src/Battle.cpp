@@ -78,9 +78,11 @@ void Battle::checkBattleStatus() {
         setBattleOver();
         whoWon = 1; // Jogador venceu
         cout << "Você venceu a batalha!" << endl;
+        pressSpaceToContinue(); // Temporario
     } else if (player.getHp() <= 0) {
         setBattleOver();
         whoWon = 2; // Inimigo venceu
         cout << "Você foi derrotado!" << endl;
+        pressSpaceToContinue(); // Temporario
     }
 }

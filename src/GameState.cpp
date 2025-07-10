@@ -65,7 +65,7 @@ void Game::handleInput() {
 }
 
 void Game::render() {
-    system(CLEAR_COMMAND); // Limpa a tela antes de renderizar
+    if (Game::currentState != GameState::BATTLE_MENU) {system(CLEAR_COMMAND);} // Limpa a tela antes de renderizar
     switch (Game::currentState) {
         case GameState::MAIN_MENU:
             renderMainMenu();
