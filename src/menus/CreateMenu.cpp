@@ -192,8 +192,11 @@ void handleCreateSaveInput() {
         case Key::Enter: {
             if (createSaveOptions[Game::selectedOption] == "Salvar") {
                 saveVector[Game::selectedHorizontal].saveToFile(chosenCharacter(), {});
+
                 loadSave(saveVector[Game::selectedHorizontal]);
+                Game::player = chosenCharacter();
                 Game::currentState = GameState::GAME_MENU;
+
             } else if (createSaveOptions[Game::selectedOption] == "Deletar") {
                 saveVector[Game::selectedHorizontal].deleteSave();
                 break;

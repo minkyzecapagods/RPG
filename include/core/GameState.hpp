@@ -29,6 +29,10 @@ namespace Game {
     extern bool isBattleActive;
     extern bool isBattleOver;
     extern int selectedHorizontal;
+    extern int currentEnemyIndex;
+    Enemy getEnemyByIndex(int index);
+    size_t getTotalEnemies();
+    extern Character player;
 
     void handleInput();
     void render();
