@@ -2,10 +2,10 @@
 #include <vector>
 #include <string>
 
-#include "MainMenu.hpp"
-#include "GameState.hpp"
-#include "ArrowKey.hpp"
-#include "utils.hpp"
+#include "menus/MainMenu.hpp"
+#include "core/GameState.hpp"
+#include "core/ArrowKey.hpp"
+#include "helpers/utils.hpp"
 
 vector<string> mainMenuOptions = {
     "Novo Jogo",

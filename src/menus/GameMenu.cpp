@@ -2,10 +2,10 @@
 #include <vector>
 #include <string>
 
-#include "GameMenu.hpp"
-#include "GameState.hpp"
-#include "ArrowKey.hpp"
-#include "utils.hpp"
+#include "menus/GameMenu.hpp"
+#include "core/GameState.hpp"
+#include "core/ArrowKey.hpp"
+#include "helpers/utils.hpp"
 
 using namespace std;
 
@@ -28,13 +28,12 @@ void renderGameMenu() {
       "█▀█████▀▀████▀██▄▀██████  ▀████▀███▄ ▀█████▀████▀██▄████▄     ",
       "                      ██                                      ",
       "                   ▄████▄                                     "},
-    { "                                                  ",
-      "   ▄██▀██▄▀███  ▀███      ▄██▀███ ▄▄█▀██▀███▄███  ",
-      "  ██▀   ▀██ ██    ██      ██   ▀▀▄█▀   ██ ██▀ ▀▀  ",
-      "  ██     ██ ██    ██      ▀█████▄██▀▀▀▀▀▀ ██      ",
-      "  ██▄   ▄██ ██    ██      █▄   ████▄    ▄ ██      ",
-      "   ▀█████▀  ▀████▀███▄    ██████▀ ▀█████▀████▄    ",
-      "                                                  "},
+    { "                                              ",
+      " ▄██▀██▄▀███  ▀███      ▄██▀███ ▄▄█▀██▀███▄███",
+      "██▀   ▀██ ██    ██      ██   ▀▀▄█▀   ██ ██▀ ▀▀",
+      "██     ██ ██    ██      ▀█████▄██▀▀▀▀▀▀ ██    ",
+      "██▄   ▄██ ██    ██      █▄   ████▄    ▄ ██    ",
+      " ▀█████▀  ▀████▀███▄    ██████▀ ▀█████▀████▄  "},
     { "                                                                                 ",
       "                                                          ▀███           ▄█▀▀▀█▄ ",
       "                                                            ██           ██▀  ▀█▄",
@@ -74,7 +73,7 @@ void handleGameMenuInput() {
             } else if (gameMenuOptions[Game::selectedOption] == "Itens") {
                 cout << "Itens menu ainda não implementado.\n";
             } else if (gameMenuOptions[Game::selectedOption] == "Voltar") {
-                Game::currentState = GameState::EXIT;  
+                Game::currentState = GameState::MAIN_MENU;  
             }
             Game::selectedOption = 0;
             break;

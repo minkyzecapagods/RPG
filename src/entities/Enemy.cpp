@@ -1,5 +1,5 @@
-#include "Enemy.hpp"
-#include "BattleMenu.hpp"
+#include "entities/Enemy.hpp"
+#include "menus/BattleMenu.hpp"
 #include <ctime>
 
 Enemy::Enemy(string name) : Character(name) {}

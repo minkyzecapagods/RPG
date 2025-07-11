@@ -1,14 +1,14 @@
 #include <iostream>
 
-#include "GameState.hpp"
-#include "MainMenu.hpp"
-#include "SaveMenu.hpp"
-#include "Character.hpp"
-#include "Battle.hpp"
-#include "CreateMenu.hpp"
-#include "CustomMenu.hpp"
-#include "BattleMenu.hpp"
-#include "GameMenu.hpp"
+#include "core/GameState.hpp"
+#include "menus/MainMenu.hpp"
+#include "menus/SaveMenu.hpp"
+#include "menus/CreateMenu.hpp"
+#include "menus/CustomMenu.hpp"
+#include "menus/BattleMenu.hpp"
+#include "menus/GameMenu.hpp"
+#include "entities/Character.hpp"
+#include "systems/Battle.hpp"
 
 GameState Game::currentState = GameState::MAIN_MENU;
 size_t Game::selectedOption = 0;

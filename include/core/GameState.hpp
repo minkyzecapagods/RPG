@@ -2,7 +2,7 @@
 #define GAMESTATE_H
 
 #include <string>
-#include "Battle.hpp"
+#include "systems/Battle.hpp"
 
 using namespace std;
 

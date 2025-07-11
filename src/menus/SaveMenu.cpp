@@ -1,8 +1,8 @@
-#include "GameState.hpp"
-#include "SaveMenu.hpp"
-#include "Save.hpp"
-#include "ArrowKey.hpp"
-#include "utils.hpp"
+#include "core/GameState.hpp"
+#include "menus/SaveMenu.hpp"
+#include "systems/Save.hpp"
+#include "core/ArrowKey.hpp"
+#include "helpers/utils.hpp"
 
 #include <map>
 #include <string>
@@ -21,6 +21,8 @@ vector<string> saveMenuOptions = {
 void renderSaveMenu() {
   renderSaves(Game::selectedHorizontal);
   renderScroll(saveMenuOptions);
+  cout << "\n";
+  centralPrint("Use setas para mover, espaço para selecionar, pressione q para sair.\n");
 }
 
 void handleSaveMenuInput() {

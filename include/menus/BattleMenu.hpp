@@ -1,7 +1,7 @@
 #ifndef BATTLEMENU_HPP
 #define BATTLEMENU_HPP
 
-#include "Character.hpp"
+#include "entities/Character.hpp"
 
 extern vector<string> battleMenuOptions;
 

@@ -1,48 +1,19 @@
 
-#include "utils.hpp"
-#include "GameState.hpp"
+#include "helpers/utils.hpp"
+#include "core/GameState.hpp"
 
 #include <vector>
 #include <iostream>
 #include <string>
 #include <map>
+#include <sys/ioctl.h>
+#include <unistd.h>
+#include <cstdlib>
 
 using namespace std;
 
 const string greenText = "\033[32;40m";
 const string normalText = "\033[37;40m";
-
-#ifdef _WIN32
-
-int getTerminalWidth() {
-    CONSOLE_SCREEN_BUFFER_INFO csbi;
-    GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
-    return csbi.srWindow.Right - csbi.srWindow.Left + 1;
-} 
-
-void adjustWindow() {
-        // SOLUÇÃO WINDOWS
-    HWND console = GetConsoleWindow();
-    
-    // Sair do modo tela cheia
-    ShowWindow(console, SW_RESTORE);
-    
-    // Configurar tamanho e posição
-    int width = 800;
-    int height = 600;
-    
-    RECT rect;
-    GetWindowRect(console, &rect);
-    int screenWidth = GetSystemMetrics(SM_CXSCREEN);
-    int screenHeight = GetSystemMetrics(SM_CYSCREEN);
-    int x = (screenWidth - width) / 2;
-    int y = (screenHeight - height) / 2;
-    
-    MoveWindow(console, x, y, width, height, TRUE);
-    
-}
-
-#else
 
 int getTerminalWidth() {
   struct winsize w;
@@ -54,8 +25,6 @@ void adjustWindow() {
     cout << "\033[8;60;100t";  // 50 linhas, 100 colunas
     flush(cout);
 }
-
-#endif
 
 string repeat(int times, const string& str) {
     string res;

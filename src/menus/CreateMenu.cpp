@@ -2,13 +2,13 @@
 #include <string>
 #include <iostream>
 
-#include "CreateMenu.hpp"
-#include "CustomMenu.hpp"
-#include "GameState.hpp"
-#include "ArrowKey.hpp"
-#include "utils.hpp"
-#include "Save.hpp"
-#include "card_render.hpp"
+#include "menus/CreateMenu.hpp"
+#include "menus/CustomMenu.hpp"
+#include "core/GameState.hpp"
+#include "core/ArrowKey.hpp"
+#include "helpers/utils.hpp"
+#include "systems/Save.hpp"
+#include "helpers/card_render.hpp"
 
 using namespace std;
 
@@ -119,12 +119,16 @@ void renderCharacterChoice(){
                                              selected[3] + createChar[i] + normalText + "\n", chars);
     cout << "\n\n";
     centralPrint(str[2] + "\n", chars);
+    cout << "\n";
+    centralPrint("Use setas para mover, espaço para selecionar, pressione q para sair.\n");
 }
 
 void renderCreateSaveMenu() {
   renderCharStats(chosen);
   renderSaves(Game::selectedHorizontal);
   renderScroll(createSaveOptions);
+  cout << "\n";
+  centralPrint("Use setas para mover, espaço para selecionar, pressione q para sair.\n");
 }
 
 void handleChoiceMenuInput() {

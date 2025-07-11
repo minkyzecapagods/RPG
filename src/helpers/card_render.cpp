@@ -2,10 +2,10 @@
 #include <vector>
 #include <iostream>
 
-#include "card_render.hpp"
-#include "CreateMenu.hpp"
-#include "GameState.hpp"
-#include "utils.hpp"
+#include "helpers/card_render.hpp"
+#include "menus/CreateMenu.hpp"
+#include "core/GameState.hpp"
+#include "helpers/utils.hpp"
     
 vector<string> getHeaders() {
     vector<string> selected = {" ", " ", " ", " ", " "};

@@ -1,27 +1,35 @@
-TARGET = RPG
+# Configurações básicas
+CXX := g++
+CXXFLAGS := -std=c++17 -Wall -Wextra -Iinclude
+LDFLAGS := 
+TARGET := RPG
+BUILD_DIR := build
+SRC_DIR := src
 
-CXX = g++
-CXXFLAGS = -Wall -Wextra -std=c++17 -Iinclude
+# Encontra todos os arquivos fonte - ESTA É A PARTE CRÍTICA
+SRCS := $(shell find $(SRC_DIR) -name '*.cpp')
+OBJS := $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(SRCS))
+DEPS := $(OBJS:.o=.d)
 
-SRCDIR = src
-INCDIR = include
-OBJDIR = obj
-
-SRC = $(wildcard $(SRCDIR)/*.cpp) main.cpp
-OBJ = $(patsubst %.cpp, $(OBJDIR)/%.o, $(notdir $(SRC)))
-
+# Regra principal
 all: $(TARGET)
 
-$(TARGET): $(OBJ)
-	$(CXX) $(CXXFLAGS) $^ -o $@
+$(TARGET): $(OBJS)
+	$(CXX) $(LDFLAGS) $^ -o $@
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.cpp
-	@mkdir -p $(OBJDIR)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+# Regra para compilar objetos
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
+	@mkdir -p $(@D)
+	$(CXX) $(CXXFLAGS) -MMD -c $< -o $@
 
-$(OBJDIR)/main.o: main.cpp
-	@mkdir -p $(OBJDIR)
-	$(CXX) $(CXXFLAGS) -c main.cpp -o $@
+# Inclui dependências
+-include $(DEPS)
 
+# Limpeza
 clean:
-	rm -rf $(OBJDIR) *.o $(TARGET)
+	rm -rf $(BUILD_DIR) $(TARGET)
+
+run: $(TARGET)
+	./$(TARGET)
+
+.PHONY: all clean run

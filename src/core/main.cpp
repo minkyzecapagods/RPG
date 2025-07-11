@@ -2,12 +2,12 @@
 #include <string>
 #include <vector>
 
-#include "ArrowKey.hpp"
-#include "GameState.hpp"
-#include "include/Character.hpp"
-#include "utils.hpp"
-#include "Enemy.hpp"
-#include "Save.hpp"
+#include "core/ArrowKey.hpp"
+#include "core/GameState.hpp"
+#include "entities/Character.hpp"
+#include "helpers/utils.hpp"
+#include "entities/Enemy.hpp"
+#include "systems/Save.hpp"
 
 
 using namespace std;

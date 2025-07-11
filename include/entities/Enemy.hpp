@@ -3,8 +3,8 @@
 
 #include <iostream>
 #include <vector>
-#include <Character.hpp>
 
+#include "Character.hpp"
 #include "Item.hpp"
 
 using namespace std;
