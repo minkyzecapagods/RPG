@@ -26,6 +26,7 @@ extern vector<Save> saveVector;
 
 void renderSaves(const int selectedSave);
 void loadFromFile();
+
 void loadSave(const Save& save);
 
 #endif

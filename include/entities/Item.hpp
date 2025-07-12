@@ -15,6 +15,7 @@ private:
   ItemType type;
   int bonus;
   bool isLocked;
+
 public:
   Item(string name, string description, ItemType type, int bonus, bool isLocked);
   string getName() const;

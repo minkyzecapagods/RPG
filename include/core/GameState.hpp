@@ -11,6 +11,7 @@ enum class GameState {
     MAIN_MENU,
     SAVE_MENU,
     CREATE_MENU_CHOICE,
+    CREATE_MENU_CUSTOM,
     GIVE_NAME,
     CREATE_SAVE,
     CREATE_CHARACTER,

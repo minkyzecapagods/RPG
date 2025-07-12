@@ -7,6 +7,7 @@
 #include "menus/CustomMenu.hpp"
 #include "menus/BattleMenu.hpp"
 #include "menus/GameMenu.hpp"
+
 #include "entities/Character.hpp"
 #include "systems/Battle.hpp"
 
@@ -15,6 +16,7 @@ size_t Game::selectedOption = 0;
 bool Game::isBattleActive = false;
 bool Game::isBattleOver = false;
 int Game::selectedHorizontal = 0;
+
 Character Game::player;
 int Game::currentEnemyIndex = 0;
 

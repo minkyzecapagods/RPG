@@ -5,7 +5,6 @@
 #include <fstream>
 #include <sstream>
 
-
 using namespace std;
 
 vector<Save> saveVector = {Save(), Save(), Save()};
