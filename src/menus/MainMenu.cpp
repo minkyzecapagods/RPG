@@ -10,11 +10,44 @@
 vector<string> mainMenuOptions = {
     "Novo Jogo",
     "Carregar Jogo",
-    "Sair",
-    "Battle Test"
+    "Sair"
 };
 
+
 void renderMainMenu() {
+    vector<vector<string>> title = {{
+        "                                                                          ",
+        "           ▄▄                              ",
+        "▀████▀     ██                              ",
+        "  ██                                       ",
+        "  ██     ▀███  ▄█▀████████  ▀███   ▄▄█▀██   ▀████████▄▀███▄███  ▄██▀██▄   ",
+        "  ██       ██ ▄██  ██   ██    ██  ▄█▀   ██    ██   ▀██  ██▀ ▀▀ ██▀   ▀██  ",
+        "  █▓     ▄ ▓█ ▀▓▓███▀   ▓█    ██  ▓█▀▀▀▀▀▀    ▓█    ██  █▓     ██     ██  ",
+        "  █▓    ▒█ ▓█ █▓        ▓█    █▓  ▓█▄    ▄    ▓█    ▓█  █▓     ██     ▓█  ",
+        "  ▓▓     ▓ ▓▓ ▀▓▓▓▓▓▀   ▓█    ▓▓  ▓▓▀▀▀▀▀▀    ▓█▓   ▓▓  ▓▓     ▓█     ▓▓  ",
+        "  ▓▒    ▓▓ ▓▓ ▓▒        ▓▓    ▓▓  ▒▓▓         ▓█   ▓▓▓  ▓▒     ▓▓▓   ▓▓▓  ",
+        "▒ ▒▒ ▓▒ ▒▒ ▒ ▒ ▒ ▒▓▒ ▒  ▒▒ ▓▒ ▒▓▒  ▒ ▒ ▒▒     ▒▓▒ ▒ ▒ ▒ ▒▒▒     ▒ ▒ ▒ ▒   ",
+        "              ▒▒     ▒▒                       ▒▒                          ",
+        "              ▒▒▒▒ ▒▒                       ▒ ▒ ▒▒                        "},
+    {   "                                               ",
+        " ▄▄                                             ",         
+        " ▀███▀▀▀██▄              ▀███                   ",
+        "   ██   ▀██▄               ██                   ",
+        "   ██   ▄██  ▄▄█▀██   ▄█▀▀███ ▀███▄███  ▄██▀██▄ ",
+        "   ███████  ▄█▀   ██▄██    ██   ██▀ ▀▀ ██▀   ▀██",
+        "   ██       ▓█▀▀▀▀▀▀█▓█    █▓   █▓     ██     ██",
+        "   █▓       ▓█▄    ▄▀▓█    █▓   █▓     ██     ▓█",
+        "   █▓       ▓▓▀▀▀▀▀▀▓▓▓    ▓▓   ▓▓     ▓█     ▓▓",
+        "   ▓▓       ▒▓▓     ▀▒▓    ▓▒   ▓▒     ▓▓▓   ▓▓▓",
+        " ▒▓▒▓▒       ▒ ▒ ▒▒  ▒ ▒ ▒ ▓ ▒▒ ▒▒▒     ▒ ▒ ▒ ▒ "}};
+    
+    for (const auto& subtitle : title) {
+        int size = subtitle[0].size();
+        for (const auto& line : subtitle) {
+            centralPrint(line + "\n", size);
+        }
+    }
+    cout << "\n";
     renderScroll(mainMenuOptions);
     centralPrint("Use setas para mover, espaço para selecionar, pressione q para sair.\n");
 }
@@ -31,13 +64,12 @@ void handleMainMenuInput() {
             break;
         case Key::Enter: {
             if (mainMenuOptions[Game::selectedOption] == "Novo Jogo") {
+                Game::currentEnemyIndex = 0; // Reseta o índice do inimigo para um novo jogo
                 Game::currentState = GameState::CREATE_MENU_CHOICE;
             } else if (mainMenuOptions[Game::selectedOption] == "Carregar Jogo") {
                 Game::currentState = GameState::SAVE_MENU;
             } else if (mainMenuOptions[Game::selectedOption] == "Sair") {
                 Game::currentState = GameState::EXIT;  
-            } if (mainMenuOptions[Game::selectedOption] == "Battle Test") {
-                Game::currentState = GameState::INITIALIZE_BATTLE;  
             }
             
             Game::selectedOption = 0;

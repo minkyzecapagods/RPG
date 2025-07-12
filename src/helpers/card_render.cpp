@@ -40,8 +40,9 @@ vector<string> formatCharacterCard(const DefaultCharacter &character) {
       " ||/============\\|/============\\|| ",
       " `-------------~___------------~'' ",};
 
-    string name = formatField(character.name[0], 12, ' ');       
-    string title = formatField(character.name[2], 12, ' ');
+    string name = formatField(character.name[0] + character.name[1], 12, ' ');       
+    string title = formatField(character.name[3], 12, ' ');
+
     string atk = formatField(to_string(character.attack), 2, '0');
     string def = formatField(to_string(character.defense), 2, '0');
     string mag = formatField(to_string(character.magic), 2, '0');
@@ -50,7 +51,7 @@ vector<string> formatCharacterCard(const DefaultCharacter &character) {
     {"{ATK}", atk}
     });
     result[2] = replacePlaceholder(result[2], {
-    {"{THE}", character.name[1]},
+    {"{THE}", character.name[2]},
     {"{DEF}", def}
     });
     result[3] = replacePlaceholder(result[3], {
@@ -62,7 +63,7 @@ vector<string> formatCharacterCard(const DefaultCharacter &character) {
 
 void renderCharStats(const DefaultCharacter &chosen) {
     int size = chosen.ascii.size();
-    vector<string> titles = {"Nome: " + chosen.name[0] + "  " + chosen.name[1] + "  " + chosen.name[2],
+    vector<string> titles = {"Nome: " + chosen.name[0] + chosen.name[1] + chosen.name[1] + chosen.name[2] + chosen.name[3],
                              "Atk:  " + formatField(to_string(chosen.attack), 2, '0'),
                              "Def:  " + formatField(to_string(chosen.defense), 2, '0'),
                              "Mag:  " + formatField(to_string(chosen.magic), 2, '0')};

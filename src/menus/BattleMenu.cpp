@@ -13,7 +13,6 @@
 #include "menus/CreateMenu.hpp"
 #include "helpers/utils.hpp"
 
-
 using namespace std;
 
 vector<string> battleMenuOptions = {

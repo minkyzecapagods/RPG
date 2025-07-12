@@ -22,7 +22,7 @@ bool Save::saveToFile(const Character& hero, const vector<vector<int>>& enemys_i
 
     if (index < 0 || index >= numSaves) return false;
 
-    string filename = "saves/save" + to_string(index) + ".txt";
+    string filename = "data/saves/save" + to_string(index) + ".txt";
     ofstream file(filename);
     if (!file.is_open()) return false;
 
@@ -74,7 +74,7 @@ bool Save::saveToVector(const Character& hero, const vector<vector<int>>& enemys
 
 void loadFromFile() {
   for (int i = 0; i < numSaves; ++i) {
-    string filename = "saves/save" + to_string(i + 1) + ".txt";
+    string filename = "data/saves/save" + to_string(i + 1) + ".txt";
     ifstream file(filename);
 
     if (!file.is_open()) continue;
@@ -114,6 +114,11 @@ void loadFromFile() {
     }
     file.close();
   }
+}
+
+void loadSave(const Save& save) {
+    Game::player = save.getHero(); // Atualiza o personagem do jogo com o herói salvo
+    // Quando tiver itens e inimigos, devemos tambem atualizar o inventário dos inimigos
 }
 
 bool Save::deleteSave() {

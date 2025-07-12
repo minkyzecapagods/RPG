@@ -1,6 +1,5 @@
 #include <iostream>
 
-
 #include "entities/Character.hpp"
 #include "menus/BattleMenu.hpp"
 #include "core/ArrowKey.hpp"

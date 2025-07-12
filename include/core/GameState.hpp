@@ -16,6 +16,7 @@ enum class GameState {
     CREATE_SAVE,
     CREATE_CHARACTER,
     INITIALIZE_BATTLE,
+    GAME_MENU,
     BATTLE_MENU,
     INVENTORY_MENU,
     IN_GAME,
@@ -25,9 +26,14 @@ enum class GameState {
 namespace Game {
     extern GameState currentState;
     extern size_t selectedOption;
+    extern Character player;
     extern bool isBattleActive;
     extern bool isBattleOver;
     extern int selectedHorizontal;
+    extern int currentEnemyIndex;
+    Enemy getEnemyByIndex(int index);
+    size_t getTotalEnemies();
+    extern Character player;
 
     void handleInput();
     void render();

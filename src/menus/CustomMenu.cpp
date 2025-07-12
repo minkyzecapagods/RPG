@@ -6,8 +6,7 @@
 #include "systems/Save.hpp"
 #include "helpers/card_render.hpp"
 
-
-DefaultCharacter custom = {{"", "", ""}, 10, 10, 10, {
+DefaultCharacter custom = {{"", "", "", ""}, 10, 10, 10, {
 "                 __           ",
 "             ___/ /\\          ",
 "            /,  /  _\\         ",
@@ -71,7 +70,10 @@ void renderCharCreation() {
       "░█▀▄░█░▄▀▀░▀█▀▒█▀▄░█░██▄░█▒█▒▄▀▄░░░▄▀▀▒██▀░█▒█░▄▀▀░░▒█▀▄░▄▀▄░█▄░█░▀█▀░▄▀▄░▄▀▀",
       "▒█▄▀░█▒▄██░▒█▒░█▀▄░█▒█▄█░▀▄█░█▀█▒░▒▄██░█▄▄░▀▄█▒▄██▒░░█▀▒░▀▄▀░█▒▀█░▒█▒░▀▄▀▒▄██"};
     for (const auto& line : title) centralPrint(line + "\n", 73);
+    cout << "\n";
     renderScroll(createCustomOptions);
+    cout << "\n";
+    centralPrint("Use setas para mover, espaço para selecionar, pressione q para sair.\n");
 }
 
 void handleCharCreation() {
@@ -128,8 +130,10 @@ void renderNameInput() {
     centralPrint(color +"┏━━━━━━━━━━━━━━┓" + normalText + "\n", 16);
     centralPrint(color + "┃ ", 16);
     cout << formatField(custom.name[0], 12, ' ') << " ┃\n" << normalText;
-    centralPrint(color + "┗━━━━━━━━━━━━━━┛\n" + normalText, 16);
+    centralPrint(color + "┗━━━━━━━━━━━━━━┛\n\n" + normalText, 16);
     renderScroll(createCustomOptions);
+    cout << "\n";
+    centralPrint("Use setas para mover, espaço para selecionar, pressione q para sair.\n");
 }
 
 void handleNameInput() {

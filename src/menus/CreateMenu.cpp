@@ -9,6 +9,7 @@
 #include "helpers/utils.hpp"
 #include "systems/Save.hpp"
 #include "helpers/card_render.hpp"
+
 using namespace std;
 
 vector<string> createChar = {
@@ -22,7 +23,8 @@ vector<string> createChar = {
 
 
 // Nome, defesa, ataque, magia e arte ASCII dos personagens
-const DefaultCharacter tank = {{"Magnolia,", "a", "escudeira"}, 16, 6, 8,{
+
+const DefaultCharacter tank = {{"Magnolia", ", ", "a", " escudeira"}, 16, 6, 8,{
     "       _,.",
     "     ,` -.)                   ",
     "    ( _/-\\-._                ",
@@ -42,7 +44,8 @@ const DefaultCharacter tank = {{"Magnolia,", "a", "escudeira"}, 16, 6, 8,{
     "   (  /   \\  ))       ))  /",
     "    `Y-.___\\__ ))))))) __/",
     "     |        \\_______/",}};
-const DefaultCharacter healer = {{"Cesar,", "o", "curandeiro"}, 3, 12, 15, {
+
+const DefaultCharacter healer = {{"Cesar", ", ", "o", " curandeiro"}, 3, 12, 15, {
     "               _____          ",
     "              / \\   \\         ",
     "             / / \\   \\        ",
@@ -63,7 +66,7 @@ const DefaultCharacter healer = {{"Cesar,", "o", "curandeiro"}, 3, 12, 15, {
     "           /   /'  \\  \\ /     ",
     "           \\  ' '   \\   \\     "}};
 
- DefaultCharacter assassin = {{"Cahara,", "o", "assassino"}, 20, 6, 4, {
+ DefaultCharacter assassin = {{"Cahara", ", ", "o", " assassino"}, 20, 6, 4, {
     "⠀⠀⠀⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀  ",
     "⠀⠀⠀⠀⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀  ",
     "⠀⠀⠀⢸⠀⡇⠀⠀⠀⠀⠀⠀⠀⠀⢸⠈⠑⢤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀  ",
@@ -118,12 +121,16 @@ void renderCharacterChoice(){
                                              selected[3] + createChar[i] + normalText + "\n", chars);
     cout << "\n\n";
     centralPrint(str[2] + "\n", chars);
+    cout << "\n";
+    centralPrint("Use setas para mover, espaço para selecionar, pressione q para sair.\n");
 }
 
 void renderCreateSaveMenu() {
   renderCharStats(chosen);
   renderSaves(Game::selectedHorizontal);
   renderScroll(createSaveOptions);
+  cout << "\n";
+  centralPrint("Use setas para mover, espaço para selecionar, pressione q para sair.\n");
 }
 
 void handleChoiceMenuInput() {
@@ -187,6 +194,11 @@ void handleCreateSaveInput() {
         case Key::Enter: {
             if (createSaveOptions[Game::selectedOption] == "Salvar") {
                 saveVector[Game::selectedHorizontal].saveToFile(chosenCharacter(), {});
+
+                loadSave(saveVector[Game::selectedHorizontal]);
+                Game::player = chosenCharacter();
+                Game::currentState = GameState::GAME_MENU;
+
             } else if (createSaveOptions[Game::selectedOption] == "Deletar") {
                 saveVector[Game::selectedHorizontal].deleteSave();
                 break;
