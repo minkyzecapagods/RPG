@@ -64,9 +64,18 @@ Battle::Battle(Character player, Enemy enemy){
                 checkBattleStatus();
             }
         }
+        
         if (battleOver) {
-            Game::isBattleOver = true;
-            Game::currentState = GameState::MAIN_MENU; // Volta ao menu principal após a batalha (temporário)
+            Game::isBattleOver = true; // Define a flag global
+            if (whoWon == 1) {
+                if (static_cast<size_t>(Game::currentEnemyIndex) < Game::getTotalEnemies()) {
+                    Game::currentState = GameState::INITIALIZE_BATTLE; // Inicia a próxima batalha
+                } else {
+                    Game::currentState = GameState::MAIN_MENU; // Todos os inimigos derrotados, volta ao menu principal
+                }
+            } else { // whoWon == 2 (jogador perdeu)
+                Game::currentState = GameState::MAIN_MENU; // Volta ao menu principal
+            }
         }
     }
 };
@@ -91,16 +100,14 @@ void Battle::enemyTurn() {
     }
 }
 
+
 void Battle::checkBattleStatus() {
     if (enemy.getHp() <= 0) {
         this->setBattleOver();
         whoWon = 1; // Jogador venceu
-        cout << "Você venceu a batalha!" << endl;
-        pressSpaceToContinue(); // Temporario
+        Game::currentEnemyIndex++; // Incrementa o índice do inimigo
     } else if (player.getHp() <= 0) {
         this->setBattleOver();
         whoWon = 2; // Inimigo venceu
-        cout << "Você foi derrotado!" << endl;
-        pressSpaceToContinue(); // Temporario
     }
 }
