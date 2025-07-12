@@ -42,6 +42,7 @@ vector<string> formatCharacterCard(const DefaultCharacter &character) {
 
     string name = formatField(character.name[0] + character.name[1], 12, ' ');       
     string title = formatField(character.name[3], 12, ' ');
+
     string atk = formatField(to_string(character.attack), 2, '0');
     string def = formatField(to_string(character.defense), 2, '0');
     string mag = formatField(to_string(character.magic), 2, '0');

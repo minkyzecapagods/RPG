@@ -23,6 +23,7 @@ vector<string> createChar = {
 
 
 // Nome, defesa, ataque, magia e arte ASCII dos personagens
+
 const DefaultCharacter tank = {{"Magnolia", ", ", "a", " escudeira"}, 16, 6, 8,{
     "       _,.",
     "     ,` -.)                   ",
@@ -43,6 +44,7 @@ const DefaultCharacter tank = {{"Magnolia", ", ", "a", " escudeira"}, 16, 6, 8,{
     "   (  /   \\  ))       ))  /",
     "    `Y-.___\\__ ))))))) __/",
     "     |        \\_______/",}};
+
 const DefaultCharacter healer = {{"Cesar", ", ", "o", " curandeiro"}, 3, 12, 15, {
     "               _____          ",
     "              / \\   \\         ",
