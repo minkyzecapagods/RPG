@@ -71,7 +71,7 @@ void handleGameMenuInput() {
             if (gameMenuOptions[Game::selectedOption] == "Batalhe") {
                 Game::currentState = GameState::INITIALIZE_BATTLE; 
             } else if (gameMenuOptions[Game::selectedOption] == "Itens") {
-                cout << "Itens menu ainda não implementado.\n";
+                Game::currentState = GameState::INVENTORY_MENU;
             } else if (gameMenuOptions[Game::selectedOption] == "Voltar") {
                 Game::currentSave.saveToFile(Game::player, {{}}); // Salva o jogo atual antes de voltar
                 resetItemRegistry(); // Reseta o registro de itens ao voltar ao menu principal  

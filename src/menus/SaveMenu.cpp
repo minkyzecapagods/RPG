@@ -44,6 +44,7 @@ void handleSaveMenuInput() {
             break;
         case Key::Enter:
             if (saveMenuOptions[Game::selectedOption] == "Carregar") {
+                // TRY CATCH AQUI PRA CASO TENTAR SELECIONAR UM SAVE VAZIO
                 Game::currentSave = saveVector[Game::selectedHorizontal];
                 loadSave(Game::currentSave, Game::selectedHorizontal);
                 Game::currentState = GameState::GAME_MENU;

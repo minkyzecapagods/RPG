@@ -43,10 +43,6 @@ namespace Game {
     void render(Character player, Character enemy);
 }
 
-#ifdef _WIN32
-    #define CLEAR_COMMAND "cls"
-#else
-    #define CLEAR_COMMAND "clear"
-#endif
+#define CLEAR_COMMAND "clear"
 
 #endif

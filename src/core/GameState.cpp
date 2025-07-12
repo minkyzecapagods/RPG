@@ -7,6 +7,7 @@
 #include "menus/CustomMenu.hpp"
 #include "menus/BattleMenu.hpp"
 #include "menus/GameMenu.hpp"
+#include "menus/ItemsMenu.hpp"
 
 #include "entities/Character.hpp"
 #include "systems/Battle.hpp"
@@ -91,6 +92,9 @@ void Game::handleInput() {
         case GameState::GAME_MENU:
             handleGameMenuInput();
             break;
+        case GameState::INVENTORY_MENU:
+            handleItemsMenuInput();
+            break;
         default: break;
     }
 }
@@ -121,6 +125,9 @@ void Game::render() {
             break;
         case GameState::GAME_MENU:
             renderGameMenu();
+            break;
+        case GameState::INVENTORY_MENU:
+            renderItemsMenu();
             break;
         default: break;
     }
