@@ -1,10 +1,11 @@
-#include "CustomMenu.hpp"
-#include "CreateMenu.hpp"
-#include "GameState.hpp"
-#include "ArrowKey.hpp"
-#include "utils.hpp"
-#include "Save.hpp"
-#include "card_render.hpp"
+#include "menus/CustomMenu.hpp"
+#include "menus/CreateMenu.hpp"
+#include "core/GameState.hpp"
+#include "core/ArrowKey.hpp"
+#include "helpers/utils.hpp"
+#include "systems/Save.hpp"
+#include "helpers/card_render.hpp"
+
 
 DefaultCharacter custom = {{"", "", ""}, 10, 10, 10, {
 "                 __           ",

@@ -3,15 +3,16 @@
 #include <string>
 #include <iomanip>
 
-#include "BattleMenu.hpp"
-#include "ArrowKey.hpp"
-#include "GameState.hpp"
-#include "MainMenu.hpp"
-#include "SaveMenu.hpp"
-#include "Character.hpp"
-#include "Battle.hpp"
-#include "CreateMenu.hpp"
-#include "utils.hpp"
+#include "menus/BattleMenu.hpp"
+#include "core/ArrowKey.hpp"
+#include "core/GameState.hpp"
+#include "menus/MainMenu.hpp"
+#include "menus/SaveMenu.hpp"
+#include "entities/Character.hpp"
+#include "systems/Battle.hpp"
+#include "menus/CreateMenu.hpp"
+#include "helpers/utils.hpp"
+
 
 using namespace std;
 

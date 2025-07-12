@@ -1,11 +1,14 @@
 
-#include "utils.hpp"
-#include "GameState.hpp"
+#include "helpers/utils.hpp"
+#include "core/GameState.hpp"
 
 #include <vector>
 #include <iostream>
 #include <string>
 #include <map>
+#include <sys/ioctl.h>
+#include <unistd.h>
+#include <cstdlib>
 
 using namespace std;
 

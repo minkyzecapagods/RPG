@@ -1,8 +1,8 @@
-#include "GameState.hpp"
-#include "SaveMenu.hpp"
-#include "Save.hpp"
-#include "ArrowKey.hpp"
-#include "utils.hpp"
+#include "core/GameState.hpp"
+#include "menus/SaveMenu.hpp"
+#include "systems/Save.hpp"
+#include "core/ArrowKey.hpp"
+#include "helpers/utils.hpp"
 
 #include <map>
 #include <string>

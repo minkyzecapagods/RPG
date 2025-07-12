@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include <set>
-#include "Character.hpp"
+#include "entities/Character.hpp"
 
 class Save {
 private:

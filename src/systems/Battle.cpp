@@ -3,13 +3,13 @@
 #include <string>
 #include <iomanip>
 
-#include "Battle.hpp"
-#include "GameState.hpp"
-#include "ArrowKey.hpp"
-#include "Character.hpp"
-#include "utils.hpp"
-#include "BattleMenu.hpp"
-#include "Enemy.hpp"
+#include "systems/Battle.hpp"
+#include "core/GameState.hpp"
+#include "core/ArrowKey.hpp"
+#include "entities/Character.hpp"
+#include "helpers/utils.hpp"
+#include "menus/BattleMenu.hpp"
+#include "entities/Enemy.hpp"
 
 using namespace std;
 

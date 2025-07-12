@@ -1,8 +1,8 @@
 #ifndef BATTLE_HPP
 #define BATTLE_HPP
 
-#include "Character.hpp"
-#include "Enemy.hpp"
+#include "entities/Character.hpp"
+#include "entities/Enemy.hpp"
 
 class Battle{
     private:
