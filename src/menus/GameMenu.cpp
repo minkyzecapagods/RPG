@@ -73,7 +73,9 @@ void handleGameMenuInput() {
             } else if (gameMenuOptions[Game::selectedOption] == "Itens") {
                 cout << "Itens menu ainda não implementado.\n";
             } else if (gameMenuOptions[Game::selectedOption] == "Voltar") {
-                Game::currentState = GameState::MAIN_MENU;  
+                Game::currentSave.saveToFile(Game::player, {{}}); // Salva o jogo atual antes de voltar
+                resetItemRegistry(); // Reseta o registro de itens ao voltar ao menu principal  
+                Game::currentState = GameState::MAIN_MENU; 
             }
             Game::selectedOption = 0;
             break;

@@ -3,7 +3,9 @@
 
 #include <string>
 #include "systems/Battle.hpp"
-
+#include "entities/Character.hpp"
+#include "entities/Enemy.hpp"
+#include "systems/ItemRegistry.hpp"
 using namespace std;
 
 // Estados possíveis do jogo
@@ -33,6 +35,7 @@ namespace Game {
     Enemy getEnemyByIndex(int index);
     size_t getTotalEnemies();
     extern Character player;
+    extern Save currentSave;
 
     void handleInput();
     void render();

@@ -191,10 +191,12 @@ void handleCreateSaveInput() {
             break;
         case Key::Enter: {
             if (createSaveOptions[Game::selectedOption] == "Salvar") {
-                saveVector[Game::selectedHorizontal].saveToFile(chosenCharacter(), {});
-
-                loadSave(saveVector[Game::selectedHorizontal]);
+                Game::currentSave = saveVector[Game::selectedHorizontal];
+                Game::currentSave.saveToFile(chosenCharacter(), {});
+                resetCustomCharacter(); // Reseta o personagem customizado
+                loadSave(Game::currentSave);
                 Game::player = chosenCharacter();
+                chosen = {};
                 Game::currentState = GameState::GAME_MENU;
 
             } else if (createSaveOptions[Game::selectedOption] == "Deletar") {

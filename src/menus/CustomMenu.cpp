@@ -179,3 +179,10 @@ void handleNameInput() {
       return;
     }
 }
+
+void resetCustomCharacter() {
+  custom.name = {"", "", "", ""};
+  custom.defense = 10;
+  custom.attack = 10;
+  custom.magic = 10;
+}

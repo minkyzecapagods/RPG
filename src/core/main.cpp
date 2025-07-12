@@ -8,7 +8,7 @@
 #include "helpers/utils.hpp"
 #include "entities/Enemy.hpp"
 #include "systems/Save.hpp"
-
+#include "systems/ItemRegistry.hpp"
 
 using namespace std;
 
@@ -16,10 +16,10 @@ int main() {
     cout << normalText; // Modo de texto dentro do jogo (fundo preto, texto branco)
     initKeyboard();
     loadFromFile(); // Carrega os saves do jogo
-    
+    items.loadItemsFromFile(); // Carrega os itens do jogo
     while (Game::currentState != GameState::EXIT) {
         adjustWindow();
-
+        
         Game::render();
         Game::handleInput();
         if (Game::currentState == GameState::INITIALIZE_BATTLE) {

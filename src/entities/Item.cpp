@@ -3,11 +3,18 @@
 
 using namespace std;
 
-Item::Item(string name, string description, ItemType type, int bonus, bool isLocked)
-    : name(name), description(description), type(type), bonus(bonus), isLocked(isLocked){}
+Item::Item(string name, string quest, string description, ItemType type, vector<string> ascii, int bonus)
+    : name(name), quest(quest), description(description), type(type), ascii(ascii), bonus(bonus) {}
+Item::Item() {
+    name = "Default Item";
+    quest = "No Quest";
+    description = "No Description";
+    type = ItemType::WEAPON; // Default type
+    ascii = {"Default ASCII Art"};
+    bonus = 0; // Default bonus
+};
+
 string Item::getName() const { return name; }
 string Item::getDescription() const { return description; }
 ItemType Item::getType() const { return type; }
 int Item::getBonus() const { return bonus; }
-bool Item::getIsLocked() const { return isLocked; }
-void Item::setIsLocked(bool locked) { isLocked = locked; }

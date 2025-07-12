@@ -1,0 +1,57 @@
+#ifndef ITEMREGISTRY_HPP
+#define ITEMREGISTRY_HPP
+
+#include <unordered_map>
+#include <vector>
+#include <string>
+#include "entities/Item.hpp"
+#include "systems/Save.hpp"
+
+using namespace std;
+
+class ItemRegistry {
+  // Classe responsável por gerenciar o registro de itens do jogo
+  // Carrega itens de um arquivo, permite desbloquear e bloquear itens, e verificar status de desbloqueio
+
+private:
+  unordered_map<int, Item> itemMap;
+  vector<int> unlockedItems;
+  string itemsFilePath;
+  
+public:
+  ItemRegistry(const string& itemsFilePath);
+  // Carregar todos os itens do arquivo
+  void loadItemsFromFile();
+  
+  // Obter item por ID
+  Item getItem(int id);
+
+  // Atualiza o filepath
+  void setItemsFilePath(const string& newFilePath);
+
+  // Para atualizar a lista de itens desbloqueados de acordo com o save
+  void setUnlockedItems(const vector<int>& unlocked);
+  
+  // Listar todos os itens (com status de desbloqueio)
+  vector<pair<Item, bool>> getAllItems();
+  
+  // Adicionar novo item ao registro
+  void addItem(const Item& item);
+  
+  // Marcar item como desbloqueado
+  void unlockItem(int id);
+
+  // Marcar item como bloqueado
+  void lockItem(int id);
+  
+  // Verificar se item está desbloqueado
+  bool isUnlocked(int id);
+};
+
+void addSavedItensInfo(int saveId, const vector<int> &equipment);
+
+extern ItemRegistry items;
+
+void resetItemRegistry();
+
+#endif

@@ -4,7 +4,7 @@
 #include "entities/Character.hpp"
 #include "entities/Enemy.hpp"
 
-class Battle{
+class Battle {
     private:
         bool battleOver = false;
         int whoWon = 0; // 0 = Ninguém, 1 = Jogador, 2 = Inimigo

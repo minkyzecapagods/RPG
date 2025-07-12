@@ -3,6 +3,7 @@
 #include "systems/Save.hpp"
 #include "core/ArrowKey.hpp"
 #include "helpers/utils.hpp"
+#include "systems/ItemRegistry.hpp"
 
 #include <map>
 #include <string>
@@ -43,7 +44,8 @@ void handleSaveMenuInput() {
             break;
         case Key::Enter:
             if (saveMenuOptions[Game::selectedOption] == "Carregar") {
-                loadSave(saveVector[Game::selectedHorizontal]);
+                Game::currentSave = saveVector[Game::selectedHorizontal];
+                loadSave(Game::currentSave, Game::selectedHorizontal);
                 Game::currentState = GameState::GAME_MENU;
             } else if (saveMenuOptions[Game::selectedOption] == "Deletar") {
                 saveVector[Game::selectedHorizontal].deleteSave();

@@ -6,25 +6,23 @@
 
 using namespace std;
 
-enum class ItemType { ARMA, ARMADURA, TALISMA, ANEL };
+enum class ItemType { WEAPON, ARMOR, TALISMAN, LUCKYCHARM };
 
 class Item {
 private:
   string name;
+  string quest;
   string description;
   ItemType type;
+  vector<string> ascii;
   int bonus;
-  bool isLocked;
 public:
-  Item(string name, string description, ItemType type, int bonus, bool isLocked);
+  Item(string name, string quest, string description, ItemType type, vector<string> ascii, int bonus);
+  Item(); // Construtor padrão
   string getName() const;
   string getDescription() const;
   ItemType getType() const;
   int getBonus() const;
-  bool getIsLocked() const;
-  void setIsLocked(bool locked);
 };
-
-extern vector<Item> UnlockedItems;
 
 #endif

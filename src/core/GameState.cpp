@@ -16,6 +16,7 @@ bool Game::isBattleActive = false;
 bool Game::isBattleOver = false;
 int Game::selectedHorizontal = 0;
 Character Game::player;
+Save Game::currentSave;
 int Game::currentEnemyIndex = 0;
 
 namespace {
