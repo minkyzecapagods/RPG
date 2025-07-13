@@ -3,16 +3,14 @@
 
 #include <vector>
 #include <string>
+#include <sys/ioctl.h>
+#include <unistd.h>
+#include <cstdlib>
 
 using namespace std;
 
-#ifdef _WIN32
-  #include <windows.h>
-#else
-  #include <sys/ioctl.h>
-  #include <unistd.h>
-  #include <cstdlib>
-#endif
+template <typename T>
+void renderGenericList(const vector<T>& items, int selectedIndex);
 
 extern const string greenText;
 extern const string normalText;

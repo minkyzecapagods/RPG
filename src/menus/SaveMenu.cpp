@@ -20,7 +20,7 @@ vector<string> saveMenuOptions = {
 };
 
 void renderSaveMenu() {
-  renderSaves(Game::selectedHorizontal);
+  renderGenericList(saveVector, Game::selectedHorizontal);
   renderScroll(saveMenuOptions);
   cout << "\n";
   centralPrint("Use setas para mover, espaço para selecionar, pressione q para sair.\n");
@@ -45,8 +45,8 @@ void handleSaveMenuInput() {
         case Key::Enter:
             if (saveMenuOptions[Game::selectedOption] == "Carregar") {
                 // TRY CATCH AQUI PRA CASO TENTAR SELECIONAR UM SAVE VAZIO
-                Game::currentSave = saveVector[Game::selectedHorizontal];
-                loadSave(Game::currentSave, Game::selectedHorizontal);
+                Game::currentSave = {saveVector[Game::selectedHorizontal], Game::selectedHorizontal};
+                loadSave(Game::currentSave.save, Game::selectedHorizontal);
                 Game::currentState = GameState::GAME_MENU;
             } else if (saveMenuOptions[Game::selectedOption] == "Deletar") {
                 saveVector[Game::selectedHorizontal].deleteSave();

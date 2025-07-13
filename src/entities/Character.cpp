@@ -67,12 +67,12 @@ Character::Character(string name, int defense, int attack, int magic, vector<int
 
 
 Character::Character() {
-    this->name = "name";
+    this->name = "----";
     hp = 100;
     defense = 10;
     attack = 10;
     magic = 10;
-    equipment = {1, 2, 3, 4};
+    equipment = {};
 }
 void Character::dealDamage(Character* target){
     int damage = 10 + this->attack;

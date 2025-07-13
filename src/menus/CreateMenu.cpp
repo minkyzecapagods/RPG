@@ -127,7 +127,7 @@ void renderCharacterChoice(){
 
 void renderCreateSaveMenu() {
   renderCharStats(chosen);
-  renderSaves(Game::selectedHorizontal);
+  renderGenericList(saveVector, Game::selectedHorizontal);
   renderScroll(createSaveOptions);
   cout << "\n";
   centralPrint("Use setas para mover, espaço para selecionar, pressione q para sair.\n");
@@ -193,10 +193,10 @@ void handleCreateSaveInput() {
             break;
         case Key::Enter: {
             if (createSaveOptions[Game::selectedOption] == "Salvar") {
-                Game::currentSave = saveVector[Game::selectedHorizontal];
-                Game::currentSave.saveToFile(chosenCharacter(), {});
+                Game::currentSave = {saveVector[Game::selectedHorizontal], Game::selectedHorizontal};
+                Game::currentSave.save.saveToFile(chosenCharacter(), {}, items, Game::currentSave.index);
                 resetCustomCharacter(); // Reseta o personagem customizado
-                loadSave(Game::currentSave);
+                loadSave(Game::currentSave.save);
                 Game::player = chosenCharacter();
                 chosen = {};
                 Game::currentState = GameState::GAME_MENU;

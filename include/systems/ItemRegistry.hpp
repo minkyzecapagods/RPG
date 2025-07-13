@@ -5,14 +5,11 @@
 #include <vector>
 #include <string>
 #include "entities/Item.hpp"
-#include "systems/Save.hpp"
 
 using namespace std;
 
+class ItemRegistry;
 class ItemRegistry {
-  // Classe responsável por gerenciar o registro de itens do jogo
-  // Carrega itens de um arquivo, permite desbloquear e bloquear itens, e verificar status de desbloqueio
-
 private:
   unordered_map<int, Item> itemMap;
   vector<int> unlockedItems;
@@ -28,6 +25,9 @@ public:
 
   // Atualiza o filepath
   void setItemsFilePath(const string& newFilePath);
+
+  // Total de itens
+  int getNumItems() const;
 
   // Para atualizar a lista de itens desbloqueados de acordo com o save
   void setUnlockedItems(const vector<int>& unlocked);

@@ -6,18 +6,22 @@
 #include <set>
 #include "entities/Character.hpp"
 
+class ItemRegistry;
+
 class Save {
 private:
   Character hero;
   vector<vector<int>> enemys_inventory;
+  int numItems;
   bool isWritten;
 public:
   Save();
   const Character& getHero() const;
   vector<vector<int>>& getEnemysInventory();
   bool getIsWritten() const;
-  bool saveToFile(const Character& hero, const vector<vector<int>>& enemys_inventory);
-  bool saveToVector(const Character& hero, const vector<vector<int>>& enemys_inventory);
+  int getNumItems() const;
+  bool saveToFile(const Character& hero, const vector<vector<int>>& enemys_inventory, const ItemRegistry& registry, const int saveIndex);
+  bool saveToVector(const Character& hero, const vector<vector<int>>& enemys_inventory, int numItems);
   bool deleteSave();
 };
 

@@ -6,6 +6,7 @@
 #include "entities/Character.hpp"
 #include "entities/Enemy.hpp"
 #include "systems/ItemRegistry.hpp"
+#include "systems/Save.hpp"
 using namespace std;
 
 // Estados possíveis do jogo
@@ -25,6 +26,11 @@ enum class GameState {
     EXIT
 };
 
+struct indexedSave {
+    Save save;
+    int index;
+};
+
 namespace Game {
     extern GameState currentState;
     extern size_t selectedOption;
@@ -36,7 +42,7 @@ namespace Game {
     Enemy getEnemyByIndex(int index);
     size_t getTotalEnemies();
     extern Character player;
-    extern Save currentSave;
+    extern indexedSave currentSave;
 
     void handleInput();
     void render();

@@ -50,6 +50,8 @@ void ItemRegistry::setUnlockedItems(const vector<int>& unlocked) {
     unlockedItems = unlocked;
 }
 
+int ItemRegistry::getNumItems() const { return itemMap.size(); }
+
 ItemType stringToItemType(const string& typeStr) {
   if (typeStr == "WEAPON") return ItemType::WEAPON;
   if (typeStr == "ARMOR") return ItemType::ARMOR;

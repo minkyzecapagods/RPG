@@ -1,6 +1,7 @@
 
 #include "helpers/utils.hpp"
 #include "core/GameState.hpp"
+#include "systems/Save.hpp"
 
 #include <vector>
 #include <iostream>
@@ -98,3 +99,55 @@ string replacePlaceholder(const string& str, initializer_list<pair<string, strin
     }
     return result;
 }
+
+string getSelectionDisplay(bool isSelected) {
+    return isSelected ? 
+        greenText + " ↑        ◹◸        ↓ " + normalText :
+        " ↑                  ↓ ";
+}
+
+vector<string> getRowDataDisplay(vector<Save> saves,int numItems, int selected) {
+    vector<string> data = {"", ""};
+    string color = "";
+    for (int i = 0; i < numItems; i++) {
+        if (i == selected) color = greenText;
+        else color = normalText;
+        data[0] += color + " ↑ " + formatField(saves[i].getHero().getName(), 16, ' ')
+             + " ↓ " + normalText;
+        data[1] += color + " ↑   Items: " + 
+            formatField(to_string(saves[i].getNumItems()), 2, '0') + "/" +
+            formatField(to_string(saves[i].getHero().getEquipment().size()), 2, '0') +
+            "   ↓ " + normalText;
+    }
+    return data;
+}
+
+// vector<string> getRowsDataDisplay(vector<Item> items, int selected) 
+
+template <typename T>
+void renderGenericList(const vector<T>& items, int selectedIndex) {
+    // Dados comuns a todos os tipos
+    const int numItems = items.size();
+    const int width = 23 * items.size(); // Largura fixa por item
+
+    // Renderizar linha superior
+    string topLine = repeat(numItems, " ↑→→→→→→→→→→→→→→→→→→↓ ", selectedIndex);
+    centralPrint(topLine + "\n", width);
+    
+    // Renderizar linha de seleção
+    string selectionLine;
+    for (int i = 0; i < numItems; ++i) {
+        selectionLine += getSelectionDisplay(i == selectedIndex);
+    }
+    centralPrint(selectionLine + "\n", width);
+    
+    // Renderizar dados específicos
+    vector<string> dataLine = getRowDataDisplay(items, numItems, selectedIndex);
+    for (const auto& line : dataLine) centralPrint(line + "\n", width);
+    
+    // Renderizar linhas inferiores
+    centralPrint(repeat(numItems, " ↑                  ↓ ", selectedIndex) + "\n", width);
+    centralPrint(repeat(numItems, " ↑→→→→→→→→→→→→→→→→→→↓ ", selectedIndex) + "\n", width);
+}
+
+template void renderGenericList<Save>(const vector<Save>&, int selectedIndex);

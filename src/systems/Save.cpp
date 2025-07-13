@@ -1,6 +1,7 @@
 #include "systems/Save.hpp"
 #include "helpers/utils.hpp"
 #include "core/GameState.hpp"
+#include "systems/ItemRegistry.hpp"
 
 #include <fstream>
 #include <sstream>
@@ -10,22 +11,29 @@ using namespace std;
 vector<Save> saveVector = {Save(), Save(), Save()};
 const int numSaves = saveVector.size();
 
-Save::Save() : hero(), enemys_inventory(), isWritten(false) {}
+Save::Save() : hero(), enemys_inventory(), numItems(0), isWritten(false) {}
 
 const Character& Save::getHero() const{ return hero; }
 
+int Save::getNumItems() const { return numItems; }
+
 bool Save::getIsWritten() const { return isWritten; }
 
-bool Save::saveToFile(const Character& hero, const vector<vector<int>>& enemys_inv) {
+bool Save::saveToFile(const Character& hero, const vector<vector<int>>& enemys_inv, const ItemRegistry& registry, const int saveIndex) {
     // Determina índice do save no vetor (por subtração de vetores)
-    int index = this - &saveVector[0] + 1; // +1 porque o vetor começa em 0, mas os saves começam em 1
+    int index = saveIndex + 1;// +1 porque o vetor começa em 0, mas os saves começam em 1
 
-    if (index < 0 || index >= numSaves) return false;
+    if (index < 0 || index >= numSaves) {
+      cout << "PROBLEMA DE INT: " << index;
+      return false;
+    }
 
-    string filename = "data/saves" + to_string(index) + "/save.txt";
+    string filename = "data/saves/save" + to_string(index) + "/save.txt";
     ofstream file(filename);
-    if (!file.is_open()) return false;
-
+    if (!file.is_open()) {
+      cout << "PROBLEMA DE SAVE";
+      return false;
+    }
     // Salva os dados do personagem
     file << hero.getName() << ";" << hero.getDefense() << ";" 
          << hero.getAttack() << ";" << hero.getMagic() << ";";
@@ -48,10 +56,13 @@ bool Save::saveToFile(const Character& hero, const vector<vector<int>>& enemys_i
         file << "\n";
     }
 
+    file << registry.getNumItems() << ";\n";
+
     file.close();
 
     // Atualiza o objeto Save
 
+    this->numItems = registry.getNumItems();
     this->hero = hero;
     this->enemys_inventory = enemys_inv;
     isWritten = true;
@@ -59,7 +70,7 @@ bool Save::saveToFile(const Character& hero, const vector<vector<int>>& enemys_i
     return true;
 }
 
-bool Save::saveToVector(const Character& hero, const vector<vector<int>>& enemys_inv)  {
+bool Save::saveToVector(const Character& hero, const vector<vector<int>>& enemys_inv, int numItems)  {
     // Determina índice do save no vetor (por subtração de vetores)
     int index = this - &saveVector[0] + 1; // +1 porque o vetor começa em 0, mas os saves começam em 1
     if (index < 0 || index >= numSaves) return false;
@@ -67,6 +78,8 @@ bool Save::saveToVector(const Character& hero, const vector<vector<int>>& enemys
     // Atualiza o objeto Save
     this->hero = hero;
     this->enemys_inventory = enemys_inv;
+    this->numItems = numItems;
+
     isWritten = true;
 
     return true;
@@ -74,7 +87,7 @@ bool Save::saveToVector(const Character& hero, const vector<vector<int>>& enemys
 
 void loadFromFile() {
   for (int i = 0; i < numSaves; ++i) {
-    string filename = "data/save" + to_string(i + 1) + "/save.txt";
+    string filename = "data/saves/save" + to_string(i + 1) + "/save.txt";
     ifstream file(filename);
 
     if (!file.is_open()) continue;
@@ -102,19 +115,25 @@ void loadFromFile() {
       Character hero(name, stoi(defense), stoi(attack), stoi(magic), equipment);
       // Lê inventário dos inimigos
       vector<vector<int>> enemys_inv;
+      int numItems;
       while (getline(file, line)) {
-          stringstream invSS(line);
-          vector<int> inv;
-          while (getline(invSS, id, ',')) {
+        stringstream invSS(line);
+        vector<int> inv;
+        while (getline(invSS, id, ',')) {
+          if (!id.empty() && id.back() == ';') {
+              id.pop_back(); // remove o ;
+              numItems = stoi(id);
+          }
+          if (!id.empty())
               inv.push_back(stoi(id));
           }
           enemys_inv.push_back(inv);
+        }
+        saveVector[i].saveToVector(hero, enemys_inv, numItems);
       }
-      saveVector[i].saveToVector(hero, enemys_inv);
+      file.close();
     }
-    file.close();
   }
-}
 
 void loadSave(const Save& save, int saveId) {
     Game::player = save.getHero(); // Atualiza o personagem do jogo com o herói salvo
@@ -137,52 +156,4 @@ bool Save::deleteSave() {
     ofstream file(filename);
     file.close();
     return true;
-}
-
-void renderSaves(const int selectedSave) {
-    vector<string> saveInfo = {
-                                " ↑        {SELECTED}        ↓ ",
-                                " ↑{NAME}↓ ",
-                                " ↑   Items: {ITEMS}/{TOTAL}   ↓ "};
-                                
-  int chars = 23 * numSaves;  // largura do quadrado do save é 23
-  centralPrint(repeat(numSaves, " ↑→→→→→→→→→→→→→→→→→→↓ ", selectedSave) + "\n", chars );
-  string str;
-  for (int i = 0; i < numSaves; ++i) {
-    if (selectedSave == i) str += greenText + replacePlaceholder(saveInfo[0], "{SELECTED}", "◹◸") + normalText;
-    else str += replacePlaceholder(saveInfo[0], "{SELECTED}", "  ");
-  }
-  centralPrint(str, chars);
-
-  string nameStr, itemStr;
-  for (int i = 0; i < numSaves; ++i) {
-    if (i == selectedSave) {
-      nameStr += greenText; 
-      itemStr += greenText;
-    }
-
-    string name, items;
-    if (saveVector[i].getIsWritten()) {
-      name = saveVector[i].getHero().getName();
-      items = to_string(saveVector[i].getHero().getEquipment().size());
-    } else {
-      name = "----";
-      items = "--";
-    }
-    nameStr += replacePlaceholder(saveInfo[1], "{NAME}", formatField(name, 18, ' ')); // 18 chars dentro do save
-    itemStr += replacePlaceholder(saveInfo[2], {
-    {"{TOTAL}", "30"},
-    {"{ITEMS}", formatField(items, 2, '0')}
-    });
-
-    if (i == selectedSave) {
-      nameStr += normalText; 
-      itemStr += normalText;
-    }
-  }
-  cout << "\n";
-  centralPrint(nameStr + "\n", chars);
-  centralPrint(itemStr + "\n", chars);
-  centralPrint(repeat(numSaves, " ↑                  ↓ ", selectedSave) + "\n", chars);
-  centralPrint(repeat(numSaves, " ↑←←←←←←←←←←←←←←←←←←↓ ", selectedSave) + "\n", chars);
 }
