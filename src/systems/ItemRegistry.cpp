@@ -26,6 +26,17 @@ Item ItemRegistry::getItem(int id) {
     }
 }
 
+vector<pair<Item, bool>> ItemRegistry::getAllItems() {
+    vector<pair<Item, bool>> result;
+
+    for (const auto& [id, item] : itemMap) {
+        bool unlocked = isUnlocked(id);
+        result.emplace_back(item, unlocked);
+    }
+
+    return result;
+}
+
 void ItemRegistry::setItemsFilePath(const string& newFilePath) {
     itemsFilePath = newFilePath;
 }
@@ -137,6 +148,10 @@ void addSavedItensInfo(int index, const vector<int> &equipment) {
 
 void resetItemRegistry() {
     items = ItemRegistry("data/items/items.txt");
+}
+
+bool ItemRegistry::isUnlocked(int id) {
+    return std::find(unlockedItems.begin(), unlockedItems.end(), id) != unlockedItems.end();
 }
 
 bool ItemRegistry::saveItemsToFile() {

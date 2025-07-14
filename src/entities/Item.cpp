@@ -30,3 +30,13 @@ string itemTypeToString(ItemType type) {
     default: return "OTHER"; // TRY CATCH??
     }
 }
+
+string itemTypeToStat(ItemType type) {
+    switch (type) {
+    case ItemType::WEAPON: return "ATK";
+    case ItemType::ARMOR: return "ARM";
+    case ItemType::TALISMAN: return "MAG";
+    case ItemType::LUCKYCHARM: return "LUK";
+    default: return "???"; // TRY CATCH??
+    }
+}

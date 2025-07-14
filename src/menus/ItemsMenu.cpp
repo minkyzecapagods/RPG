@@ -3,6 +3,7 @@
 #include "core/ArrowKey.hpp"
 #include "helpers/utils.hpp"
 #include "systems/ItemRegistry.hpp"
+#include "entities/Item.hpp"
 
 #include <vector>
 #include <string>
@@ -17,6 +18,8 @@ vector<string> itemsMenuOptions = {
 };
 
 void renderItemsMenu() {
+
+    renderGenericList(items.getAllItems(), Game::selectedHorizontal);
     renderScroll(itemsMenuOptions);
     cout << "\n";
     centralPrint("Use setas para mover, espaço para selecionar, pressione q para sair.\n");

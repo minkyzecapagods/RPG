@@ -2,6 +2,8 @@
 #include "helpers/utils.hpp"
 #include "core/GameState.hpp"
 #include "systems/Save.hpp"
+#include "entities/Item.hpp"
+#include "systems/ItemRegistry.hpp"
 
 #include <vector>
 #include <iostream>
@@ -129,13 +131,30 @@ vector<string> getRowDataDisplay(vector<Save> saves,int numItems, int selected) 
     return data;
 }
 
-// vector<string> getRowsDataDisplay(vector<Item> items, int selected) 
+vector<string> getRowDataDisplay(vector<pair<Item, bool>> item, int numItems, int selected) {
+    vector<string> data = {"", "", ""};
+    string color = "";
+    for (int i = 0; i < numItems; i++) {
+        string name, bonusStr, lockStatus;
+        if (i == selected) color = greenText;
+        else color = normalText;
+        data[0] += color + " ↑ " + formatField(item[i].first.getName(), 16, ' ')
+         + " ↓ " + normalText;
+        data[1] += color + " ↑     +" + formatField(to_string(item[i].first.getBonus()), 2, '0') 
+        + "  " + itemTypeToStat(item[i].first.getType()) +
+        "     ↓ " + normalText;
+        string status = "     Perdido    ";
+        if (items.isUnlocked(item[i].second)) status = "  Conquistado  ";
+        data[2] += color + " ↑ " + status + " ↓ " + normalText;
+    }
+    return data;
+}
 
 template <typename T>
-void renderGenericList(const vector<T>& items, int selectedIndex) {
+void renderGenericList(const vector<T>& data, int selectedIndex) {
     // Dados comuns a todos os tipos
-    const int numItems = items.size();
-    const int width = 23 * items.size(); // Largura fixa por item
+    const int numItems = data.size();
+    const int width = 23 * data.size(); // Largura fixa por item
 
     // Renderizar linha superior
     string topLine = repeat(numItems, " ↑→→→→→→→→→→→→→→→→→→↓ ", selectedIndex);
@@ -149,7 +168,7 @@ void renderGenericList(const vector<T>& items, int selectedIndex) {
     centralPrint(selectionLine + "\n", width);
     
     // Renderizar dados específicos
-    vector<string> dataLine = getRowDataDisplay(items, numItems, selectedIndex);
+    vector<string> dataLine = getRowDataDisplay(data, numItems, selectedIndex);
     for (const auto& line : dataLine) centralPrint(line + "\n", width);
     
     // Renderizar linhas inferiores
@@ -158,3 +177,4 @@ void renderGenericList(const vector<T>& items, int selectedIndex) {
 }
 
 template void renderGenericList<Save>(const vector<Save>&, int selectedIndex);
+template void renderGenericList<pair<Item, bool>>(const vector<pair<Item, bool>>&, int selectedIndex);

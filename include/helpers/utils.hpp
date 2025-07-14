@@ -10,7 +10,7 @@
 using namespace std;
 
 template <typename T>
-void renderGenericList(const vector<T>& items, int selectedIndex);
+void renderGenericList(const vector<T>& data, int selectedIndex);
 
 extern const string greenText;
 extern const string normalText;

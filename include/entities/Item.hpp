@@ -29,4 +29,6 @@ public:
 
 string itemTypeToString(ItemType type);
 
+string itemTypeToStat(ItemType type);
+
 #endif
