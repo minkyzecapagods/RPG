@@ -191,10 +191,15 @@ void handleCreateSaveInput() {
             break;
         case Key::Enter: {
             if (createSaveOptions[Game::selectedOption] == "Salvar") {
-                Game::currentSave = {saveVector[Game::selectedHorizontal], Game::selectedHorizontal};
-                Game::currentSave.save.saveToFile(chosenCharacter(), {}, items, Game::currentSave.index);
-                resetCustomCharacter(); // Reseta o personagem customizado
-                loadSave(Game::currentSave.save);
+                Game::currentEnemyIndex = 0; // Garante que um novo jogo comece do zero
+                Game::currentSave.index = Game::selectedHorizontal; // Define o índice para que saveItemsToFile funcione
+                items.saveItemsToFile(); // Cria o saved_items.txt para o novo save
+
+                Save newSave;
+                newSave.saveToFile(chosenCharacter(), {}, items, Game::selectedHorizontal);
+                Game::currentSave.save = newSave; // Atualiza o objeto save no estado do jogo
+
+                loadSave(Game::currentSave.save, Game::currentSave.index);
                 Game::player = chosenCharacter();
                 chosen = {};
                 Game::currentState = GameState::GAME_MENU;

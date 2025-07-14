@@ -57,7 +57,8 @@ void renderGameMenu() {
 
     // Mostra as informações do personagem e do jogo
     centralPrint("Personagem: " + Game::player.getName() + "\n");
-    centralPrint("Inimigo a ser enfrentado: " + to_string(Game::currentEnemyIndex + 1) + "/" + to_string(Game::getTotalEnemies()) + "\n");
+    centralPrint("Próximo inimigo: " + Game::getEnemyByIndex(Game::currentEnemyIndex).getName() + "\n");
+    centralPrint("Inimigos restantes: " + to_string(Game::getTotalEnemies() - Game::currentEnemyIndex) + "\n");
     centralPrint("Save: " + to_string(Game::currentSave.index + 1) + "\n\n");
 
     renderScroll(gameMenuOptions);

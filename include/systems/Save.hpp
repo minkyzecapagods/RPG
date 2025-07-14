@@ -13,15 +13,17 @@ private:
   Character hero;
   vector<vector<int>> enemys_inventory;
   int existingItems;
+  int currentEnemyIndex; // Adicionado para salvar o progresso do inimigo
   bool isWritten;
 public:
   Save();
   const Character& getHero() const;
+  int getCurrentEnemyIndex() const; // Getter para o índice do inimigo
   vector<vector<int>>& getEnemysInventory();
   bool getIsWritten() const;
   int getexistingItems() const;
   bool saveToFile(const Character& hero, const vector<vector<int>>& enemys_inventory, const ItemRegistry& registry, const int saveIndex);
-  bool saveToVector(const Character& hero, const vector<vector<int>>& enemys_inventory, int numItems);
+  bool saveToVector(const Character& hero, const vector<vector<int>>& enemys_inventory, int numItems, int enemyIndex);
   bool deleteSave();
 };
 
