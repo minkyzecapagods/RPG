@@ -12,14 +12,14 @@ class Save {
 private:
   Character hero;
   vector<vector<int>> enemys_inventory;
-  int numItems;
+  int existingItems;
   bool isWritten;
 public:
   Save();
   const Character& getHero() const;
   vector<vector<int>>& getEnemysInventory();
   bool getIsWritten() const;
-  int getNumItems() const;
+  int getexistingItems() const;
   bool saveToFile(const Character& hero, const vector<vector<int>>& enemys_inventory, const ItemRegistry& registry, const int saveIndex);
   bool saveToVector(const Character& hero, const vector<vector<int>>& enemys_inventory, int numItems);
   bool deleteSave();

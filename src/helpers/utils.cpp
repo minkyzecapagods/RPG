@@ -110,14 +110,21 @@ vector<string> getRowDataDisplay(vector<Save> saves,int numItems, int selected) 
     vector<string> data = {"", ""};
     string color = "";
     for (int i = 0; i < numItems; i++) {
+        string name, totalItems, partialItems;
         if (i == selected) color = greenText;
         else color = normalText;
-        data[0] += color + " ↑ " + formatField(saves[i].getHero().getName(), 16, ' ')
+        if (saves[i].getIsWritten()) {
+            data[0] += color + " ↑ " + formatField(saves[i].getHero().getName(), 16, ' ')
              + " ↓ " + normalText;
-        data[1] += color + " ↑   Items: " + 
-            formatField(to_string(saves[i].getNumItems()), 2, '0') + "/" +
-            formatField(to_string(saves[i].getHero().getEquipment().size()), 2, '0') +
+            data[1] += color + " ↑   Items: " + formatField(to_string(saves[i].getHero().getEquipment().size()), 2, '0') 
+            + "/" +
+            formatField(to_string(saves[i].getexistingItems()), 2, '0') +
             "   ↓ " + normalText;
+        }
+        else {
+            data[0] += color + " ↑       ----       ↓ " + normalText;
+            data[1] += color + " ↑   Items: --/--   ↓ " + normalText;
+        }
     }
     return data;
 }

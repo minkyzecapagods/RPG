@@ -108,8 +108,6 @@ void renderCharacterChoice(){
 
     vector<string> selected = {"", "", "", ""};
     if (Game::selectedOption < 4) selected[Game::selectedOption] = greenText;
-    
-    system(CLEAR_COMMAND);
 
     cout << "\n\n";
     centralPrint(str[0] +"\n", chars); 

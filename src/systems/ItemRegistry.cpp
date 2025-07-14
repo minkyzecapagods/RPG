@@ -140,5 +140,4 @@ void addSavedItensInfo(int saveId, const vector<int> &equipment) {
 
 void resetItemRegistry() {
     items = ItemRegistry("data/items/items.txt");
-    items.loadItemsFromFile();
 }
