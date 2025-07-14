@@ -74,6 +74,7 @@ void handleGameMenuInput() {
                 Game::currentState = GameState::INVENTORY_MENU;
             } else if (gameMenuOptions[Game::selectedOption] == "Voltar") {
                 Game::currentSave.save.saveToFile(Game::player, {{}}, items, Game::currentSave.index); // Salva o jogo atual antes de voltar
+                items.saveItemsToFile();
                 resetItemRegistry(); // Reseta o registro de itens ao voltar ao menu principal  
                 Game::currentState = GameState::MAIN_MENU; 
             }

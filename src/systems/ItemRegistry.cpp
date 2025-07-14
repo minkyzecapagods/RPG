@@ -1,5 +1,6 @@
 #include "systems/ItemRegistry.hpp"
 #include "entities/Item.hpp"
+#include "core/GameState.hpp"
 
 #include <string>
 #include <vector>
@@ -128,16 +129,44 @@ void ItemRegistry::loadItemsFromFile() {
   file.close();
 }
 
-void addSavedItensInfo(int saveId, const vector<int> &equipment) {
-  // Adiciona os itens desbloqueados do save atual ao registro global
-  if (saveId != -1) {
-    string filepath = "data/save" + to_string(saveId + 1) + "/saved_items.txt";
-    items.setItemsFilePath(filepath);
-  }
-  items.loadItemsFromFile();
-  items.setUnlockedItems(equipment);
+void addSavedItensInfo(int index, const vector<int> &equipment) {
+    if (index != -1) items.setItemsFilePath("data/saves/save" + to_string(index + 1) + "/saved_items.txt");
+   items.loadItemsFromFile();
+   items.setUnlockedItems(equipment);
 }
 
 void resetItemRegistry() {
     items = ItemRegistry("data/items/items.txt");
+}
+
+bool ItemRegistry::saveItemsToFile() {
+    string filename = "data/saves/save" + to_string(Game::currentSave.index + 1) + "/saved_items.txt";
+    ofstream file(filename);
+    if (!file.is_open()) {
+        cerr << "Erro ao abrir arquivo para escrita: " << filename << endl;
+       return false;
+    }
+
+    // Escrever cada item no arquivo
+    bool firstItem = true;
+    for (const auto& [id, item] : itemMap) {
+        // Linha vazia entre itens (exceto antes do primeiro)
+        if (!firstItem) file << '\n';
+        firstItem = false;
+
+        // Escrever campos básicos
+        file << item.getName() << '\n'
+             << item.getDescription() << '\n'
+             << item.getQuest() << '\n'
+             << itemTypeToString(item.getType()) << '\n'
+             << item.getBonus() << '\n';
+
+        // Escrever arte ASCII
+        for (const string& line : item.getAscii()) {
+            file << line << '\n';
+        }
+    }
+
+    file.close();
+    return true;
 }

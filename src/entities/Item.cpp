@@ -16,5 +16,17 @@ Item::Item() {
 
 string Item::getName() const { return name; }
 string Item::getDescription() const { return description; }
+string Item::getQuest() const { return quest; }
 ItemType Item::getType() const { return type; }
+vector<string> Item::getAscii() const { return ascii; }
 int Item::getBonus() const { return bonus; }
+
+string itemTypeToString(ItemType type) {
+    switch (type) {
+    case ItemType::WEAPON: return "WEAPON";
+    case ItemType::ARMOR: return "ARMOR";
+    case ItemType::TALISMAN: return "TALISMAN";
+    case ItemType::LUCKYCHARM: return "LUCKYCHARM";
+    default: return "OTHER"; // TRY CATCH??
+    }
+}

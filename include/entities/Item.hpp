@@ -21,8 +21,12 @@ public:
   Item(); // Construtor padrão
   string getName() const;
   string getDescription() const;
+  string getQuest() const;
   ItemType getType() const;
+  vector<string> getAscii() const;
   int getBonus() const;
 };
+
+string itemTypeToString(ItemType type);
 
 #endif

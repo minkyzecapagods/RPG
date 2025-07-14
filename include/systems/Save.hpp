@@ -28,7 +28,6 @@ public:
 extern const int numSaves;
 extern vector<Save> saveVector;
 
-void renderSaves(const int selectedSave);
 void loadFromFile();
 
 void loadSave(const Save& save, int saveId = -1);

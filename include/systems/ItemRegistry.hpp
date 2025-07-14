@@ -1,7 +1,7 @@
 #ifndef ITEMREGISTRY_HPP
 #define ITEMREGISTRY_HPP
 
-#include <unordered_map>
+#include <map>
 #include <vector>
 #include <string>
 #include "entities/Item.hpp"
@@ -11,7 +11,7 @@ using namespace std;
 class ItemRegistry;
 class ItemRegistry {
 private:
-  unordered_map<int, Item> itemMap;
+  map<int, Item> itemMap;
   vector<int> unlockedItems;
   string itemsFilePath;
   
@@ -46,9 +46,11 @@ public:
   
   // Verificar se item está desbloqueado
   bool isUnlocked(int id);
+
+  bool saveItemsToFile();
 };
 
-void addSavedItensInfo(int saveId, const vector<int> &equipment);
+void addSavedItensInfo(int index, const vector<int> &equipment);
 
 extern ItemRegistry items;
 

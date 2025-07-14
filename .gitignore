@@ -9,6 +9,14 @@ RPG
 /bin/
 /obj/
 
+#Ignorar arquivos de save
+/data/saves/save1/save.txt
+/data/saves/save1/saved_items.txt
+/data/saves/save2/save.txt
+/data/saves/save2/saved_items.txt
+/data/saves/save3/save.txt
+/data/saves/save3/saved_items.txt
+
 # Ignorar arquivos de backup ou temporários
 *~
 *.swp

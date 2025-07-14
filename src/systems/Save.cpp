@@ -127,6 +127,7 @@ void loadFromFile() {
   }
 
 void loadSave(const Save& save, int saveId) {
+  
     Game::player = save.getHero(); // Atualiza o personagem do jogo com o herói salvo
 
     addSavedItensInfo(saveId, save.getHero().getEquipment());
