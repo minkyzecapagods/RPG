@@ -3,5 +3,7 @@
 
 void renderItemsMenu();
 void handleItemsMenuInput();
+void renderShowItem();
+void handleShowItemInput();
 
 #endif

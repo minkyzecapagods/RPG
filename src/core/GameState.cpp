@@ -94,6 +94,9 @@ void Game::handleInput() {
         case GameState::INVENTORY_MENU:
             handleItemsMenuInput();
             break;
+        case GameState::SHOW_ITEM:
+            handleShowItemInput();
+            break;
         default: break;
     }
 }
@@ -127,6 +130,9 @@ void Game::render() {
             break;
         case GameState::INVENTORY_MENU:
             renderItemsMenu();
+            break;
+        case GameState::SHOW_ITEM:
+            renderShowItem();
             break;
         default: break;
     }

@@ -22,6 +22,7 @@ enum class GameState {
     GAME_MENU,
     BATTLE_MENU,
     INVENTORY_MENU,
+    SHOW_ITEM,
     IN_GAME,
     EXIT
 };

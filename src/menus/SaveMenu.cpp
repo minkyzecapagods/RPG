@@ -20,10 +20,11 @@ vector<string> saveMenuOptions = {
 };
 
 void renderSaveMenu() {
-  renderGenericList(saveVector, Game::selectedHorizontal);
-  renderScroll(saveMenuOptions);
-  cout << "\n";
-  centralPrint("Use setas para mover, espaço para selecionar, pressione q para sair.\n");
+    cout << "\n\n";
+    renderGenericList(saveVector, Game::selectedHorizontal);
+    renderScroll(saveMenuOptions);
+    cout << "\n";
+    centralPrint("Use setas para mover, espaço para selecionar, pressione q para sair.\n");
 }
 
 void handleSaveMenuInput() {

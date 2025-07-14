@@ -16,6 +16,7 @@
 using namespace std;
 
 const string greenText = "\033[32;40m";
+const string redText = "\033[31;40m";
 const string normalText = "\033[37;40m";
 
 int getTerminalWidth() {
@@ -143,9 +144,9 @@ vector<string> getRowDataDisplay(vector<pair<Item, bool>> item, int numItems, in
         data[1] += color + " ↑     +" + formatField(to_string(item[i].first.getBonus()), 2, '0') 
         + "  " + itemTypeToStat(item[i].first.getType()) +
         "     ↓ " + normalText;
-        string status = "     Perdido    ";
-        if (items.isUnlocked(item[i].second)) status = "  Conquistado  ";
-        data[2] += color + " ↑ " + status + " ↓ " + normalText;
+        string status = redText + "     Perdido    ";
+        if (items.isUnlocked(item[i].second)) status = greenText + "  Conquistado  ";
+        data[2] += color + " ↑ " + status + color + " ↓ " + normalText;
     }
     return data;
 }
@@ -176,5 +177,22 @@ void renderGenericList(const vector<T>& data, int selectedIndex) {
     centralPrint(repeat(numItems, " ↑→→→→→→→→→→→→→→→→→→↓ ", selectedIndex) + "\n", width);
 }
 
-template void renderGenericList<Save>(const vector<Save>&, int selectedIndex);
-template void renderGenericList<pair<Item, bool>>(const vector<pair<Item, bool>>&, int selectedIndex);
+template void renderGenericList<Save>(const vector<Save>&, int);
+template void renderGenericList<pair<Item, bool>>(const vector<pair<Item, bool>>&, int);
+
+template <typename T>
+vector<vector<T>> separateInVectorsOf3(const vector<T>& data) {
+    vector<vector<T>> result;
+
+    for (size_t i = 0; i < data.size(); i += 3) {
+        vector<T> chunk;
+        for (size_t j = i; j < i + 3 && j < data.size(); ++j) {
+            chunk.push_back(data[j]);
+        }
+        result.push_back(chunk);
+    }
+
+    return result;
+}
+
+template vector<vector<pair<Item, bool>>> separateInVectorsOf3<pair<Item, bool>>(const vector<pair<Item, bool>>&);

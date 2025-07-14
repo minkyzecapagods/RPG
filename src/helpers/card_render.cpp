@@ -116,3 +116,34 @@ void renderCharCustom(const DefaultCharacter &custom) {
         centralPrint(asciiLine + normalText + "\n", 41);
     }
 }
+
+vector<string> getAsciiFrame(const vector<string>& ascii) {
+    vector<string> withFrame = {" _______________________ ", "|  ___________________  |"};
+
+    for (const auto& line: ascii) {
+        withFrame.push_back("| |" + line + "| |");
+    }
+    withFrame.push_back("|________________________|");
+    return withFrame;
+}
+
+void renderItemCard(const pair<Item, bool>& item) {
+    cout << "\n";
+    string status =  redText + "  PERDIDO";
+    if (item.second) status = greenText +"ENCONTRADO";
+    centralPrint(status + normalText, 10);
+    cout << "\n";
+    centralPrint("+" + to_string(item.first.getBonus()) + " " + itemTypeToStat(item.first.getType()));
+    cout << "\n";
+    centralPrint(item.first.getName());
+    cout << "\n\n";
+    vector<string> asciiFrame = getAsciiFrame(item.first.getAscii());
+    for (const auto& line: asciiFrame) {
+        centralPrint(line + "\n", 26);
+    }
+    cout << "\n\n";
+    centralPrint(item.first.getDescription());
+    cout << "\n";
+    centralPrint("Quest : " + item.first.getQuest());
+    cout << "\n";
+}

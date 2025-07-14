@@ -12,7 +12,11 @@ using namespace std;
 template <typename T>
 void renderGenericList(const vector<T>& data, int selectedIndex);
 
+template <typename T>
+vector<vector<T>> separateInVectorsOf3(const vector<T>& data);
+
 extern const string greenText;
+extern const string redText;
 extern const string normalText;
 
 string repeat(int times, const string& str);
