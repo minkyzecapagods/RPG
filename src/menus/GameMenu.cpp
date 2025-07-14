@@ -16,6 +16,7 @@ vector<string> gameMenuOptions = {
 };
 
 
+
 void renderGameMenu() {
     vector<vector<string>> title = {{
       "                                                              ",
@@ -53,9 +54,16 @@ void renderGameMenu() {
         }
     }
     cout << "\n";
+
+    // Mostra as informações do personagem e do jogo
+    centralPrint("Personagem: " + Game::player.getName() + "\n");
+    centralPrint("Inimigo a ser enfrentado: " + to_string(Game::currentEnemyIndex + 1) + "/" + to_string(Game::getTotalEnemies()) + "\n");
+    centralPrint("Save: " + to_string(Game::currentSave.index + 1) + "\n\n");
+
     renderScroll(gameMenuOptions);
     centralPrint("Use setas para mover, espaço para selecionar, pressione q para sair.\n");
 }
+
 
 void handleGameMenuInput() {
     Key key = getArrowKey();
