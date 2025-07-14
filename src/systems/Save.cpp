@@ -11,9 +11,11 @@ using namespace std;
 vector<Save> saveVector = {Save(), Save(), Save()};
 const int numSaves = saveVector.size();
 
-Save::Save() : hero(), enemys_inventory(), existingItems(0), isWritten(false) {}
+Save::Save() : hero(), enemys_inventory(), existingItems(0), currentEnemyIndex(0), isWritten(false) {}
 
 const Character& Save::getHero() const{ return hero; }
+
+int Save::getCurrentEnemyIndex() const { return currentEnemyIndex; }
 
 int Save::getexistingItems() const { return existingItems; }
 
@@ -37,7 +39,8 @@ bool Save::saveToFile(const Character& hero, const vector<vector<int>>& enemys_i
     
     // Salva os dados do personagem
     file << hero.getName() << ";" << hero.getDefense() << ";" 
-         << hero.getAttack() << ";" << hero.getMagic() << ";";
+         << hero.getAttack() << ";" << hero.getMagic() << ";"
+         << Game::currentEnemyIndex << ";";
 
     // Salva equipamentos do herói
     for (size_t i = 0; i < hero.getEquipment().size(); ++i) {
@@ -62,15 +65,16 @@ bool Save::saveToFile(const Character& hero, const vector<vector<int>>& enemys_i
     file.close();
 
     // Atualiza o objeto Save
-    saveVector[saveIndex].saveToVector(hero, enemys_inv, registry.getNumItems() );
+    saveVector[saveIndex].saveToVector(hero, enemys_inv, registry.getNumItems(), Game::currentEnemyIndex);
     return true;
 }
 
-bool Save::saveToVector(const Character& hero, const vector<vector<int>>& enemys_inv, int numItemsToSave)  {
+bool Save::saveToVector(const Character& hero, const vector<vector<int>>& enemys_inv, int numItemsToSave, int enemyIndex)  {
     // Atualiza o objeto Save
     this->hero = hero;
     this->enemys_inventory = enemys_inv;
     this->existingItems = numItemsToSave;
+    this->currentEnemyIndex = enemyIndex;
     isWritten = true;
 
     return true;
@@ -89,11 +93,12 @@ void loadFromFile() {
       stringstream ss(line);
       // Lê os dados do herói
       // Exemplo de linha: "HeroName;100;50;30;1,
-      string name, defense, attack, magic, equipStr;
+      string name, defense, attack, magic, equipStr, enemyIndexStr;
       getline(ss, name, ';');
       getline(ss, defense, ';');
       getline(ss, attack, ';');
       getline(ss, magic, ';');
+      getline(ss, enemyIndexStr, ';');
       getline(ss, equipStr, ';');
 
       // Lê os equipamentos do herói
@@ -120,7 +125,7 @@ void loadFromFile() {
           }
           enemys_inv.push_back(inv);
         }
-        saveVector[i].saveToVector(hero, enemys_inv, numItemsToSave);
+        saveVector[i].saveToVector(hero, enemys_inv, numItemsToSave, stoi(enemyIndexStr));
       }
       file.close();
     }
@@ -129,6 +134,7 @@ void loadFromFile() {
 void loadSave(const Save& save, int saveId) {
   
     Game::player = save.getHero(); // Atualiza o personagem do jogo com o herói salvo
+    Game::currentEnemyIndex = save.getCurrentEnemyIndex(); // Atualiza o índice do inimigo
 
     addSavedItensInfo(saveId, save.getHero().getEquipment());
     // Quando tiver itens e inimigos, devemos tambem atualizar o inventário dos inimigos

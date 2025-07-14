@@ -15,6 +15,7 @@ using namespace std;
 int main() {
     cout << normalText; // Modo de texto dentro do jogo (fundo preto, texto branco)
     initKeyboard();
+    items.loadItemsFromFile(); // Carrega todos os itens do jogo
     loadFromFile(); // Carrega os saves do jogo
     while (Game::currentState != GameState::EXIT) {
         adjustWindow();

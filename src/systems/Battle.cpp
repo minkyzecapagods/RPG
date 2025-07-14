@@ -69,7 +69,7 @@ Battle::Battle(Character player, Enemy enemy){
             Game::isBattleOver = true; // Define a flag global
             if (whoWon == 1) {
                 if (static_cast<size_t>(Game::currentEnemyIndex) < Game::getTotalEnemies()) {
-                    Game::currentState = GameState::INITIALIZE_BATTLE; // Inicia a próxima batalha
+                    Game::currentState = GameState::GAME_MENU; // Retorna ao menu do jogo
                 } else {
                     Game::currentState = GameState::MAIN_MENU; // Todos os inimigos derrotados, volta ao menu principal
                 }

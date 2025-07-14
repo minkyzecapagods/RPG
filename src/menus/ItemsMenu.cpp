@@ -27,6 +27,12 @@ vector<string> showItemOptions = {
 };
 
 void renderItemsMenu() {
+    if (items.getNumItems() == 0) {
+        cout << "\n\n";
+        centralPrint("Nenhum item encontrado.\n");
+        renderScroll({"Voltar"});
+        return;
+    }
     vector<vector<pair<Item, bool>>> vectorsOf3 = separateInVectorsOf3(items.getAllItems());
     cout << "\n\n";
     int index = Game::selectedHorizontal/3;
@@ -40,6 +46,14 @@ void renderItemsMenu() {
 }
 
 void handleItemsMenuInput() {
+    if (items.getNumItems() == 0) {
+        Key key = getArrowKey();
+        if (key == Key::Enter || key == Key::Quit) {
+            Game::currentState = GameState::GAME_MENU;
+        }
+        return;
+    }
+
     Key key = getArrowKey();
     int totalItems = items.getNumItems();
 

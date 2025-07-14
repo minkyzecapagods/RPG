@@ -87,6 +87,8 @@ void ItemRegistry::addItem(const Item& item) {
 }
 
 void ItemRegistry::loadItemsFromFile() {
+  itemMap.clear();
+  unlockedItems.clear();
   ifstream file(itemsFilePath);
   if (!file.is_open()) {
   throw runtime_error("Erro ao abrir arquivo de itens: " + itemsFilePath);
