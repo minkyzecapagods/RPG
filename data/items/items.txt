@@ -14,7 +14,7 @@ WEAPON
 █▓▒▒█░░░░▓▓▓▒░░░░░░░
 ████░░░░░░░░░░░░░░░░
 
-Talismã de Deus
+Talismã Deus
 Talismã que foi dado por deus
 Mate o goblin para obter
 TALISMAN
@@ -30,7 +30,7 @@ TALISMAN
 █▓▒▒█░░░░▓▓▓▒░░░░░░░
 ████░░░░░░░░░░░░░░░░
 
-Armadura de Espinhos
+Armadura Espinho
 Armadura que contém espinhos
 Mate o goblin para obter
 ARMOR

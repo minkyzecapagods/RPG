@@ -5,6 +5,8 @@
 
 #include <fstream>
 #include <sstream>
+#include <iostream>
+#include <cstdio>
 
 using namespace std;
 
@@ -84,55 +86,68 @@ bool Save::saveToVector(const Character& hero, const vector<vector<int>>& enemys
 }
 
 void loadFromFile() {
-  for (int i = 0; i < numSaves; ++i) {
-    string filename = "data/saves/save" + to_string(i + 1) + "/save.txt";
-    ifstream file(filename);
+    for (int i = 0; i < numSaves; ++i) {
+        string filename = "data/saves/save" + to_string(i + 1) + "/save.txt";
+        ifstream file(filename);
 
-    if (!file.is_open()) continue;
+        if (!file.is_open()) continue;
 
-    string line;
-    // Lê linha do herói
-    if (getline(file, line)) {
-      stringstream ss(line);
-      // Lê os dados do herói
-      // Exemplo de linha: "HeroName;100;50;30;1,
-      string name, defense, attack, magic, equipStr, enemyIndexStr;
-      getline(ss, name, ';');
-      getline(ss, defense, ';');
-      getline(ss, attack, ';');
-      getline(ss, magic, ';');
-      getline(ss, enemyIndexStr, ';');
-      getline(ss, equipStr, ';');
+        try {
+            string line;
+            // Lê linha do herói
+            if (getline(file, line)) {
+                stringstream ss(line);
+                string name, defense, attack, magic, equipStr, enemyIndexStr;
+                getline(ss, name, ';');
+                getline(ss, defense, ';');
+                getline(ss, attack, ';');
+                getline(ss, magic, ';');
+                getline(ss, enemyIndexStr, ';');
+                getline(ss, equipStr, ';');
 
-      // Lê os equipamentos do herói
-      // Exemplo de equipStr: "1,2,3"
-      vector<int> equipment;
-      stringstream equipSS(equipStr);
-      string id;
-      while (getline(equipSS, id, ',')) equipment.push_back(stoi(id));
+                // Validação básica para campos vazios
+                if (name.empty() || defense.empty() || attack.empty() || magic.empty() || enemyIndexStr.empty()) {
+                    throw invalid_argument("Campo de herói faltando ou save corrompido.");
+                }
 
-      Character hero(name, stoi(defense), stoi(attack), stoi(magic), equipment);
-      // Lê inventário dos inimigos
-      vector<vector<int>> enemys_inv;
-      int numItemsToSave;
-      while (getline(file, line)) {
-        stringstream invSS(line);
-        vector<int> inv;
-        while (getline(invSS, id, ',')) {
-          if (!id.empty() && id.back() == ';') {
-              id.pop_back(); // remove o ;
-              numItemsToSave = stoi(id);
-          }
-          if (!id.empty())
-              inv.push_back(stoi(id));
-          }
-          enemys_inv.push_back(inv);
+                vector<int> equipment;
+                stringstream equipSS(equipStr);
+                string id;
+                while (getline(equipSS, id, ',')) {
+                    if (!id.empty()) equipment.push_back(stoi(id));
+                }
+
+                Character hero(name, stoi(defense), stoi(attack), stoi(magic), equipment);
+
+                vector<vector<int>> enemys_inv;
+                int numItemsToSave = 0; // Inicializa com 0
+
+                // Lê inventário dos inimigos e a linha final de contagem de itens
+                while (getline(file, line)) {
+                    if (line.find(';') != string::npos) { // Linha de contagem de itens
+                        numItemsToSave = stoi(line.substr(0, line.find(';')));
+                        break; 
+                    }
+                    
+                    stringstream invSS(line);
+                    vector<int> inv;
+                    while (getline(invSS, id, ',')) {
+                        if (!id.empty()) inv.push_back(stoi(id));
+                    }
+                    if (!inv.empty()) {
+                        enemys_inv.push_back(inv);
+                    }
+                }
+                saveVector[i].saveToVector(hero, enemys_inv, numItemsToSave, stoi(enemyIndexStr));
+            }
+        } catch (const exception& e) {
+            cerr << "Erro ao carregar o save " << filename << ": " << e.what() << ". O save será ignorado." << endl;
+            // Garante que o save seja resetado para um estado vazio e não escrito
+            saveVector[i] = Save(); 
         }
-        saveVector[i].saveToVector(hero, enemys_inv, numItemsToSave, stoi(enemyIndexStr));
-      }
-      file.close();
+        file.close();
     }
-  }
+}
 
 void loadSave(const Save& save, int saveId) {
   
@@ -152,9 +167,10 @@ bool Save::deleteSave() {
     saveVector[index - 1] = Save();
     isWritten = false;
 
-    // Remove o arquivo correspondente
-    string filename = "data/saves/save" + to_string(index) + "/save.txt";
-    ofstream file(filename);
-    file.close();
+    // Remove os arquivos correspondentes
+    string saveDir = "data/saves/save" + to_string(index) + "/";
+    remove((saveDir + "save.txt").c_str());
+    remove((saveDir + "saved_items.txt").c_str());
+
     return true;
 }
