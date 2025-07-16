@@ -23,11 +23,11 @@ bool Save::getIsWritten() const { return isWritten; }
 
 bool Save::saveToFile(const Character& hero, const vector<vector<int>>& enemys_inv, const ItemRegistry& registry, const int saveIndex) {
     // Determina índice do save no vetor (por subtração de vetores)
-    int index = saveIndex + 1;// +1 porque o vetor começa em 0, mas os saves começam em 1
-    
-    if (index < 0 || index >= numSaves) {
-      cout << "PROBLEMA DE INT: " << index;
-      return false;
+    int index = saveIndex + 1; // +1 porque o vetor começa em 0, mas os saves começam em 1
+
+    if (saveIndex < 0 || saveIndex >= numSaves) {
+        cout << "PROBLEMA DE INT: " << index;
+        return false;
     }
     
     string filename = "data/saves/save" + to_string(index) + "/save.txt";
@@ -63,6 +63,9 @@ bool Save::saveToFile(const Character& hero, const vector<vector<int>>& enemys_i
     file << registry.getNumItems() << ";\n";
     
     file.close();
+
+    // Salva os itens do herói em um arquivo separado
+    addSavedItensInfo(saveIndex, hero.getEquipment());
 
     // Atualiza o objeto Save
     saveVector[saveIndex].saveToVector(hero, enemys_inv, registry.getNumItems(), Game::currentEnemyIndex);
@@ -136,7 +139,7 @@ void loadSave(const Save& save, int saveId) {
     Game::player = save.getHero(); // Atualiza o personagem do jogo com o herói salvo
     Game::currentEnemyIndex = save.getCurrentEnemyIndex(); // Atualiza o índice do inimigo
 
-    addSavedItensInfo(saveId, save.getHero().getEquipment());
+    items.loadUnlockedItems(saveId);
     // Quando tiver itens e inimigos, devemos tambem atualizar o inventário dos inimigos
 }
 

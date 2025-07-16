@@ -142,10 +142,29 @@ void ItemRegistry::loadItemsFromFile() {
   file.close();
 }
 
+void ItemRegistry::loadUnlockedItems(int saveId) {
+    string filename = "data/saves/save" + to_string(saveId + 1) + "/saved_items.txt";
+    ifstream file(filename);
+    if (!file.is_open()) return;
+
+    int itemId;
+    while (file >> itemId) {
+        unlockItem(itemId);
+    }
+
+    file.close();
+}
+
 void addSavedItensInfo(int index, const vector<int> &equipment) {
-    if (index != -1) items.setItemsFilePath("data/saves/save" + to_string(index + 1) + "/saved_items.txt");
-   items.loadItemsFromFile();
-   items.setUnlockedItems(equipment);
+    string filename = "data/saves/save" + to_string(index + 1) + "/saved_items.txt";
+    ofstream file(filename);
+    if (!file.is_open()) return;
+
+    for (int itemId : equipment) {
+        file << itemId << "\n";
+    }
+
+    file.close();
 }
 
 void resetItemRegistry() {

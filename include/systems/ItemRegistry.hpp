@@ -19,6 +19,7 @@ public:
   ItemRegistry(const string& itemsFilePath);
   // Carregar todos os itens do arquivo
   void loadItemsFromFile();
+    void loadUnlockedItems(int saveId);
   
   // Obter item por ID
   Item getItem(int id);
