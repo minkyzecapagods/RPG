@@ -133,13 +133,13 @@ vector<string> getRowDataDisplay(vector<Save> saves,int numItems, int selected) 
 }
 
 vector<string> getRowDataDisplay(vector<pair<Item, bool>> item, int numItems, int selected) {
-    vector<string> data = {"", "", ""};
+    // Agora teremos 4 linhas: nome, [EQUIPADO], bônus/tipo, status
+    vector<string> data = {"", "", "", ""};
     string color = "";
     for (int i = 0; i < numItems; i++) {
-        string name, bonusStr, lockStatus;
         if (i == selected) color = greenText;
         else color = normalText;
-        // NOVO: Verifica se o item está equipado
+        // Verifica se o item está equipado
         bool isEquipped = false;
         const auto& equipment = Game::player.getEquipment();
         int itemId = items.getIdByName(item[i].first.getName());
@@ -149,14 +149,22 @@ vector<string> getRowDataDisplay(vector<pair<Item, bool>> item, int numItems, in
                 break;
             }
         }
-        string equipMark = isEquipped ? (" " + greenText + "[EQUIPADO]" + normalText) : "";
-        data[0] += color + " ↑ " + formatField(item[i].first.getName() + equipMark, 16, ' ') + " ↓ " + normalText;
-        data[1] += color + " ↑     +" + formatField(to_string(item[i].first.getBonus()), 2, '0') 
-        + "  " + itemTypeToStat(item[i].first.getType()) +
-        "     ↓ " + normalText;
-        string status = redText + "     Perdido    ";
-        if (items.isUnlocked(item[i].second)) status = greenText + "  Conquistado  ";
-        data[2] += color + " ↑ " + status + color + " ↓ " + normalText;
+        // Linha 0: Nome do item
+        string itemName = item[i].first.getName();
+        string formattedName = formatField(itemName.substr(0, 16), 16, ' '); // Garante que não ultrapasse 16 caracteres
+        data[0] += color + " ↑ " + formattedName + " ↓ " + normalText;
+        // Linha 1: [EQUIPADO] ou vazio
+        string equipLine = isEquipped ? (greenText + formatField("[EQUIPADO]", 16, ' ') + normalText) : formatField("", 16, ' ');
+        data[1] += color + " ↑ " + equipLine + " ↓ " + normalText;
+        // Linha 2: Bônus/tipo
+        data[2] += color + " ↑     +" + formatField(to_string(item[i].first.getBonus()), 2, '0') 
+            + "  " + itemTypeToStat(item[i].first.getType()) +
+            "     ↓ " + normalText;
+        // Linha 3: Status
+        string statusText = items.isUnlocked(item[i].second) ? "Conquistado" : "Perdido";
+        string statusColor = items.isUnlocked(item[i].second) ? greenText : redText;
+        string status = statusColor + formatField(statusText, 16, ' ') + normalText;
+        data[3] += color + " ↑ " + status + color + " ↓ " + normalText;
     }
     return data;
 }

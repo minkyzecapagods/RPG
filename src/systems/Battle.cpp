@@ -126,7 +126,7 @@ void Battle::checkBattleStatus() {
                 // Mensagem de item encontrado
                 cout << "\n\n";
                 centralPrint("Você encontrou um novo item: " + items.getItem(itemId).getName() + "!\n");
-                cout << "Pressione Enter para continuar...\n";
+                centralPrint("Pressione Enter para continuar...");
                 std::cin.ignore();
                 std::cin.get();
             }

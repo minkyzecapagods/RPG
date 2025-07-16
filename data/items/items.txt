@@ -1,8 +1,8 @@
-Espada Heroica
-Espada empunhada pelo Lorde Pedro na grande Guerra
-Mate o goblin para obter
+Espada
+Mate o goblin para obter!
+Espada empunhada pelo Lorde Pedro na grande Guerra.
 WEAPON
-9
+10
 ░░░░░░░░░░░░░░█▒▒░░█
 ░░░░░░░░░░░░▒█▒▒░░░█
 ░░░░░░░░░░█▒▒▒░░░▒█░
@@ -14,11 +14,11 @@ WEAPON
 █▓▒▒█░░░░▓▓▓▒░░░░░░░
 ████░░░░░░░░░░░░░░░░
 
-Talismã Deus
-Talismã que foi dado por deus
-Mate o goblin para obter
+Amuleto
+Mate o Orc para obter!
+Amuleto da sorte do grande Lorde Pedro.
 TALISMAN
-9
+10
 ░░░░░░░░░░░░░░█▒▒░░█
 ░░░░░░░░░░░░▒█▒▒░░░█
 ░░░░░░░░░░█▒▒▒░░░▒█░
@@ -30,11 +30,11 @@ TALISMAN
 █▓▒▒█░░░░▓▓▓▒░░░░░░░
 ████░░░░░░░░░░░░░░░░
 
-Armadura Espinho
-Armadura que contém espinhos
-Mate o goblin para obter
+Armadura
+Mate o Slime para obter!
+Armadura usada pelo grande Lorde Pedro durante seu reinado.
 ARMOR
-9
+10
 ░░░░░░░░░░░░░░█▒▒░░█
 ░░░░░░░░░░░░▒█▒▒░░░█
 ░░░░░░░░░░█▒▒▒░░░▒█░
