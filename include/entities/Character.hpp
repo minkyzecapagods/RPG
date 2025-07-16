@@ -33,6 +33,7 @@ class Character {
         int getMagic() const;
         int getDefenseTEST();
         const vector<int>& getEquipment() const;
+        vector<int>& getEquipment();
 
         //setters
 

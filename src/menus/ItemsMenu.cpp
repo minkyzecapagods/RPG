@@ -5,6 +5,7 @@
 #include "helpers/card_render.hpp"
 #include "systems/ItemRegistry.hpp"
 #include "entities/Item.hpp"
+#include "helpers/item_actions.hpp" // ADICIONADO
 
 #include <vector>
 #include <string>
@@ -99,6 +100,7 @@ void renderShowItem() {
 
 void handleShowItemInput() {
     Key key = getArrowKey();
+    static string lastMessage = "";
 
     switch (key) {
         case Key::Up:
@@ -108,12 +110,46 @@ void handleShowItemInput() {
             Game::selectedOption = (Game::selectedOption + 1) % showItemOptions.size();
             break;
         case Key::Enter: {
+            int itemId = items.getIdByName(selectedItem.first.getName());
+            if (itemId == -1) {
+                lastMessage = "Erro: item não encontrado.";
+                cout << "\n";
+                centralPrint(lastMessage + "\n");
+                lastMessage = "";
+                std::cin.get();
+                break;
+            }
             if (showItemOptions[Game::selectedOption] == "Equipar") {
-
+                if (equipItem(itemId)) {
+                    lastMessage = "Item equipado com sucesso!";
+                } else {
+                    lastMessage = "Não foi possível equipar o item (não está desbloqueado).";
+                    cout << "\n";
+                    centralPrint(lastMessage + "\n");
+                    lastMessage = "";
+                    std::cin.get();
+                }
             } else if (showItemOptions[Game::selectedOption] == "Desequipar") {
-               
+                if (unequipItem(selectedItem.first.getType())) {
+                    lastMessage = "Item desequipado.";
+                } else {
+                    lastMessage = "Nenhum item desse tipo equipado.";
+                    cout << "\n";
+                    centralPrint(lastMessage + "\n");
+                    lastMessage = "";
+                    std::cin.get();
+                }
             } else if (showItemOptions[Game::selectedOption] == "Descartar") {
-
+                if (discardItem(itemId)) {
+                    lastMessage = "Item descartado.";
+                    Game::currentState = GameState::INVENTORY_MENU;
+                } else {
+                    lastMessage = "Não foi possível descartar o item.";
+                    cout << "\n";
+                    centralPrint(lastMessage + "\n");
+                    lastMessage = "";
+                    std::cin.get();
+                }
             } else if (showItemOptions[Game::selectedOption] == "Voltar") {
                 Game::currentState = GameState::INVENTORY_MENU;
             }
@@ -125,5 +161,10 @@ void handleShowItemInput() {
             break;
         default:
             break;
+    }
+    if (!lastMessage.empty()) {
+        cout << "\n";
+        centralPrint(lastMessage + "\n");
+        lastMessage = "";
     }
 }

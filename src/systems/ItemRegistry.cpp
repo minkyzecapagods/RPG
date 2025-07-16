@@ -187,3 +187,12 @@ bool ItemRegistry::saveItemsToFile() {
     file.close();
     return true;
 }
+
+int ItemRegistry::getIdByName(const std::string& name) const {
+    for (const auto& [id, item] : itemMap) {
+        if (item.getName() == name) {
+            return id;
+        }
+    }
+    return -1; // Não encontrado
+}

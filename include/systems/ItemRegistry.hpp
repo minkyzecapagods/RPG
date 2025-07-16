@@ -48,6 +48,8 @@ public:
   bool isUnlocked(int id);
 
   bool saveItemsToFile();
+
+  int getIdByName(const std::string& name) const;
 };
 
 void addSavedItensInfo(int index, const vector<int> &equipment);

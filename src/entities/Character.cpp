@@ -20,6 +20,7 @@ int Character::getAttack() const{return attack;}
 int Character::getMagic() const{return magic;}
 
 const vector<int>& Character::getEquipment() const{return equipment;}
+vector<int>& Character::getEquipment() { return equipment; }
 
 void Character::addDefense(int addedDefense){
     defense += addedDefense;
