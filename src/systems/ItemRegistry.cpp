@@ -143,6 +143,7 @@ void ItemRegistry::loadItemsFromFile() {
 }
 
 void ItemRegistry::loadUnlockedItems(int saveId) {
+    unlockedItems.clear(); // Limpa os itens desbloqueados antes de carregar os do save
     string filename = "data/saves/save" + to_string(saveId + 1) + "/saved_items.txt";
     ifstream file(filename);
     if (!file.is_open()) return;

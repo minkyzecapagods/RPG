@@ -193,6 +193,8 @@ void handleCreateSaveInput() {
             if (createSaveOptions[Game::selectedOption] == "Salvar") {
                 Game::currentEnemyIndex = 0; // Garante que um novo jogo comece do zero
                 Game::currentSave.index = Game::selectedHorizontal; // Define o índice para que saveItemsToFile funcione
+                resetItemRegistry(); // Limpa o registro de itens antes de criar o novo save
+                items.loadItemsFromFile(); // Recarrega os itens do arquivo
                 items.saveItemsToFile(); // Cria o saved_items.txt para o novo save
 
                 Save newSave;

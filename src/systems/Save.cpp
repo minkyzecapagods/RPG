@@ -7,6 +7,7 @@
 #include <sstream>
 #include <iostream>
 #include <cstdio>
+#include <algorithm>
 
 using namespace std;
 
@@ -149,12 +150,22 @@ void loadFromFile() {
     }
 }
 
-void loadSave(const Save& save, int saveId) {
-  
-    Game::player = save.getHero(); // Atualiza o personagem do jogo com o herói salvo
-    Game::currentEnemyIndex = save.getCurrentEnemyIndex(); // Atualiza o índice do inimigo
+// Função utilitária para limpar equipamentos inválidos
+void removeInvalidEquipment(Character& hero) {
+    auto& equipment = hero.getEquipment();
+    equipment.erase(
+        std::remove_if(equipment.begin(), equipment.end(), [](int itemId) {
+            return !items.isUnlocked(itemId);
+        }),
+        equipment.end()
+    );
+}
 
-    items.loadUnlockedItems(saveId);
+void loadSave(const Save& save, int saveId) {
+    items.loadUnlockedItems(saveId); // Primeiro, restaura os itens desbloqueados
+    Game::player = save.getHero();   // Depois, restaura o personagem
+    removeInvalidEquipment(Game::player); // Limpa equipamentos inválidos
+    Game::currentEnemyIndex = save.getCurrentEnemyIndex(); // Atualiza o índice do inimigo
     // Quando tiver itens e inimigos, devemos tambem atualizar o inventário dos inimigos
 }
 
