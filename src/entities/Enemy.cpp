@@ -8,17 +8,6 @@ Enemy::Enemy() : Character() {}
 
 Enemy::Enemy(string name, int defense, int attack, int magic) : Character(name, defense, attack, magic, {}) {}
 
-bool Enemy::defend(bool havePlayerDefended){
-    if(havePlayerDefended) {
-        this->raisedDefenses = false;
-        return false;
-    }
-    else {
-        this->raisedDefenses = true;
-        return true;
-    }
-}
-
 int Enemy::autoAction(Character* target, bool havePlayerDefended, bool haveEnemyDefended) {
     this->raisedDefenses = false;
 

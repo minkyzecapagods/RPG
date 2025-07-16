@@ -38,7 +38,6 @@ class Character {
         int getDefense() const;
         int getAttack() const;
         int getMagic() const;
-        int getDefenseTEST();
         const vector<int>& getEquipment() const;
         vector<int>& getEquipment();
 

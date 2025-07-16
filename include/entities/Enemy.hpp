@@ -13,7 +13,6 @@ class Enemy : public Character {
         Enemy();
         Enemy(string name);
         Enemy(string name, int defense, int attack, int magic);
-        bool defend(bool havePlayerDefended) override;
         int autoAction(Character* target, bool havePlayerDefended, bool haveEnemyDefended);
 };
 

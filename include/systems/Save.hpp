@@ -19,7 +19,6 @@ public:
   Save();
   const Character& getHero() const;
   int getCurrentEnemyIndex() const; // Getter para o índice do inimigo
-  vector<vector<int>>& getEnemysInventory();
   bool getIsWritten() const;
   int getexistingItems() const;
   bool saveToFile(const Character& hero, const vector<vector<int>>& enemys_inventory, const ItemRegistry& registry, const int saveIndex);
