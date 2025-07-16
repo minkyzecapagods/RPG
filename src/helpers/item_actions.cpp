@@ -44,5 +44,7 @@ bool discardItem(int itemId) {
     }
     // Remove do inventário
     items.lockItem(itemId);
+    // Salva a mudança imediatamente
+    addSavedItensInfo(Game::currentSave.index);
     return true;
 } 

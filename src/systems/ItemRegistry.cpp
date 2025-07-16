@@ -155,12 +155,16 @@ void ItemRegistry::loadUnlockedItems(int saveId) {
     file.close();
 }
 
-void addSavedItensInfo(int index, const vector<int> &equipment) {
+const vector<int>& ItemRegistry::getUnlockedItems() const {
+    return unlockedItems;
+}
+
+void addSavedItensInfo(int index) {
     string filename = "data/saves/save" + to_string(index + 1) + "/saved_items.txt";
     ofstream file(filename);
     if (!file.is_open()) return;
 
-    for (int itemId : equipment) {
+    for (int itemId : items.getUnlockedItems()) {
         file << itemId << "\n";
     }
 

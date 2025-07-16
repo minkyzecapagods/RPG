@@ -67,7 +67,7 @@ bool Save::saveToFile(const Character& hero, const vector<vector<int>>& enemys_i
     file.close();
 
     // Salva os itens do herói em um arquivo separado
-    addSavedItensInfo(saveIndex, hero.getEquipment());
+    addSavedItensInfo(saveIndex);
 
     // Atualiza o objeto Save
     saveVector[saveIndex].saveToVector(hero, enemys_inv, registry.getNumItems(), Game::currentEnemyIndex);

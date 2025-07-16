@@ -174,7 +174,7 @@ void handleShowItemInput() {
             } else if (selectedOpt == "Descartar") {
                 if (discardItem(itemId)) {
                     lastMessage = "Item descartado.";
-                    Game::currentState = GameState::INVENTORY_MENU;
+                    selectedItem.second = false; // Atualiza o estado do item para 'trancado'
                 } else {
                     lastMessage = "Não foi possível descartar o item.";
                     cout << "\n";

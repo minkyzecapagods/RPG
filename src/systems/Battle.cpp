@@ -115,6 +115,22 @@ void Battle::checkBattleStatus() {
     if (enemy.getHp() <= 0) {
         this->setBattleOver();
         whoWon = 1; // Jogador venceu
+        // --- INÍCIO: Desbloqueio de item ao derrotar inimigo ---
+        int enemyIndex = Game::currentEnemyIndex; // Ainda não incrementado
+        // IDs dos itens começam em 1
+        int itemId = enemyIndex + 1;
+        if (itemId >= 1 && itemId <= items.getNumItems()) {
+            if (!items.isUnlocked(itemId)) {
+                items.unlockItem(itemId);
+                addSavedItensInfo(Game::currentSave.index);
+                // Mensagem de item encontrado
+                cout << "\n\n";
+                centralPrint("Você encontrou um novo item: " + items.getItem(itemId).getName() + "!\n");
+                cout << "Pressione Enter para continuar...\n";
+                std::cin.ignore();
+                std::cin.get();
+            }
+        }
         Game::currentEnemyIndex++; // Incrementa o índice do inimigo
     } else if (player->getHp() <= 0) {
         this->setBattleOver();

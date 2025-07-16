@@ -32,6 +32,9 @@ public:
 
   // Para atualizar a lista de itens desbloqueados de acordo com o save
   void setUnlockedItems(const vector<int>& unlocked);
+
+  // Retorna a lista de itens desbloqueados
+  const vector<int>& getUnlockedItems() const;
   
   // Listar todos os itens (com status de desbloqueio)
   vector<pair<Item, bool>> getAllItems();
@@ -56,7 +59,7 @@ public:
   void unlockAllItems();
 };
 
-void addSavedItensInfo(int index, const vector<int> &equipment);
+void addSavedItensInfo(int index);
 
 extern ItemRegistry items;
 
