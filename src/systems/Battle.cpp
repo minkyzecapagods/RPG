@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <iomanip>
+#include <unordered_map>
 
 #include "systems/Battle.hpp"
 #include "core/GameState.hpp"
@@ -12,6 +13,13 @@
 #include "entities/Enemy.hpp"
 
 using namespace std;
+
+// Mapa global: nome do inimigo -> nome do item
+std::unordered_map<std::string, std::string> enemyToItemDrop = {
+    {"Goblin", "Espada"},
+    {"Orc", "Amuleto"},
+    {"Slime", "Armadura"}
+};
 
 //teste
 vector<string> n = {
@@ -115,12 +123,12 @@ void Battle::checkBattleStatus() {
     if (enemy.getHp() <= 0) {
         this->setBattleOver();
         whoWon = 1; // Jogador venceu
-        // --- INÍCIO: Desbloqueio de item ao derrotar inimigo ---
-        int enemyIndex = Game::currentEnemyIndex; // Ainda não incrementado
-        // IDs dos itens começam em 1
-        int itemId = enemyIndex + 1;
-        if (itemId >= 1 && itemId <= items.getNumItems()) {
-            if (!items.isUnlocked(itemId)) {
+        // --- INÍCIO: Drop customizado de item ao derrotar inimigo ---
+        std::string enemyName = enemy.getName();
+        auto it = enemyToItemDrop.find(enemyName);
+        if (it != enemyToItemDrop.end()) {
+            int itemId = items.getIdByName(it->second);
+            if (itemId != -1 && !items.isUnlocked(itemId)) {
                 items.unlockItem(itemId);
                 addSavedItensInfo(Game::currentSave.index);
                 // Mensagem de item encontrado
@@ -131,6 +139,7 @@ void Battle::checkBattleStatus() {
                 std::cin.get();
             }
         }
+        // --- FIM: Drop customizado ---
         Game::currentEnemyIndex++; // Incrementa o índice do inimigo
     } else if (player->getHp() <= 0) {
         this->setBattleOver();
