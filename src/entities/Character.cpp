@@ -137,8 +137,3 @@ int Character::action(size_t choice, Character* target, bool havePlayerDefended,
             break;
     }
 }
-
-//void Character::action(Character* target){
-   // Character::dealDamage(target);
-    //IA
-//}

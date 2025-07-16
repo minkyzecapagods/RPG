@@ -52,25 +52,6 @@ void Game::handleInput() {
             handleBattleMenuInput();
             break;
         case GameState::IN_GAME: {
-            /*
-            Character player("player");
-            Character enemy("enemy");
-            Battle currentBattle(player, enemy); //inicializando uma batalha com player e enemy
-            int result;
-            while(true){
-                result = currentBattle.advanceBattleLogic();
-                if(result == 1){
-                    cout << "vitoria" << endl;
-                    Game::currentState = GameState::MAIN_MENU;
-                    break;
-                }
-                else if(result == 2){
-                    cout << "derrota" << endl;
-                    Game::currentState = GameState::MAIN_MENU;
-                    break;
-                }
-            }
-            */
             break;
         }
         case GameState::SAVE_MENU:

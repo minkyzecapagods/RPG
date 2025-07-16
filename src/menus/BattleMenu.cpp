@@ -19,7 +19,7 @@ vector<string> battleMenuOptions = {
     "Atacar",
     "Defender",
     "Curar",
-    "Status"
+    "Fugir"
 };
 
 
@@ -96,7 +96,7 @@ void announceAction(string name, int action){
             cout << name << " curou-se!" << endl;
             break;
         case 3:
-            cout << name << "verificou o status!" << endl;
+            cout << name << " fugiu!" << endl;
             break;
         case -1:
             cout << name << " tentou se defender, mas não conseguiu!" << endl;

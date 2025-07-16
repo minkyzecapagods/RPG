@@ -16,12 +16,13 @@ class Character {
         int defense;
         int attack;
         int magic;
+        
         vector<int> equipment;
     protected:
         bool raisedDefenses = false;
     public:
         Character(string name); //construtor
-        Character(string name, int defense, int attack, int magic, vector<int> equipment);
+        Character(string name, int baseDefense, int baseAttack, int baseMagic, vector<int> equipment);
         Character(); //construtor padrão
         
         //getters

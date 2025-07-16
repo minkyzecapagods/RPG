@@ -40,7 +40,7 @@ vector<string> n = {
 Battle::Battle(Character player, Enemy enemy){
     this->player = player;
     this->enemy = enemy;
-
+    
     //USAR O CONSTRUCTOR, INICIA UMA BATALHA!
     while (!Game::isBattleOver) {
         Game::currentState = GameState::BATTLE_MENU;
@@ -81,6 +81,13 @@ Battle::Battle(Character player, Enemy enemy){
 };
 
 void Battle::playerTurn() {
+    if(Game::selectedOption == 3)
+    {
+        this->setBattleOver();
+        this->playerAction = 3; // Jogador fugiu
+        whoWon = 2; // Jogador fugiu, logo o inimigo venceu
+        return; // Sai da função se o jogador fugiu
+    }
     this->playerAction = player.action(Game::selectedOption, &enemy, havePlayerDefended, haveEnemyDefended);
     if(playerAction == 1) {
         this->havePlayerDefended = true;
