@@ -91,26 +91,58 @@ void handleItemsMenuInput() {
 }
 
 void renderShowItem() {
+    // Verifica se o item está equipado
+    int itemId = items.getIdByName(selectedItem.first.getName());
+    bool isEquipped = false;
+    const auto& equipment = Game::player.getEquipment();
+    for (int eqId : equipment) {
+        if (eqId == itemId) {
+            isEquipped = true;
+            break;
+        }
+    }
+    // Monta opções dinâmicas
+    vector<string> dynamicOptions;
+    if (!isEquipped && selectedItem.second) dynamicOptions.push_back("Equipar");
+    if (isEquipped) dynamicOptions.push_back("Desequipar");
+    if (selectedItem.second) dynamicOptions.push_back("Descartar");
+    dynamicOptions.push_back("Voltar");
     renderItemCard(selectedItem);
     cout << "\n";
-    renderScroll(showItemOptions);
+    renderScroll(dynamicOptions);
     cout << "\n";
     centralPrint("Use setas para mover, espaço para selecionar, pressione q para sair.\n");
 }
 
 void handleShowItemInput() {
+    // Repete a lógica de opções dinâmicas
+    int itemId = items.getIdByName(selectedItem.first.getName());
+    bool isEquipped = false;
+    const auto& equipment = Game::player.getEquipment();
+    for (int eqId : equipment) {
+        if (eqId == itemId) {
+            isEquipped = true;
+            break;
+        }
+    }
+    vector<string> dynamicOptions;
+    if (!isEquipped && selectedItem.second) dynamicOptions.push_back("Equipar");
+    if (isEquipped) dynamicOptions.push_back("Desequipar");
+    if (selectedItem.second) dynamicOptions.push_back("Descartar");
+    dynamicOptions.push_back("Voltar");
+
     Key key = getArrowKey();
     static string lastMessage = "";
 
     switch (key) {
         case Key::Up:
-            Game::selectedOption = (Game::selectedOption - 1 + showItemOptions.size()) % showItemOptions.size();
+            Game::selectedOption = (Game::selectedOption - 1 + dynamicOptions.size()) % dynamicOptions.size();
             break;
         case Key::Down:
-            Game::selectedOption = (Game::selectedOption + 1) % showItemOptions.size();
+            Game::selectedOption = (Game::selectedOption + 1) % dynamicOptions.size();
             break;
         case Key::Enter: {
-            int itemId = items.getIdByName(selectedItem.first.getName());
+            string selectedOpt = dynamicOptions[Game::selectedOption];
             if (itemId == -1) {
                 lastMessage = "Erro: item não encontrado.";
                 cout << "\n";
@@ -119,7 +151,7 @@ void handleShowItemInput() {
                 std::cin.get();
                 break;
             }
-            if (showItemOptions[Game::selectedOption] == "Equipar") {
+            if (selectedOpt == "Equipar") {
                 if (equipItem(itemId)) {
                     lastMessage = "Item equipado com sucesso!";
                 } else {
@@ -129,7 +161,7 @@ void handleShowItemInput() {
                     lastMessage = "";
                     std::cin.get();
                 }
-            } else if (showItemOptions[Game::selectedOption] == "Desequipar") {
+            } else if (selectedOpt == "Desequipar") {
                 if (unequipItem(selectedItem.first.getType())) {
                     lastMessage = "Item desequipado.";
                 } else {
@@ -139,7 +171,7 @@ void handleShowItemInput() {
                     lastMessage = "";
                     std::cin.get();
                 }
-            } else if (showItemOptions[Game::selectedOption] == "Descartar") {
+            } else if (selectedOpt == "Descartar") {
                 if (discardItem(itemId)) {
                     lastMessage = "Item descartado.";
                     Game::currentState = GameState::INVENTORY_MENU;
@@ -150,7 +182,7 @@ void handleShowItemInput() {
                     lastMessage = "";
                     std::cin.get();
                 }
-            } else if (showItemOptions[Game::selectedOption] == "Voltar") {
+            } else if (selectedOpt == "Voltar") {
                 Game::currentState = GameState::INVENTORY_MENU;
             }
             Game::selectedOption = 0;

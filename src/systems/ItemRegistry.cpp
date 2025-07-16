@@ -215,3 +215,11 @@ int ItemRegistry::getIdByName(const std::string& name) const {
     }
     return -1; // Não encontrado
 }
+
+void ItemRegistry::unlockAllItems() {
+    for (const auto& [id, item] : itemMap) {
+        if (!isUnlocked(id)) {
+            unlockedItems.push_back(id);
+        }
+    }
+}

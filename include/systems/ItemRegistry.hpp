@@ -51,6 +51,9 @@ public:
   bool saveItemsToFile();
 
   int getIdByName(const std::string& name) const;
+
+  // Função de debug para desbloquear todos os itens
+  void unlockAllItems();
 };
 
 void addSavedItensInfo(int index, const vector<int> &equipment);

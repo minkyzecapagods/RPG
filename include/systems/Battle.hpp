@@ -21,16 +21,16 @@ class Battle {
         //ele perder a batalha.
         
     public:
-        Character player;
+        Character* player;
         Enemy enemy;
-        Battle(Character player, Enemy enemy);
+        Battle(Character* player, Enemy enemy);
         void playerTurn();
         void enemyTurn();
         void checkBattleStatus();
 
         bool getBattleOver() { return battleOver; }
         void setBattleOver() { battleOver = true; }
-        Character getPlayer() { return player; }
+        Character& getPlayer() { return *player; }
         Character getEnemy() { return enemy; }
 };
 

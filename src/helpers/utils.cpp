@@ -139,8 +139,18 @@ vector<string> getRowDataDisplay(vector<pair<Item, bool>> item, int numItems, in
         string name, bonusStr, lockStatus;
         if (i == selected) color = greenText;
         else color = normalText;
-        data[0] += color + " ↑ " + formatField(item[i].first.getName(), 16, ' ')
-         + " ↓ " + normalText;
+        // NOVO: Verifica se o item está equipado
+        bool isEquipped = false;
+        const auto& equipment = Game::player.getEquipment();
+        int itemId = items.getIdByName(item[i].first.getName());
+        for (int eqId : equipment) {
+            if (eqId == itemId) {
+                isEquipped = true;
+                break;
+            }
+        }
+        string equipMark = isEquipped ? (" " + greenText + "[EQUIPADO]" + normalText) : "";
+        data[0] += color + " ↑ " + formatField(item[i].first.getName() + equipMark, 16, ' ') + " ↓ " + normalText;
         data[1] += color + " ↑     +" + formatField(to_string(item[i].first.getBonus()), 2, '0') 
         + "  " + itemTypeToStat(item[i].first.getType()) +
         "     ↓ " + normalText;

@@ -37,9 +37,12 @@ vector<string> n = {
 "  ||        ccc/",
 "  ||"};
 
-Battle::Battle(Character player, Enemy enemy){
+Battle::Battle(Character* player, Enemy enemy){
     this->player = player;
     this->enemy = enemy;
+    // Vida cheia no início da batalha
+    this->player->setHp(this->player->getMaxHp());
+    this->enemy.setHp(this->enemy.getMaxHp());
     
     //USAR O CONSTRUCTOR, INICIA UMA BATALHA!
     while (!Game::isBattleOver) {
@@ -53,7 +56,7 @@ Battle::Battle(Character player, Enemy enemy){
             if(!this->battleOver){
                 playerTurn();
                 Game::render(getPlayer(), getEnemy());
-                announceAction(player.getName(), playerAction);
+                announceAction(player->getName(), playerAction);
                 checkBattleStatus();
             }
             
@@ -88,7 +91,7 @@ void Battle::playerTurn() {
         whoWon = 2; // Jogador fugiu, logo o inimigo venceu
         return; // Sai da função se o jogador fugiu
     }
-    this->playerAction = player.action(Game::selectedOption, &enemy, havePlayerDefended, haveEnemyDefended);
+    this->playerAction = player->action(Game::selectedOption, &enemy, havePlayerDefended, haveEnemyDefended);
     if(playerAction == 1) {
         this->havePlayerDefended = true;
     }
@@ -98,7 +101,7 @@ void Battle::playerTurn() {
 }
 
 void Battle::enemyTurn() {
-    this->enemyAction = enemy.autoAction(&player, havePlayerDefended, haveEnemyDefended);
+    this->enemyAction = enemy.autoAction(player, havePlayerDefended, haveEnemyDefended);
     if(enemyAction == 1) {
         this->haveEnemyDefended = true;
     }
@@ -113,7 +116,7 @@ void Battle::checkBattleStatus() {
         this->setBattleOver();
         whoWon = 1; // Jogador venceu
         Game::currentEnemyIndex++; // Incrementa o índice do inimigo
-    } else if (player.getHp() <= 0) {
+    } else if (player->getHp() <= 0) {
         this->setBattleOver();
         whoWon = 2; // Inimigo venceu
     }

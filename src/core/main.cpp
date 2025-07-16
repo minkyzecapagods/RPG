@@ -16,6 +16,7 @@ int main() {
     cout << normalText; // Modo de texto dentro do jogo (fundo preto, texto branco)
     initKeyboard();
     items.loadItemsFromFile(); // Carrega todos os itens do jogo
+    items.unlockAllItems(); // DEBUG: desbloqueia todos os itens para teste
     loadFromFile(); // Carrega os saves do jogo
     while (Game::currentState != GameState::EXIT) {
         adjustWindow();
@@ -24,7 +25,7 @@ int main() {
         Game::handleInput();
         if (Game::currentState == GameState::INITIALIZE_BATTLE) {
             Game::isBattleOver = false;
-            Battle(Game::player, Game::getEnemyByIndex(Game::currentEnemyIndex)); // Inicia uma batalha com o personagem ativo e o inimigo atual
+            Battle(&Game::player, Game::getEnemyByIndex(Game::currentEnemyIndex)); // Inicia uma batalha com o personagem ativo e o inimigo atual
             Game::isBattleOver = false; // Reseta o estado da batalha
         }
     }

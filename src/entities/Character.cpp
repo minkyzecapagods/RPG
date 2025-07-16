@@ -10,14 +10,12 @@
 #include "systems/Battle.hpp"
 #include "menus/CreateMenu.hpp"
 #include "helpers/utils.hpp"
+#include "systems/ItemRegistry.hpp"
 
 using namespace std;
 
 string Character::getName() const{return name;}
 int Character::getHp() const{return hp;}
-int Character::getDefense() const{return defense;}
-int Character::getAttack() const{return attack;}
-int Character::getMagic() const{return magic;}
 
 const vector<int>& Character::getEquipment() const{return equipment;}
 vector<int>& Character::getEquipment() { return equipment; }
@@ -76,15 +74,15 @@ Character::Character() {
     equipment = {};
 }
 void Character::dealDamage(Character* target){
-    int damage = 10 + this->attack;
+    int damage = 10 + this->getAttack();
     
     target->takeDamage(damage);  //chamando a takeDamage do target
 }
 
 void Character::takeDamage(int rawDamage){
-    int damage = rawDamage - this->defense;
+    int damage = rawDamage - this->getDefense();
     if(this->raisedDefenses){
-        damage = rawDamage - this->defense - 5;
+        damage = rawDamage - this->getDefense() - 5;
     }
 
     if(damage < 1){
@@ -137,4 +135,54 @@ int Character::action(size_t choice, Character* target, bool havePlayerDefended,
             return 4; // Retorna -1 para indicar que a ação é inválida
             break;
     }
+}
+
+int Character::getAttackBonus() const {
+    int bonus = 0;
+    for (int id : equipment) {
+        Item item = items.getItem(id);
+        if (item.getType() == ItemType::WEAPON)
+            bonus += item.getBonus();
+    }
+    return bonus;
+}
+
+int Character::getDefenseBonus() const {
+    int bonus = 0;
+    for (int id : equipment) {
+        Item item = items.getItem(id);
+        if (item.getType() == ItemType::ARMOR)
+            bonus += item.getBonus();
+    }
+    return bonus;
+}
+
+int Character::getMagicBonus() const {
+    int bonus = 0;
+    for (int id : equipment) {
+        Item item = items.getItem(id);
+        if (item.getType() == ItemType::TALISMAN)
+            bonus += item.getBonus();
+    }
+    return bonus;
+}
+
+int Character::getAttack() const {
+    return attack + getAttackBonus();
+}
+
+int Character::getDefense() const {
+    return defense + getDefenseBonus();
+}
+
+int Character::getMagic() const {
+    return magic + getMagicBonus();
+}
+
+void Character::setHp(int value) {
+    hp = value;
+}
+
+int Character::getMaxHp() const {
+    return 100; // Valor fixo, pode ser alterado se necessário
 }

@@ -11,16 +11,13 @@ bool equipItem(int itemId) {
     // Verifica se já existe um item desse tipo equipado
     for (size_t i = 0; i < equipment.size(); ++i) {
         if (items.getItem(equipment[i]).getType() == item.getType()) {
-            // Desequipa o item antigo
-            items.unlockItem(equipment[i]);
+            // Desequipa o item antigo (apenas remove do vetor)
             equipment[i] = itemId;
-            items.lockItem(itemId);
             return true;
         }
     }
     // Se não existe, adiciona
     equipment.push_back(itemId);
-    items.lockItem(itemId);
     return true;
 }
 
@@ -29,8 +26,6 @@ bool unequipItem(ItemType type) {
     auto& equipment = Game::player.getEquipment();
     for (auto it = equipment.begin(); it != equipment.end(); ++it) {
         if (items.getItem(*it).getType() == type) {
-            if (!items.isUnlocked(*it)) return false;
-            items.unlockItem(*it);
             equipment.erase(it);
             return true;
         }
