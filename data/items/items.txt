@@ -1,8 +1,8 @@
-Espada Heroica
-Espada empunhada pelo Lorde Pedro na grande Guerra
-Mate o goblin para obter
-ARMA
-9
+Espada
+Mate o goblin para obter!
+Espada empunhada pelo Lorde Pedro na grande Guerra.
+WEAPON
+10
 ░░░░░░░░░░░░░░█▒▒░░█
 ░░░░░░░░░░░░▒█▒▒░░░█
 ░░░░░░░░░░█▒▒▒░░░▒█░
@@ -14,11 +14,11 @@ ARMA
 █▓▒▒█░░░░▓▓▓▒░░░░░░░
 ████░░░░░░░░░░░░░░░░
 
-Espada broxa2
-Espada empunhada pelo Lorde Pedro na grande Guerra
-Mate o goblin para obter
-ARMA
-9
+Amuleto
+Mate o Orc para obter!
+Amuleto da sorte do grande Lorde Pedro.
+TALISMAN
+10
 ░░░░░░░░░░░░░░█▒▒░░█
 ░░░░░░░░░░░░▒█▒▒░░░█
 ░░░░░░░░░░█▒▒▒░░░▒█░
@@ -30,107 +30,11 @@ ARMA
 █▓▒▒█░░░░▓▓▓▒░░░░░░░
 ████░░░░░░░░░░░░░░░░
 
-Espada broxa3
-Espada empunhada pelo Lorde Pedro na grande Guerra
-Mate o goblin para obter
-ARMA
-9
-░░░░░░░░░░░░░░█▒▒░░█
-░░░░░░░░░░░░▒█▒▒░░░█
-░░░░░░░░░░█▒▒▒░░░▒█░
-░░░▒▒░░░▒█▒▒▒░░▒▓▒░░
-░░░█▓███▒▒░░░░█░░░░░
-░░░░█▓██░░░█▓░░░░░░░
-░░░░█▓▓▓███░░░░░░░░░
-░▓████████▓█▓░░░░░░░
-█▓▒▒█░░░░▓▓▓▒░░░░░░░
-████░░░░░░░░░░░░░░░░
-
-Espada broxa4
-Espada empunhada pelo Lorde Pedro na grande Guerra
-Mate o goblin para obter
-ARMA
-9
-░░░░░░░░░░░░░░█▒▒░░█
-░░░░░░░░░░░░▒█▒▒░░░█
-░░░░░░░░░░█▒▒▒░░░▒█░
-░░░▒▒░░░▒█▒▒▒░░▒▓▒░░
-░░░█▓███▒▒░░░░█░░░░░
-░░░░█▓██░░░█▓░░░░░░░
-░░░░█▓▓▓███░░░░░░░░░
-░▓████████▓█▓░░░░░░░
-█▓▒▒█░░░░▓▓▓▒░░░░░░░
-████░░░░░░░░░░░░░░░░
-
-Espada broxa5
-Espada empunhada pelo Lorde Pedro na grande Guerra
-Mate o goblin para obter
-ARMA
-9
-░░░░░░░░░░░░░░█▒▒░░█
-░░░░░░░░░░░░▒█▒▒░░░█
-░░░░░░░░░░█▒▒▒░░░▒█░
-░░░▒▒░░░▒█▒▒▒░░▒▓▒░░
-░░░█▓███▒▒░░░░█░░░░░
-░░░░█▓██░░░█▓░░░░░░░
-░░░░█▓▓▓███░░░░░░░░░
-░▓████████▓█▓░░░░░░░
-█▓▒▒█░░░░▓▓▓▒░░░░░░░
-████░░░░░░░░░░░░░░░░
-
-Espada broxa6
-Espada empunhada pelo Lorde Pedro na grande Guerra
-Mate o goblin para obter
-ARMA
-9
-░░░░░░░░░░░░░░█▒▒░░█
-░░░░░░░░░░░░▒█▒▒░░░█
-░░░░░░░░░░█▒▒▒░░░▒█░
-░░░▒▒░░░▒█▒▒▒░░▒▓▒░░
-░░░█▓███▒▒░░░░█░░░░░
-░░░░█▓██░░░█▓░░░░░░░
-░░░░█▓▓▓███░░░░░░░░░
-░▓████████▓█▓░░░░░░░
-█▓▒▒█░░░░▓▓▓▒░░░░░░░
-████░░░░░░░░░░░░░░░░
-
-Espada broxa7
-Espada empunhada pelo Lorde Pedro na grande Guerra
-Mate o goblin para obter
-ARMA
-9
-░░░░░░░░░░░░░░█▒▒░░█
-░░░░░░░░░░░░▒█▒▒░░░█
-░░░░░░░░░░█▒▒▒░░░▒█░
-░░░▒▒░░░▒█▒▒▒░░▒▓▒░░
-░░░█▓███▒▒░░░░█░░░░░
-░░░░█▓██░░░█▓░░░░░░░
-░░░░█▓▓▓███░░░░░░░░░
-░▓████████▓█▓░░░░░░░
-█▓▒▒█░░░░▓▓▓▒░░░░░░░
-████░░░░░░░░░░░░░░░░
-
-Espada broxa8
-Espada empunhada pelo Lorde Pedro na grande Guerra
-Mate o goblin para obter
-ARMA
-9
-░░░░░░░░░░░░░░█▒▒░░█
-░░░░░░░░░░░░▒█▒▒░░░█
-░░░░░░░░░░█▒▒▒░░░▒█░
-░░░▒▒░░░▒█▒▒▒░░▒▓▒░░
-░░░█▓███▒▒░░░░█░░░░░
-░░░░█▓██░░░█▓░░░░░░░
-░░░░█▓▓▓███░░░░░░░░░
-░▓████████▓█▓░░░░░░░
-█▓▒▒█░░░░▓▓▓▒░░░░░░░
-████░░░░░░░░░░░░░░░░
-
-Espada broxa9
-Espada empunhada pelo Lorde Pedro na grande Guerra
-Mate o goblin para obter
-ARMA
-9
+Armadura
+Mate o Slime para obter!
+Armadura usada pelo grande Lorde Pedro durante seu reinado.
+ARMOR
+10
 ░░░░░░░░░░░░░░█▒▒░░█
 ░░░░░░░░░░░░▒█▒▒░░░█
 ░░░░░░░░░░█▒▒▒░░░▒█░

@@ -19,6 +19,7 @@ public:
   ItemRegistry(const string& itemsFilePath);
   // Carregar todos os itens do arquivo
   void loadItemsFromFile();
+    void loadUnlockedItems(int saveId);
   
   // Obter item por ID
   Item getItem(int id);
@@ -31,6 +32,9 @@ public:
 
   // Para atualizar a lista de itens desbloqueados de acordo com o save
   void setUnlockedItems(const vector<int>& unlocked);
+
+  // Retorna a lista de itens desbloqueados
+  const vector<int>& getUnlockedItems() const;
   
   // Listar todos os itens (com status de desbloqueio)
   vector<pair<Item, bool>> getAllItems();
@@ -48,9 +52,14 @@ public:
   bool isUnlocked(int id);
 
   bool saveItemsToFile();
+
+  int getIdByName(const std::string& name) const;
+
+  // Função de debug para desbloquear todos os itens
+  void unlockAllItems();
 };
 
-void addSavedItensInfo(int index, const vector<int> &equipment);
+void addSavedItensInfo(int index);
 
 extern ItemRegistry items;
 

@@ -142,10 +142,34 @@ void ItemRegistry::loadItemsFromFile() {
   file.close();
 }
 
-void addSavedItensInfo(int index, const vector<int> &equipment) {
-    if (index != -1) items.setItemsFilePath("data/saves/save" + to_string(index + 1) + "/saved_items.txt");
-   items.loadItemsFromFile();
-   items.setUnlockedItems(equipment);
+void ItemRegistry::loadUnlockedItems(int saveId) {
+    unlockedItems.clear(); // Limpa os itens desbloqueados antes de carregar os do save
+    string filename = "data/saves/save" + to_string(saveId + 1) + "/saved_items.txt";
+    ifstream file(filename);
+    if (!file.is_open()) return;
+
+    int itemId;
+    while (file >> itemId) {
+        unlockItem(itemId);
+    }
+
+    file.close();
+}
+
+const vector<int>& ItemRegistry::getUnlockedItems() const {
+    return unlockedItems;
+}
+
+void addSavedItensInfo(int index) {
+    string filename = "data/saves/save" + to_string(index + 1) + "/saved_items.txt";
+    ofstream file(filename);
+    if (!file.is_open()) return;
+
+    for (int itemId : items.getUnlockedItems()) {
+        file << itemId << "\n";
+    }
+
+    file.close();
 }
 
 void resetItemRegistry() {
@@ -186,4 +210,21 @@ bool ItemRegistry::saveItemsToFile() {
 
     file.close();
     return true;
+}
+
+int ItemRegistry::getIdByName(const std::string& name) const {
+    for (const auto& [id, item] : itemMap) {
+        if (item.getName() == name) {
+            return id;
+        }
+    }
+    return -1; // Não encontrado
+}
+
+void ItemRegistry::unlockAllItems() {
+    for (const auto& [id, item] : itemMap) {
+        if (!isUnlocked(id)) {
+            unlockedItems.push_back(id);
+        }
+    }
 }

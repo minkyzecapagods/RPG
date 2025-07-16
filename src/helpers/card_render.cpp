@@ -129,9 +129,21 @@ vector<string> getAsciiFrame(const vector<string>& ascii) {
 
 void renderItemCard(const pair<Item, bool>& item) {
     cout << "\n";
-    string status =  redText + "  PERDIDO";
-    if (item.second) status = greenText +"ENCONTRADO";
-    centralPrint(status + normalText, 10);
+    // Verifica se está equipado
+    bool isEquipped = false;
+    int itemId = items.getIdByName(item.first.getName());
+    const auto& equipment = Game::player.getEquipment();
+    for (int eqId : equipment) {
+        if (eqId == itemId) {
+            isEquipped = true;
+            break;
+        }
+    }
+    string status;
+    if (!item.second) status = redText + "  PERDIDO" + normalText;
+    else if (isEquipped) status = greenText + "EQUIPADO" + normalText;
+    else status = greenText + "ENCONTRADO" + normalText;
+    centralPrint(status, 14);
     cout << "\n";
     centralPrint("+" + to_string(item.first.getBonus()) + " " + itemTypeToStat(item.first.getType()));
     cout << "\n";

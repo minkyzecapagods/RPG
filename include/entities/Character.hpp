@@ -18,6 +18,11 @@ class Character {
         int magic;
         
         vector<int> equipment;
+    
+        // Métodos auxiliares para calcular bônus de itens
+        int getAttackBonus() const;
+        int getDefenseBonus() const;
+        int getMagicBonus() const;
     protected:
         bool raisedDefenses = false;
     public:
@@ -28,11 +33,14 @@ class Character {
         //getters
         string getName() const;
         int getHp() const;
+        void setHp(int value);
+        int getMaxHp() const;
         int getDefense() const;
         int getAttack() const;
         int getMagic() const;
         int getDefenseTEST();
         const vector<int>& getEquipment() const;
+        vector<int>& getEquipment();
 
         //setters
 

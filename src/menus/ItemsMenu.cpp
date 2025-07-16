@@ -5,6 +5,7 @@
 #include "helpers/card_render.hpp"
 #include "systems/ItemRegistry.hpp"
 #include "entities/Item.hpp"
+#include "helpers/item_actions.hpp" // ADICIONADO
 
 #include <vector>
 #include <string>
@@ -90,31 +91,98 @@ void handleItemsMenuInput() {
 }
 
 void renderShowItem() {
+    // Verifica se o item está equipado
+    int itemId = items.getIdByName(selectedItem.first.getName());
+    bool isEquipped = false;
+    const auto& equipment = Game::player.getEquipment();
+    for (int eqId : equipment) {
+        if (eqId == itemId) {
+            isEquipped = true;
+            break;
+        }
+    }
+    // Monta opções dinâmicas
+    vector<string> dynamicOptions;
+    if (!isEquipped && selectedItem.second) dynamicOptions.push_back("Equipar");
+    if (isEquipped) dynamicOptions.push_back("Desequipar");
+    if (selectedItem.second) dynamicOptions.push_back("Descartar");
+    dynamicOptions.push_back("Voltar");
     renderItemCard(selectedItem);
     cout << "\n";
-    renderScroll(showItemOptions);
+    renderScroll(dynamicOptions);
     cout << "\n";
     centralPrint("Use setas para mover, espaço para selecionar, pressione q para sair.\n");
 }
 
 void handleShowItemInput() {
+    // Repete a lógica de opções dinâmicas
+    int itemId = items.getIdByName(selectedItem.first.getName());
+    bool isEquipped = false;
+    const auto& equipment = Game::player.getEquipment();
+    for (int eqId : equipment) {
+        if (eqId == itemId) {
+            isEquipped = true;
+            break;
+        }
+    }
+    vector<string> dynamicOptions;
+    if (!isEquipped && selectedItem.second) dynamicOptions.push_back("Equipar");
+    if (isEquipped) dynamicOptions.push_back("Desequipar");
+    if (selectedItem.second) dynamicOptions.push_back("Descartar");
+    dynamicOptions.push_back("Voltar");
+
     Key key = getArrowKey();
+    static string lastMessage = "";
 
     switch (key) {
         case Key::Up:
-            Game::selectedOption = (Game::selectedOption - 1 + showItemOptions.size()) % showItemOptions.size();
+            Game::selectedOption = (Game::selectedOption - 1 + dynamicOptions.size()) % dynamicOptions.size();
             break;
         case Key::Down:
-            Game::selectedOption = (Game::selectedOption + 1) % showItemOptions.size();
+            Game::selectedOption = (Game::selectedOption + 1) % dynamicOptions.size();
             break;
         case Key::Enter: {
-            if (showItemOptions[Game::selectedOption] == "Equipar") {
-
-            } else if (showItemOptions[Game::selectedOption] == "Desequipar") {
-               
-            } else if (showItemOptions[Game::selectedOption] == "Descartar") {
-
-            } else if (showItemOptions[Game::selectedOption] == "Voltar") {
+            string selectedOpt = dynamicOptions[Game::selectedOption];
+            if (itemId == -1) {
+                lastMessage = "Erro: item não encontrado.";
+                cout << "\n";
+                centralPrint(lastMessage + "\n");
+                lastMessage = "";
+                std::cin.get();
+                break;
+            }
+            if (selectedOpt == "Equipar") {
+                if (equipItem(itemId)) {
+                    lastMessage = "Item equipado com sucesso!";
+                } else {
+                    lastMessage = "Não foi possível equipar o item (não está desbloqueado).";
+                    cout << "\n";
+                    centralPrint(lastMessage + "\n");
+                    lastMessage = "";
+                    std::cin.get();
+                }
+            } else if (selectedOpt == "Desequipar") {
+                if (unequipItem(selectedItem.first.getType())) {
+                    lastMessage = "Item desequipado.";
+                } else {
+                    lastMessage = "Nenhum item desse tipo equipado.";
+                    cout << "\n";
+                    centralPrint(lastMessage + "\n");
+                    lastMessage = "";
+                    std::cin.get();
+                }
+            } else if (selectedOpt == "Descartar") {
+                if (discardItem(itemId)) {
+                    lastMessage = "Item descartado.";
+                    selectedItem.second = false; // Atualiza o estado do item para 'trancado'
+                } else {
+                    lastMessage = "Não foi possível descartar o item.";
+                    cout << "\n";
+                    centralPrint(lastMessage + "\n");
+                    lastMessage = "";
+                    std::cin.get();
+                }
+            } else if (selectedOpt == "Voltar") {
                 Game::currentState = GameState::INVENTORY_MENU;
             }
             Game::selectedOption = 0;
@@ -125,5 +193,10 @@ void handleShowItemInput() {
             break;
         default:
             break;
+    }
+    if (!lastMessage.empty()) {
+        cout << "\n";
+        centralPrint(lastMessage + "\n");
+        lastMessage = "";
     }
 }

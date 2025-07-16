@@ -45,10 +45,11 @@ void handleSaveMenuInput() {
             break;
         case Key::Enter:
             if (saveMenuOptions[Game::selectedOption] == "Carregar") {
-                // TRY CATCH AQUI PRA CASO TENTAR SELECIONAR UM SAVE VAZIO
-                Game::currentSave = {saveVector[Game::selectedHorizontal], Game::selectedHorizontal};
-                loadSave(Game::currentSave.save, Game::selectedHorizontal);
-                Game::currentState = GameState::GAME_MENU;
+                if (saveVector[Game::selectedHorizontal].getIsWritten()) {
+                    Game::currentSave = {saveVector[Game::selectedHorizontal], Game::selectedHorizontal};
+                    loadSave(Game::currentSave.save, Game::selectedHorizontal);
+                    Game::currentState = GameState::GAME_MENU;
+                }
             } else if (saveMenuOptions[Game::selectedOption] == "Deletar") {
                 saveVector[Game::selectedHorizontal].deleteSave();
                 break;
