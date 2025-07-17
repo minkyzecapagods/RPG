@@ -13,7 +13,7 @@ class Enemy : public Character {
         Enemy();
         Enemy(string name);
         Enemy(string name, int defense, int attack, int magic);
-        int autoAction(Character* target, bool havePlayerDefended, bool haveEnemyDefended);
+        int autoAction(Character* target, bool haveEnemyDefended);
 };
 
 #endif

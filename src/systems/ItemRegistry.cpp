@@ -37,10 +37,6 @@ vector<pair<Item, bool>> ItemRegistry::getAllItems() {
     return result;
 }
 
-void ItemRegistry::setItemsFilePath(const string& newFilePath) {
-    itemsFilePath = newFilePath;
-}
-
 void ItemRegistry::unlockItem(int id) {
     if (itemMap.find(id) != itemMap.end()) {
         unlockedItems.push_back(id);
@@ -56,10 +52,6 @@ void ItemRegistry::lockItem(int id) {
     } else {
         throw runtime_error("Item com ID " + to_string(id) + " não está desbloqueado.");
     }
-}
-
-void ItemRegistry::setUnlockedItems(const vector<int>& unlocked) {
-    unlockedItems = unlocked;
 }
 
 int ItemRegistry::getNumItems() const { return itemMap.size(); }
@@ -180,38 +172,6 @@ bool ItemRegistry::isUnlocked(int id) {
     return std::find(unlockedItems.begin(), unlockedItems.end(), id) != unlockedItems.end();
 }
 
-bool ItemRegistry::saveItemsToFile() {
-    string filename = "data/saves/save" + to_string(Game::currentSave.index + 1) + "/saved_items.txt";
-    ofstream file(filename);
-    if (!file.is_open()) {
-        cerr << "Erro ao abrir arquivo para escrita: " << filename << endl;
-       return false;
-    }
-
-    // Escrever cada item no arquivo
-    bool firstItem = true;
-    for (const auto& [id, item] : itemMap) {
-        // Linha vazia entre itens (exceto antes do primeiro)
-        if (!firstItem) file << '\n';
-        firstItem = false;
-
-        // Escrever campos básicos
-        file << item.getName() << '\n'
-             << item.getDescription() << '\n'
-             << item.getQuest() << '\n'
-             << itemTypeToString(item.getType()) << '\n'
-             << item.getBonus() << '\n';
-
-        // Escrever arte ASCII
-        for (const string& line : item.getAscii()) {
-            file << line << '\n';
-        }
-    }
-
-    file.close();
-    return true;
-}
-
 int ItemRegistry::getIdByName(const std::string& name) const {
     for (const auto& [id, item] : itemMap) {
         if (item.getName() == name) {
@@ -219,12 +179,4 @@ int ItemRegistry::getIdByName(const std::string& name) const {
         }
     }
     return -1; // Não encontrado
-}
-
-void ItemRegistry::unlockAllItems() {
-    for (const auto& [id, item] : itemMap) {
-        if (!isUnlocked(id)) {
-            unlockedItems.push_back(id);
-        }
-    }
 }

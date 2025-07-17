@@ -14,17 +14,15 @@ using namespace std;
 vector<Save> saveVector = {Save(), Save(), Save()};
 const int numSaves = saveVector.size();
 
-Save::Save() : hero(), enemys_inventory(), existingItems(0), currentEnemyIndex(0), isWritten(false) {}
+Save::Save() : hero(), currentEnemyIndex(0), isWritten(false) {}
 
 const Character& Save::getHero() const{ return hero; }
 
 int Save::getCurrentEnemyIndex() const { return currentEnemyIndex; }
 
-int Save::getexistingItems() const { return existingItems; }
-
 bool Save::getIsWritten() const { return isWritten; }
 
-bool Save::saveToFile(const Character& hero, const vector<vector<int>>& enemys_inv, const ItemRegistry& registry, const int saveIndex) {
+bool Save::saveToFile(const Character& hero, const ItemRegistry& registry, const int saveIndex) {
     // Determina índice do save no vetor (por subtração de vetores)
     int index = saveIndex + 1; // +1 porque o vetor começa em 0, mas os saves começam em 1
 
@@ -53,16 +51,6 @@ bool Save::saveToFile(const Character& hero, const vector<vector<int>>& enemys_i
     }
     file << "\n";
     
-    // Salva inventário dos inimigos
-    for (const auto& inv : enemys_inv) {
-        for (size_t i = 0; i < inv.size(); ++i) {
-            file << inv[i];
-            if (i != inv.size() - 1)
-                file << ",";
-        }
-        file << "\n";
-    }
-
     file << registry.getNumItems() << ";\n";
     
     file.close();
@@ -71,15 +59,13 @@ bool Save::saveToFile(const Character& hero, const vector<vector<int>>& enemys_i
     addSavedItensInfo(saveIndex);
 
     // Atualiza o objeto Save
-    saveVector[saveIndex].saveToVector(hero, enemys_inv, registry.getNumItems(), Game::currentEnemyIndex);
+    saveVector[saveIndex].saveToVector(hero, Game::currentEnemyIndex);
     return true;
 }
 
-bool Save::saveToVector(const Character& hero, const vector<vector<int>>& enemys_inv, int numItemsToSave, int enemyIndex)  {
+bool Save::saveToVector(const Character& hero, int enemyIndex)  {
     // Atualiza o objeto Save
     this->hero = hero;
-    this->enemys_inventory = enemys_inv;
-    this->existingItems = numItemsToSave;
     this->currentEnemyIndex = enemyIndex;
     isWritten = true;
 
@@ -120,26 +106,12 @@ void loadFromFile() {
 
                 Character hero(name, stoi(defense), stoi(attack), stoi(magic), equipment);
 
-                vector<vector<int>> enemys_inv;
-                int numItemsToSave = 0; // Inicializa com 0
-
-                // Lê inventário dos inimigos e a linha final de contagem de itens
-                while (getline(file, line)) {
-                    if (line.find(';') != string::npos) { // Linha de contagem de itens
-                        numItemsToSave = stoi(line.substr(0, line.find(';')));
-                        break; 
-                    }
-                    
-                    stringstream invSS(line);
-                    vector<int> inv;
-                    while (getline(invSS, id, ',')) {
-                        if (!id.empty()) inv.push_back(stoi(id));
-                    }
-                    if (!inv.empty()) {
-                        enemys_inv.push_back(inv);
-                    }
+                // Lê a linha final de contagem de itens (ignora o valor, não é mais usado)
+                if (getline(file, line)) {
+                    // Apenas lê a linha para manter compatibilidade com saves antigos
                 }
-                saveVector[i].saveToVector(hero, enemys_inv, numItemsToSave, stoi(enemyIndexStr));
+                
+                saveVector[i].saveToVector(hero, stoi(enemyIndexStr));
             }
         } catch (const exception& e) {
             cerr << "Erro ao carregar o save " << filename << ": " << e.what() << ". O save será ignorado." << endl;
@@ -166,7 +138,6 @@ void loadSave(const Save& save, int saveId) {
     Game::player = save.getHero();   // Depois, restaura o personagem
     removeInvalidEquipment(Game::player); // Limpa equipamentos inválidos
     Game::currentEnemyIndex = save.getCurrentEnemyIndex(); // Atualiza o índice do inimigo
-    // Quando tiver itens e inimigos, devemos tambem atualizar o inventário dos inimigos
 }
 
 bool Save::deleteSave() {

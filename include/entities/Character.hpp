@@ -59,7 +59,7 @@ class Character {
 
         //void action(Character* target);
 
-        int action(size_t choice, Character* target, bool havePlayerDefended, bool haveEnemyDefended);
+        int action(size_t choice, Character* target, bool havePlayerDefended);
 };
 
 #endif

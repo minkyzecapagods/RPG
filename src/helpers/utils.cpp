@@ -121,7 +121,7 @@ vector<string> getRowDataDisplay(vector<Save> saves,int numItems, int selected) 
              + " ↓ " + normalText;
             data[1] += color + " ↑   Items: " + formatField(to_string(saves[i].getHero().getEquipment().size()), 2, '0') 
             + "/" +
-            formatField(to_string(saves[i].getexistingItems()), 2, '0') +
+            formatField(to_string(items.getNumItems()), 2, '0') +
             "   ↓ " + normalText;
         }
         else {

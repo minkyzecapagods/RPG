@@ -195,10 +195,9 @@ void handleCreateSaveInput() {
                 Game::currentSave.index = Game::selectedHorizontal; // Define o índice para que saveItemsToFile funcione
                 resetItemRegistry(); // Limpa o registro de itens antes de criar o novo save
                 items.loadItemsFromFile(); // Recarrega os itens do arquivo
-                items.saveItemsToFile(); // Cria o saved_items.txt para o novo save
 
                 Save newSave;
-                newSave.saveToFile(chosenCharacter(), {}, items, Game::selectedHorizontal);
+                newSave.saveToFile(chosenCharacter(), items, Game::selectedHorizontal);
                 Game::currentSave.save = newSave; // Atualiza o objeto save no estado do jogo
 
                 loadSave(Game::currentSave.save, Game::currentSave.index);
