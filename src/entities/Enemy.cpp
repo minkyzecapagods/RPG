@@ -1,5 +1,6 @@
 #include "entities/Enemy.hpp"
 #include "menus/BattleMenu.hpp"
+#include "helpers/utils.hpp"
 #include <ctime>
 
 Enemy::Enemy(string name) : Character(name) {}
@@ -7,6 +8,11 @@ Enemy::Enemy(string name) : Character(name) {}
 Enemy::Enemy() : Character() {}
 
 Enemy::Enemy(string name, int defense, int attack, int magic) : Character(name, defense, attack, magic, {}) {}
+
+Enemy::Enemy(string name, int defense, int attack, int magic, vector<string> ascii) {
+    Enemy(name, defense, attack, magic);
+    this->ascii = ascii;
+};
 
 int Enemy::autoAction(Character* target, bool haveEnemyDefended) {
     this->raisedDefenses = false;
@@ -28,3 +34,10 @@ int Enemy::autoAction(Character* target, bool haveEnemyDefended) {
 
     return this->action(choice, target, haveEnemyDefended);
 }
+
+void Enemy::printAscii() {
+    int chars = ascii[1].size();
+    for (const auto& line : ascii) {
+        centralPrint(line + "\n", chars);
+    }
+};

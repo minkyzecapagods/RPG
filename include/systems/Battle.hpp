@@ -23,7 +23,7 @@ class Battle {
 
         void setBattleOver() { battleOver = true; }
         Character& getPlayer() { return *player; }
-        Character getEnemy() { return enemy; }
+        Enemy getEnemy() { return enemy; }
 };
 
 #endif

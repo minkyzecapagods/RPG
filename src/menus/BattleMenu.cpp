@@ -12,6 +12,7 @@
 #include "systems/Battle.hpp"
 #include "menus/CreateMenu.hpp"
 #include "helpers/utils.hpp"
+#include "entities/Enemy.hpp"
 
 using namespace std;
 
@@ -24,17 +25,19 @@ vector<string> battleMenuOptions = {
 
 
 void renderBattleMenu() {
-    string spc = string(4, ' ');
-    cout << spc << " ╭──────────────── ⋆ ♱ ✮ ♱ ⋆ ────────────────╮\n"
-         << spc << "▕┘                                           └▏\n";
+    cout << normalText;
+    int chars = 47;
+    centralPrint(" ╭──────────────── ⋆ ♱ ✮ ♱ ⋆ ────────────────╮\n", chars);
+    centralPrint("▕┘                                           └▏\n", chars);
     for (size_t i = 0; i < battleMenuOptions.size(); ++i) {
-        string prefix = (i == Game::selectedOption) ? "• " : "  ";
+        string prefix = (i == Game::selectedOption) ? greenText + "• " : "  ";
         size_t spaces = 42 - battleMenuOptions[i].size();
-        cout << spc << "▕ " << prefix << battleMenuOptions[i] << string(spaces, ' ') << "▏\n";
+        string line = "▕ " + prefix + battleMenuOptions[i] + string(spaces, ' ') + normalText + "▏\n";
+        centralPrint(line, chars);
     }
-    cout << spc << "▕┐                                           ┌▏\n"
-         << spc <<" ╰──────────────── ⋆ ♱ ✮ ♱ ⋆ ────────────────╯\n\n"
-         << "Use ↑ ↓ para mover, espaço para selecionar, q para sair.\n";
+    centralPrint("▕┐                                           ┌▏\n", chars);
+    centralPrint(" ╰──────────────── ⋆ ♱ ✮ ♱ ⋆ ────────────────╯\n\n", chars);
+    centralPrint("Use ↑ ↓ para mover, espaço para selecionar, q para sair.\n",chars);
 }
 
 void handleBattleMenuInput() {
@@ -71,17 +74,22 @@ void pressSpaceToContinue(){ //Temporario, enquanto não temos o sistema que fal
 }
 
 
-void renderBattleStatus(Character player, Character enemy) {
+void renderBattleStatus(Character player, Enemy enemy) {
     system(CLEAR_COMMAND);
-    cout << string((56 - enemy.getName().length())/2, ' ') << enemy.getName() << "\n"
-         << " " << setfill(' ') << setw(3) << enemy.getHp() << ": "
-         << "\033[31m" << repeat(enemy.getHp()/2, "▇") << repeat(50 - enemy.getHp()/2, "◫") << "\n\n"  
-         << "\033[0m" << "Player attack: " << player.getAttack() << std::endl
-         << "Player defense: " << player.getDefense() << std::endl
-         << string((56 - player.getName().length())/2, ' ') << player.getName() << "\n"
-         <<  " " << setfill(' ') << setw(3) << player.getHp() << ": "
-         << "\033[32m" << repeat(player.getHp()/2, "▇") << repeat(50 - player.getHp()/2, "◫") << "\n"
-         << "\033[0m" << "Enemy attack: " << enemy.getAttack() << std::endl;
+    cout << "\n\n";
+    enemy.printAscii();
+    centralPrint(enemy.getName());
+    cout << "\n";
+    string enemyBar = formatField(to_string(enemy.getHp()) + ": ", 3, '0') +
+        redText + repeat(enemy.getHp()/2, "▇") +
+        repeat(50 - enemy.getHp()/2, "◫") + normalText + "\n\n";
+    centralPrint(enemyBar, 55);
+    centralPrint(player.getName()); 
+    cout << "\n";
+    string playerBar = formatField(to_string(enemy.getHp()) + ": ", 3, '0') +
+        greenText + repeat(enemy.getHp()/2, "▇") +
+        repeat(50 - enemy.getHp()/2, "◫") + normalText + "\n\n";
+    centralPrint(playerBar, 55);
 }
 
 void announceAction(string name, int action){

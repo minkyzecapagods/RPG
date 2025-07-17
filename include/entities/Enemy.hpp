@@ -9,11 +9,15 @@
 using namespace std;
 
 class Enemy : public Character {
+    private:
+        vector <string> ascii;
     public:
         Enemy();
         Enemy(string name);
         Enemy(string name, int defense, int attack, int magic);
+        Enemy(string name, int defense, int attack, int magic, vector<string> ascii);
         int autoAction(Character* target, bool haveEnemyDefended);
+        void printAscii();
 };
 
 #endif

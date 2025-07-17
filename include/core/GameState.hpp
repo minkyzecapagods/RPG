@@ -47,7 +47,7 @@ namespace Game {
 
     void handleInput();
     void render();
-    void render(Character player, Character enemy);
+    void render(Character player, Enemy enemy);
 }
 
 #define CLEAR_COMMAND "clear"
