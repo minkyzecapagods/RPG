@@ -198,7 +198,7 @@ void handleCreateSaveInput() {
                 items.saveItemsToFile(); // Cria o saved_items.txt para o novo save
 
                 Save newSave;
-                newSave.saveToFile(chosenCharacter(), {}, items, Game::selectedHorizontal);
+                newSave.saveToFile(chosenCharacter(), items, Game::selectedHorizontal);
                 Game::currentSave.save = newSave; // Atualiza o objeto save no estado do jogo
 
                 loadSave(Game::currentSave.save, Game::currentSave.index);

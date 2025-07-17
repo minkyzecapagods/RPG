@@ -11,7 +11,6 @@ class ItemRegistry;
 class Save {
 private:
   Character hero;
-  vector<vector<int>> enemys_inventory;
   int existingItems;
   int currentEnemyIndex; // Adicionado para salvar o progresso do inimigo
   bool isWritten;
@@ -21,8 +20,8 @@ public:
   int getCurrentEnemyIndex() const; // Getter para o índice do inimigo
   bool getIsWritten() const;
   int getexistingItems() const;
-  bool saveToFile(const Character& hero, const vector<vector<int>>& enemys_inventory, const ItemRegistry& registry, const int saveIndex);
-  bool saveToVector(const Character& hero, const vector<vector<int>>& enemys_inventory, int numItems, int enemyIndex);
+  bool saveToFile(const Character& hero, const ItemRegistry& registry, const int saveIndex);
+  bool saveToVector(const Character& hero, int numItems, int enemyIndex);
   bool deleteSave();
 };
 

@@ -82,7 +82,7 @@ void handleGameMenuInput() {
             } else if (gameMenuOptions[Game::selectedOption] == "Itens") {
                 Game::currentState = GameState::INVENTORY_MENU;
             } else if (gameMenuOptions[Game::selectedOption] == "Voltar") {
-                Game::currentSave.save.saveToFile(Game::player, {{}}, items, Game::currentSave.index); // Salva o jogo atual antes de voltar
+                Game::currentSave.save.saveToFile(Game::player, items, Game::currentSave.index); // Salva o jogo atual antes de voltar
                 Game::currentState = GameState::MAIN_MENU; 
             }
             Game::selectedOption = 0;
