@@ -143,7 +143,7 @@ void loadSave(const Save& save, int saveId) {
 bool Save::deleteSave() {
     // Determina índice do save no vetor (por subtração de vetores)
     int index = this - &saveVector[0] + 1; // +1 porque o vetor começa em 0, mas os saves começam em 1
-    if (index < 0 || index >= numSaves) return false;
+    if (index < 0 || index > numSaves) return false;
 
     // Reseta o objeto Save
     saveVector[index - 1] = Save();
