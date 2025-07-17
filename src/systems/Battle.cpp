@@ -21,30 +21,6 @@ std::unordered_map<std::string, std::string> enemyToItemDrop = {
     {"Slime", "Armadura"}
 };
 
-//teste
-vector<string> n = {
-"              _,-'|",
-"           ,-'._  |",
-" .||,      |####\\ |",
-"\\.`',/     \\####| |",
-"= ,. =      |###| |",
-"/ || \\    ,-'\\#/,'`.",
-"  ||     ,'   `,,. `.",
-"  ,|____,' , ,;' \\| |",
-" (3|\\    _/|/'   _| |",
-"  ||/,-''  | >-'' _,\\",
-"  ||'      ==\\ ,-'  ,'",
-"  ||       |  V \\ ,|",
-"  ||       |    |` |",
-"  ||       |    |   \\",
-"  ||       |    \\    \\",
-"  ||       |     |    \\",
-"  ||       |      \\_,-'",
-"  ||       |___,,--')_\\",
-"  ||         |_|   ccc/",
-"  ||        ccc/",
-"  ||"};
-
 Battle::Battle(Character* player, Enemy enemy){
     this->player = player;
     this->enemy = enemy;
