@@ -6,14 +6,18 @@ classDiagram
         -int attack
         -int magic
         -vector equipment
+        -vector ascii
         -bool raisedDefenses
         +Character(name)
+        +Character(name, baseDefense, baseAttack, baseMagic, equipment);
+        +Character(name, defense, attack, magic, equipment, ascii);
         +getName() string
         +getHp() int
         +setHp(value)
         +getDefense() int
         +getAttack() int
         +getMagic() int
+        +printAscii()
         +dealDamage(target)
         +takeDamage(rawDamage)
         +cure()
