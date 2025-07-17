@@ -42,6 +42,7 @@ class Character {
         int getMagic() const;
         const vector<int>& getEquipment() const;
         vector<int>& getEquipment();
+        void printAscii();
 
         //setters
 

@@ -205,3 +205,10 @@ void Character::setHp(int value) {
 int Character::getMaxHp() const {
     return 100; // Valor fixo, pode ser alterado se necessário
 }
+
+void Character::printAscii() {
+    int chars = ascii[0].size();
+    for (const auto& line : ascii) {
+        centralPrint(line + "\n", chars);
+    }
+};
