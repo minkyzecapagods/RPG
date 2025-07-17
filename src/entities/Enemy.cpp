@@ -8,7 +8,7 @@ Enemy::Enemy() : Character() {}
 
 Enemy::Enemy(string name, int defense, int attack, int magic) : Character(name, defense, attack, magic, {}) {}
 
-Enemy::Enemy(string name, int defense, int attack, int magic, vector<string> ascii) : Character(name, defense, attack, magic, {}, vector<string> ascii) {}
+Enemy::Enemy(string name, int defense, int attack, int magic, vector<string> ascii) : Character(name, defense, attack, magic, {}, ascii) {}
 
 int Enemy::autoAction(Character* target, bool haveEnemyDefended) {
     this->raisedDefenses = false;
