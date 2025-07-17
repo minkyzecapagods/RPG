@@ -48,6 +48,7 @@ Character::Character(string name) {
     attack = 10;
     magic = 10;
     equipment = {1, 2, 3, 4};
+    ascii = {};
 }
 
 Character::Character(string name, int defense, int attack, int magic, vector<int> equipment) {
@@ -57,6 +58,7 @@ Character::Character(string name, int defense, int attack, int magic, vector<int
     this->attack = attack;
     this->magic = magic;
     this->equipment = equipment;
+    this->ascii = {};
 
     // Verifica se os valores de defesa, ataque e magia são válidos
     if (this->defense < 0) this->defense = 0;
@@ -72,7 +74,24 @@ Character::Character() {
     attack = 10;
     magic = 10;
     equipment = {};
+    ascii = {};
 }
+
+Character::Character(string name, int defense, int attack, int magic, vector<int> equipment, vector<string> ascii) {
+    this->name = name;
+    this->hp = 100; // HP padrão
+    this->defense = defense;
+    this->attack = attack;
+    this->magic = magic;
+    this->equipment = equipment;
+    this->ascii = ascii;
+
+    // Verifica se os valores de defesa, ataque e magia são válidos
+    if (this->defense < 0) this->defense = 0;
+    if (this->attack < 0) this->attack = 0;
+    if (this->magic < 0) this->magic = 0;
+}
+
 void Character::dealDamage(Character* target){
     int damage = 10 + this->getAttack();
     
