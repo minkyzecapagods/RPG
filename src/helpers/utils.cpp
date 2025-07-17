@@ -135,7 +135,7 @@ vector<string> getRowDataDisplay(vector<Save> saves,int numItems, int selected) 
 vector<string> getRowDataDisplay(vector<pair<Item, bool>> item, int numItems, int selected) {
     // Agora teremos 4 linhas: nome, [EQUIPADO], bônus/tipo, status
     vector<string> data = {"", "", "", ""};
-    string color = "";
+    string color = normalText;
     for (int i = 0; i < numItems; i++) {
         if (i == selected) color = greenText;
         else color = normalText;
@@ -154,7 +154,7 @@ vector<string> getRowDataDisplay(vector<pair<Item, bool>> item, int numItems, in
         string formattedName = formatField(itemName.substr(0, 16), 16, ' '); // Garante que não ultrapasse 16 caracteres
         data[0] += color + " ↑ " + formattedName + " ↓ " + normalText;
         // Linha 1: [EQUIPADO] ou vazio
-        string equipLine = isEquipped ? (greenText + formatField("[EQUIPADO]", 16, ' ') + normalText) : formatField("", 16, ' ');
+        string equipLine = isEquipped ? (greenText + formatField("[EQUIPADO]", 16, ' ') + color) : formatField("", 16, ' ');
         data[1] += color + " ↑ " + equipLine + " ↓ " + normalText;
         // Linha 2: Bônus/tipo
         data[2] += color + " ↑     +" + formatField(to_string(item[i].first.getBonus()), 2, '0') 
