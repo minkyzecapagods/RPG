@@ -8,7 +8,6 @@
 
 using namespace std;
 
-class ItemRegistry;
 class ItemRegistry {
 private:
   map<int, Item> itemMap;
@@ -19,19 +18,13 @@ public:
   ItemRegistry(const string& itemsFilePath);
   // Carregar todos os itens do arquivo
   void loadItemsFromFile();
-    void loadUnlockedItems(int saveId);
+  void loadUnlockedItems(int saveId);
   
   // Obter item por ID
   Item getItem(int id);
 
-  // Atualiza o filepath
-  void setItemsFilePath(const string& newFilePath);
-
   // Total de itens
   int getNumItems() const;
-
-  // Para atualizar a lista de itens desbloqueados de acordo com o save
-  void setUnlockedItems(const vector<int>& unlocked);
 
   // Retorna a lista de itens desbloqueados
   const vector<int>& getUnlockedItems() const;
@@ -51,18 +44,12 @@ public:
   // Verificar se item está desbloqueado
   bool isUnlocked(int id);
 
-  bool saveItemsToFile();
-
   int getIdByName(const std::string& name) const;
-
-  // Função de debug para desbloquear todos os itens
-  void unlockAllItems();
 };
 
+// Declarações externas
 void addSavedItensInfo(int index);
-
 extern ItemRegistry items;
-
 void resetItemRegistry();
 
 #endif

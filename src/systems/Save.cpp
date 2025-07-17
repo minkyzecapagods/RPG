@@ -14,13 +14,11 @@ using namespace std;
 vector<Save> saveVector = {Save(), Save(), Save()};
 const int numSaves = saveVector.size();
 
-Save::Save() : hero(), existingItems(0), currentEnemyIndex(0), isWritten(false) {}
+Save::Save() : hero(), currentEnemyIndex(0), isWritten(false) {}
 
 const Character& Save::getHero() const{ return hero; }
 
 int Save::getCurrentEnemyIndex() const { return currentEnemyIndex; }
-
-int Save::getexistingItems() const { return existingItems; }
 
 bool Save::getIsWritten() const { return isWritten; }
 
@@ -61,14 +59,13 @@ bool Save::saveToFile(const Character& hero, const ItemRegistry& registry, const
     addSavedItensInfo(saveIndex);
 
     // Atualiza o objeto Save
-    saveVector[saveIndex].saveToVector(hero, registry.getNumItems(), Game::currentEnemyIndex);
+    saveVector[saveIndex].saveToVector(hero, Game::currentEnemyIndex);
     return true;
 }
 
-bool Save::saveToVector(const Character& hero, int numItemsToSave, int enemyIndex)  {
+bool Save::saveToVector(const Character& hero, int enemyIndex)  {
     // Atualiza o objeto Save
     this->hero = hero;
-    this->existingItems = numItemsToSave;
     this->currentEnemyIndex = enemyIndex;
     isWritten = true;
 
@@ -109,16 +106,12 @@ void loadFromFile() {
 
                 Character hero(name, stoi(defense), stoi(attack), stoi(magic), equipment);
 
-                int numItemsToSave = 0; // Inicializa com 0
-
-                // Lê a linha final de contagem de itens
+                // Lê a linha final de contagem de itens (ignora o valor, não é mais usado)
                 if (getline(file, line)) {
-                    if (line.find(';') != string::npos) { // Linha de contagem de itens
-                        numItemsToSave = stoi(line.substr(0, line.find(';')));
-                    }
+                    // Apenas lê a linha para manter compatibilidade com saves antigos
                 }
                 
-                saveVector[i].saveToVector(hero, numItemsToSave, stoi(enemyIndexStr));
+                saveVector[i].saveToVector(hero, stoi(enemyIndexStr));
             }
         } catch (const exception& e) {
             cerr << "Erro ao carregar o save " << filename << ": " << e.what() << ". O save será ignorado." << endl;

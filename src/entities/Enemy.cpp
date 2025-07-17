@@ -8,7 +8,7 @@ Enemy::Enemy() : Character() {}
 
 Enemy::Enemy(string name, int defense, int attack, int magic) : Character(name, defense, attack, magic, {}) {}
 
-int Enemy::autoAction(Character* target, bool havePlayerDefended, bool haveEnemyDefended) {
+int Enemy::autoAction(Character* target, bool haveEnemyDefended) {
     this->raisedDefenses = false;
 
     size_t choice;
@@ -26,5 +26,5 @@ int Enemy::autoAction(Character* target, bool havePlayerDefended, bool haveEnemy
         choice = 0; // Attack
     }
 
-    return this->action(choice, target, haveEnemyDefended, havePlayerDefended);
+    return this->action(choice, target, haveEnemyDefended);
 }

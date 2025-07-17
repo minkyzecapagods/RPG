@@ -113,7 +113,7 @@ bool Character::defend(bool havePlayerDefended){
     }
 }
 
-int Character::action(size_t choice, Character* target, bool havePlayerDefended, bool haveEnemyDefended) {
+int Character::action(size_t choice, Character* target, bool havePlayerDefended) {
     raisedDefenses = false; // Reseta o estado de defesa antes de cada ação
     switch(choice){
         case 0: //atacar

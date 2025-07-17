@@ -99,7 +99,7 @@ void Battle::playerTurn() {
         whoWon = 2; // Jogador fugiu, logo o inimigo venceu
         return; // Sai da função se o jogador fugiu
     }
-    this->playerAction = player->action(Game::selectedOption, &enemy, havePlayerDefended, haveEnemyDefended);
+    this->playerAction = player->action(Game::selectedOption, &enemy, havePlayerDefended);
     if(playerAction == 1) {
         this->havePlayerDefended = true;
     }
@@ -109,7 +109,7 @@ void Battle::playerTurn() {
 }
 
 void Battle::enemyTurn() {
-    this->enemyAction = enemy.autoAction(player, havePlayerDefended, haveEnemyDefended);
+    this->enemyAction = enemy.autoAction(player, haveEnemyDefended);
     if(enemyAction == 1) {
         this->haveEnemyDefended = true;
     }
